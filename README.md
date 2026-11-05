@@ -5,5 +5,3 @@
 * [Consigna](docs\Consigna.md)
 * [Arquitectura](docs\Arquitectura.md)
 * [Plan](docs\Plan.md)
-
-probanco camviarlas credenciales 1
