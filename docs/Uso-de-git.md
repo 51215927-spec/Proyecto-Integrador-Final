@@ -7,8 +7,8 @@ Esta guía explica cómo trabajar en equipo usando Git y GitHub. Vamos a usar Gi
 La primera vez, descargá el proyecto:
 
 ```bash
-git clone URL_DEL_REPOSITORIO
-cd NOMBRE_DEL_REPOSITORIO
+git clone https://github.com/51215927-spec/Proyecto-Integrador-Final.git
+cd Proyecto-Integrador-Final
 ```
 
 Configurá tu nombre y correo para identificar tus commits:
