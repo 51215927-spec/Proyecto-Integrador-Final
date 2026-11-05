@@ -1,4 +1,5 @@
-# Reglas para la colaboracion del proyecto
+# Reglas para la colaboración del proyecto
+
 ## Guía de Git y GitHub
 
 Esta guía explica cómo trabajar en equipo usando Git y GitHub. Vamos a usar GitHub Flow: cada integrante trabaja en su propia rama y propone sus cambios mediante un Pull Request.
@@ -58,6 +59,7 @@ Tipos de ramas:
 | `test/` | Agregar o modificar pruebas. | `test/registro-usuarios` |
 
 Reglas:
+
 - Usar minúsculas y guiones para separar palabras.
 - No usar espacios, tildes ni caracteres especiales.
 - Describir la tarea, no el nombre de quien la hace.
@@ -82,6 +84,7 @@ Tipos de commits:
 | `test` | Agregar o modificar pruebas. | `test: agregar pruebas de registro` |
 
 Reglas:
+
 - Escribir el mensaje en infinitivo o describiendo la acción realizada.
 - Usar minúsculas y evitar puntos al final.
 - Hacer commits pequeños, que representen un cambio concreto.
@@ -131,13 +134,158 @@ Un Pull Request es una propuesta para integrar los cambios de una rama en otra. 
 
 El PR no sube los cambios por sí solo: primero tenés que hacer `git push`.
 
+#### Cómo crear un Pull Request
+
+##### Paso 1. Subir los cambios a GitHub
+
+Antes de crear un PR, guardá tus cambios y subí tu rama:
+
+```bash
+git add .
+git commit -m "feat: agregar registro de usuarios"
+git push
+```
+
+Si es la primera vez que subís esa rama, usá:
+
+```bash
+git push -u origin feature/registro-usuarios
+```
+
+##### Paso 2. Abrir el Pull Request
+
+1. Entrá al repositorio en GitHub.
+2. Hacé clic en la pestaña `Pull requests`.
+3. Presioná `New pull request`.
+4. Elegí las ramas que querés comparar:
+   - `base`: `main`, donde querés incorporar los cambios.
+   - `compare`: `feature/registro-usuarios`, tu rama de trabajo.
+5. Revisá que aparezcan los cambios correctos y presioná `Create pull request`.
+
+También podés entrar a la página principal del repositorio. Si GitHub muestra el botón `Compare & pull request` después de subir tu rama, podés usarlo directamente.
+
+##### Paso 3. Completar la descripción
+
+El título debe explicar brevemente qué cambios contiene el PR.
+
+En la descripción, explicá qué hiciste y qué debería revisar tu compañero.
+
+Ejemplo de título:
+
+```text
+feat: agregar registro de usuarios
+```
+
+Ejemplo de descripción:
+
+```markdown
+## Cambios realizados
+
+- Se agregó el registro de usuarios.
+- Se incorporó la validación de datos.
+
+## Pruebas
+
+- Se verificó el registro con datos válidos.
+- Se verificó el rechazo de datos incorrectos.
+```
+
+Cuando termines, presioná `Create pull request`.
+
+##### Paso 4. Solicitar una revisión
+
+Una vez creado el PR, un compañero debe revisar los cambios.
+
+Para solicitar una revisión:
+
+1. Abrí el PR.
+2. En la sección `Reviewers`, seleccioná al compañero que debe revisar tu trabajo.
+3. Si es necesario, agregá comentarios o explicaciones en la descripción.
+
+El revisor debe comprobar que los cambios funcionen correctamente y que no afecten otras partes del proyecto.
+
+##### Paso 5. Corregir los cambios si es necesario
+
+Si el revisor encuentra un problema, puede dejar comentarios en el PR.
+
+Para corregirlo, volvé a tu computadora y trabajá en la misma rama:
+
+```bash
+git add .
+git commit -m "fix: corregir validacion de usuarios"
+git push
+```
+
+Los nuevos commits se incorporan automáticamente al PR existente. No es necesario crear otro.
+
+El revisor puede volver a comprobar los cambios.
+
+##### Paso 6. Integrar el PR a main
+
+Cuando el revisor apruebe los cambios, el PR puede integrarse a `main`.
+
+1. Entrá al PR.
+2. Comprobá que no haya conflictos ni problemas pendientes.
+3. Presioná `Merge pull request`.
+4. Confirmá la integración con `Confirm merge`.
+
+Una vez integrado, los cambios de tu rama pasan a formar parte de `main`.
+
+**Importante:** No integres tu propio PR sin la revisión correspondiente. Si el PR todavía no fue aprobado, esperá a que tu compañero lo revise.
+
+##### Paso 7. Actualizar tu computadora
+
+Después de que el PR se integre, actualizá tu rama principal:
+
+```bash
+git switch main
+git pull
+```
+
+Ahora tu computadora tiene los cambios que se incorporaron al repositorio. Podés empezar una nueva tarea creando otra rama.
+
+#### Resumen del proceso
+
+```text
+Crear una rama
+      |
+      v
+Hacer cambios y commits
+      |
+      v
+Subir la rama a GitHub
+      |
+      v
+Crear el Pull Request
+      |
+      v
+Revisión de un compañero
+      |
+      v
+¿Hay correcciones?
+   /         \
+ Sí           No
+ |             |
+ v             |
+Corregir       |
+y subir        |
+los cambios    |
+ |             |
+ └──────┬──────┘
+        v
+Integrar el PR a main
+        |
+        v
+Actualizar main local
+```
+
 ### Imagen: GitHub Flow
 
 ![Diagrama de GitHub Flow: crear una rama, hacer commits, abrir un Pull Request, revisar y unir los cambios](https://user-images.githubusercontent.com/6351798/48032310-63842400-e114-11e8-8db0-06dc0504dcb5.png)
 
 [Ver la guía oficial de GitHub Flow](https://docs.github.com/en/get-started/using-github/github-flow)
 
-### 6. Si `main` recibió cambios mientras trabajabas
+### 6. Si main recibió cambios mientras trabajabas
 
 Guardá tu trabajo con un commit y traé los cambios de `main` a tu rama:
 
