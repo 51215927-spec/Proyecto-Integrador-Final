@@ -7,45 +7,9 @@ A lo largo del proyecto, trabajarán en las distintas etapas de construcción de
 
 ### Organización del proyecto
 El proyecto se desarrolla de manera articulada entre cuatro materias:
-- **Diseño Visual (Imagen):** Diseño visual de los personajes y desarrollo de los recursos gráficos del juego.
+
 - **TI — Análisis de sistemas:** Definición del problema, análisis de los requerimientos y modelado de la solución.
 - **Taller de Programación:** Diseño e implementación de la lógica del juego mediante POO (C#).
-- **SSI — Sistemas de información:** Administración de archivos de texto y utilización de recursos compartidos en red.
-
----
-
-## 🟡 Imagen — Diseño visual del personaje
-
-### 1. Propósito
-En esta materia trabajarán en el diseño visual de un personaje original que formará parte del *Juego Guerra*.
-
-### 2. Actividad 1 — Definición del personaje
-Cada alumno deberá definir la identidad de su personaje:
-* **Nombre:** Debe identificar al personaje de manera clara.
-* **Descripción:** Un texto breve que explique quién es, cuáles son sus características principales y qué lo distingue.
-* **Concepto visual:** Las características físicas, los elementos distintivos, la vestimenta, los colores y otros aspectos que permitan reconocerlo.
-
-**Entregable:** Nombre y descripción del personaje.
-
-### 3. Actividad 2 — Diseño de la imagen
-Cada alumno deberá crear o completar una imagen que represente visualmente a su personaje (dibujo propio, IA, programa de diseño, etc.).
-
-**Entregable:** Archivo de imagen del personaje.
-
-### 4. Actividad 3 — Creación del ASCII Art
-A partir de la imagen original, deberán crear una versión en *ASCII Art* que pueda mostrarse en la consola.
-
-**Entregable:** Archivo de texto con el ASCII Art, listo para incorporarse al juego.
-
-### 5. Actividad 4 — Preparación de los recursos visuales
-La entrega deberá incluir:
-* Nombre del personaje.
-* Descripción breve.
-* Imagen original.
-* Archivo de texto con el ASCII Art.
-
-### 6. Entrega final de Imagen
-Ficha visual del personaje con nombre, descripción, imagen y ASCII Art, acompañada de una explicación/justificación de las decisiones visuales.
 
 ---
 
@@ -110,13 +74,3 @@ Diseñar pruebas de caja negra y caja blanca contemplando casos normales, límit
 7. **Etapa 7 — Integración:** Unificación de componentes en una aplicación funcional de consola.
 
 ---
-
-## 🟣 SSI — Sistemas y recursos compartidos
-
-### Actividades:
-1. **Actividad 1 — Organización de archivos:** Esquema de carpetas, rutas absolutas y relativas.
-2. **Actividad 2 — Archivos de texto:** Manipulación y formato de archivos `.txt`.
-3. **Actividad 3 — Compartir una carpeta:** Configuración de recursos compartidos en red local.
-4. **Actividad 4 — Usuarios y permisos:** Gestión de permisos de red y de sistema de archivos (lectura/escritura).
-5. **Actividad 5 — Disponibilidad y acceso simultáneo:** Manejo de concurrencia y fallos de red.
-6. **Actividad 6 — Prueba del entorno del juego:** Verificación del entorno definitivo.
