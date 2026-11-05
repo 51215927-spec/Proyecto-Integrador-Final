@@ -7,7 +7,7 @@ Esta guía explica cómo trabajar en equipo usando Git y GitHub. Vamos a usar Gi
 La primera vez, descargá el proyecto:
 
 ```bash
-git clone https://github.com/51215927-spec/Proyecto-Integrador-Final.git
+git clone --recurse-submodules https://github.com/51215927-spec/Proyecto-Integrador-Final.git
 cd Proyecto-Integrador-Final
 ```
 
