@@ -1,4 +1,4 @@
-# Proyecto-Integrador-Final
+# Proyecto integrador final
 
 ## Documentación
 
