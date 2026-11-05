@@ -50,4 +50,4 @@ Proyecto-Integrador-Final/
 - [Consigna](docs/Consigna.md)
 - [Arquitectura](docs/Arquitectura.md)
 - [Planificación](docs/Plan.md)
-- [Guía de Git](docs/Guia-Git.md)
+- [Guía de Git](docs/Uso-de-git.md)
