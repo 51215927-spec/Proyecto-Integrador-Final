@@ -352,7 +352,3 @@ Proyecto-Integrador-Final/
 - No subir carpetas generadas automáticamente, como `bin/` y `obj/`.
 - Si se agrega un nuevo proyecto de código, ubicarlo dentro de `src/` o `test/`, según corresponda.
 - Si se agrega documentación, incluir un enlace a ella en el `README.md`.
-
-### Enlaces a la documentación
-
-- [Arquitectura](docs/Arquitectura.md)
