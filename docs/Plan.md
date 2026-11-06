@@ -1,1 +1,0 @@
-- [ ] crear docs/diagramas y mover de el uml a ahi

@@ -1,1 +1,3 @@
-[UML](UML.uxf)
+# Arquitectura
+
+[UML](diagrmas\UML.uxf)
