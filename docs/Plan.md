@@ -11,7 +11,7 @@ Se revisaron el documento de avance aportado por el usuario y el [UML existente]
 | Actividad de TI | Estado y evidencia | Qué falta para cerrarla |
 |---|---|---|
 | 1. Personajes | Completada por confirmación del usuario. Lysander y Reched tienen nombre, descripción, seis valores, total y atributos principal y menor; ambos cumplen las restricciones. | Sin pendientes para esta actividad. |
-| 2. Requerimientos | Reglas principales, mazo común, datos de ejecución y una propuesta de comunicación redactados. | Definir la mano inicial, completar errores y respuestas, separar requisitos funcionales y técnicos y resolver las precisiones indicadas abajo. |
+| 2. Requerimientos | Reglas principales, mazo común, datos de ejecución y una propuesta de comunicación redactados. Confirmado: J1 comienza como jugador mano y el rol se alterna entre rondas. | Actualizar la terminología y las reglas del documento de entrega, completar errores y respuestas, separar requisitos funcionales y técnicos y resolver las precisiones indicadas abajo. |
 | 3. Modelo de clases | UML elaborado con clases, atributos privados, firmas y relaciones. | Justificar responsabilidades y decisiones, revisar coherencia con las reglas y cerrar las observaciones de arquitectura. |
 | 4. Métodos | Borrador de Partida, Jugador y Mazo. | Unificar las firmas con el UML y completar contratos, validaciones, excepciones y diagramas de algoritmos. |
 | 5. Archivos de personajes | Solo se indica un límite de ASCII: «máximo 25 líneas y 120 caracteres». | Aclarar si 120 es por línea o en total; definir sintaxis, campos, descripción, ASCII, errores y ejemplos válidos e inválidos. |
@@ -30,13 +30,27 @@ Valores en orden: Fuerza, Velocidad, Resistencia, Inteligencia, Energía y Habil
 ### Reglas ya redactadas
 
 - Participan dos jugadores y se reparten tres cartas a cada uno desde un mazo común.
-- La mano elige el primer atributo; ambos jugadores eligen su carta y la muestran simultáneamente. Gana el mayor valor y, ante empate, quien no eligió el atributo.
-- El ganador del combate elige el atributo siguiente. La ronda o «mano» se gana con dos combates ganados, por lo que puede terminar sin jugar la tercera carta.
-- Al terminar la ronda se devuelven las cartas jugadas al mazo, se mezcla, se reparte nuevamente y se alterna la mano. Gana la partida quien alcanza 15 rondas ganadas.
+- El jugador mano elige el primer atributo; ambos jugadores eligen su carta y la muestran simultáneamente. Gana el mayor valor y, ante empate, quien no eligió el atributo del combate.
+- El ganador del combate elige el atributo siguiente. La ronda se gana con dos combates ganados, por lo que puede terminar sin jugar la tercera carta.
+- Al terminar la ronda se devuelven las cartas jugadas al mazo, se mezcla y se reparte nuevamente. Gana la partida quien alcanza 15 rondas ganadas.
+
+### Decisión confirmada — jugador mano y terminología
+
+El usuario confirmó que al iniciar la partida se identifican J1 y J2. J1 es el jugador mano de la primera ronda. Al terminar cada ronda, el rol pasa al otro jugador: J1, J2, J1, J2, hasta finalizar la partida, independientemente de quién gane la ronda. Dentro de una ronda, el ganador de cada combate elige el siguiente atributo; esto no cambia quién es el jugador mano de esa ronda.
+
+El documento de entrega debe distinguir estos conceptos:
+
+- **Partida:** juego completo; termina cuando un jugador alcanza 15 rondas ganadas.
+- **Ronda:** serie de hasta tres combates; termina cuando un jugador gana dos combates. Equivale a lo que coloquialmente se llama «mano» en el truco.
+- **Combate:** enfrentamiento de una carta de cada jugador mediante un atributo elegido.
+- **Jugador mano:** jugador que elige el atributo del primer combate de la ronda.
+- **Mano de cartas:** cartas disponibles de un jugador; no equivale a una ronda ni al rol de jugador mano.
+
+Esta decisión está registrada en el repositorio; todavía falta trasladar y revisar la redacción en el documento de entrega del usuario.
 
 ### Precisiones pendientes antes de cerrar el diseño
 
-- Determinar cómo se elige la primera mano y confirmar que «mano» como jugador inicial y como ronda no genere ambigüedades en los contratos.
+- Aplicar la decisión de J1 como jugador mano inicial y la alternancia entre rondas al documento de entrega. Unificar la terminología de partida, ronda, combate, jugador mano y mano de cartas, y comprobar su coherencia con los contratos.
 - Aclarar el destino de las cartas no jugadas cuando la ronda termina tras dos combates y el orden de devolución. El UML ofrece `EntregarCartas`, pero no reemplaza una regla escrita.
 - Definir cómo se reúnen las cartas iniciales y qué ocurre si hay menos de seis disponibles. Las dos fichas revisadas no acreditan por sí solas un mazo suficiente.
 - Precisar el orden de elección de atributo y carta y cómo se garantiza que una computadora no revele su carta antes de que ambas elecciones estén registradas.
@@ -72,7 +86,9 @@ La actividad 1 está completada. Estamos consolidando requerimientos y modelo de
 - [x] Identificar a los dos participantes y sus acciones: elegir atributo cuando corresponde y elegir una carta de su mano.
 - [x] Definir el reparto de tres cartas a cada jugador desde un mazo común y la mezcla entre rondas.
 - [ ] Definir cómo se forma el mazo inicial y qué ocurre si tiene menos de seis cartas.
-- [ ] Definir quién es mano al iniciar la partida.
+- [x] Definir quién es jugador mano al iniciar la partida: J1, según confirmación del usuario.
+- [ ] Actualizar el documento de entrega con J1 como jugador mano inicial y la alternancia J1/J2 al terminar cada ronda, independientemente de su ganador.
+- [ ] Diferenciar en todo el documento partida, ronda, combate, jugador mano y mano de cartas; sustituir «mano ganada» por «ronda ganada» y aclarar que se juegan hasta tres combates.
 - [x] Definir quién elige el atributo: la mano en el primer combate y el ganador del combate en el siguiente.
 - [x] Especificar la comparación por el atributo elegido y la victoria de ronda al alcanzar dos combates ganados.
 - [x] Resolver la regla de empate: gana quien no eligió el atributo.
@@ -86,6 +102,8 @@ La actividad 1 está completada. Estamos consolidando requerimientos y modelo de
 - [ ] **En curso:** completar errores y respuestas; el documento identifica sobrescritura y atributos inválidos, y el UML agrega excepciones de personaje, archivo, acción y mazo.
 - [ ] Separar los requerimientos funcionales de las condiciones técnicas de ejecución.
 - [ ] Revisar y entregar el documento de requerimientos y reglas.
+
+El PR de esta actividad permanecerá en borrador mientras existan tareas pendientes de la actividad 2. El usuario indicó que solo lo aceptará cuando todas estén realizadas; antes de solicitar su revisión final, comprobar cada casilla y la actualización del documento de entrega. La integración requiere además la revisión de un compañero prevista en CONTRIBUTING.md.
 
 ### Actividad 3 — Modelo de clases
 

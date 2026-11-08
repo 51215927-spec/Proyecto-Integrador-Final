@@ -10,6 +10,8 @@ El modelo separa los datos de Personaje y la consulta delegada desde Carta; Mazo
 
 Las reglas de empate a favor de quien no eligió, dos combates para ganar una ronda y 15 rondas para ganar una partida coinciden entre el avance revisado y el UML.
 
+Según la decisión confirmada por el usuario, J1 es el jugador mano de la primera ronda y el rol se alterna entre J1 y J2 al finalizar cada ronda, independientemente del ganador. El jugador mano elige el primer atributo; después lo elige el ganador del combate anterior, sin modificar ese rol durante la ronda. La terminología y el traslado pendiente al documento de entrega se registran en [Plan](Plan.md#decisión-confirmada--jugador-mano-y-terminología); falta comprobar su coherencia con los contratos del modelo.
+
 ## Decisiones por cerrar
 
 - Unificar los métodos del borrador con las firmas y responsabilidades del UML antes de especificarlos o implementarlos.
