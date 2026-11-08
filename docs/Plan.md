@@ -6,7 +6,7 @@ Plan basado en [la consigna](Consigna.md). Marcar una tarea cuando su resultado 
 
 Alcance actual: únicamente TI (análisis y diseño). Taller queda pendiente y fuera del trabajo actual. El código todavía contiene `Hello, World!` y una prueba vacía; el diseño documentado no está implementado.
 
-Se revisaron el documento de avance aportado por el usuario y el [UML existente](diagramas/UML.uxf). El documento se utilizó como referencia local y no forma parte de la entrega del repositorio. Las casillas pendientes también incluyen tareas parcialmente desarrolladas: no significan que no exista ningún avance.
+Se revisaron el documento de avance aportado por el usuario y el [UML existente](diagramas/UML.uxf). El documento se utilizó como referencia local y no forma parte de la entrega del repositorio. Cada casilla de TI refleja esa revisión: `[x]` indica un resultado comprobado, `[ ]` indica trabajo pendiente y **En curso** señala un avance parcial con el cierre que falta. Los resultados de personajes se limitan a Lysander y Reched; no acreditan las fichas del resto del equipo. Completar una tarea de diseño no implica aprobar el entregable completo ni implementar código.
 
 | Actividad de TI | Estado y evidencia | Qué falta para cerrarla |
 |---|---|---|
@@ -57,47 +57,56 @@ Estamos consolidando requerimientos y modelo de clases (actividades 2 y 3), con 
 
 ### Actividad 1 — Análisis y diseño de los personajes
 
-- [ ] Escribir el nombre y la descripción de cada personaje e incorporar su imagen o referencia visual.
+- [x] Escribir el nombre y la descripción de Lysander y Reched (fichas del documento revisado).
+- [ ] Completar o verificar la imagen o referencia visual de ambos personajes.
 - [ ] Proponer distintas distribuciones para Fuerza, Velocidad, Resistencia, Inteligencia, Energía y Habilidad.
 - [ ] Comparar las fortalezas y debilidades de las distribuciones propuestas.
-- [ ] Elegir una distribución y justificar la estrategia del personaje.
-- [ ] Comprobar que los seis valores estén entre 250 y 750 y sumen exactamente 3000.
-- [ ] Comprobar que al menos un atributo sea mayor o igual a 650 y otro menor o igual a 350; rechazar seis valores de 500.
-- [ ] Identificar el atributo principal y el de menor valor.
-- [ ] Completar y revisar una ficha de análisis por personaje con los datos anteriores y el total.
+- [x] Elegir una distribución para Lysander y Reched (valores registrados en la tabla de verificación).
+- [ ] Justificar explícitamente la estrategia elegida y su relación con las fortalezas y debilidades.
+- [x] Comprobar que los seis valores de ambos personajes estén entre 250 y 750 y sumen exactamente 3000.
+- [x] Comprobar en ambos personajes que al menos un atributo sea mayor o igual a 650 y otro menor o igual a 350; ninguno tiene seis valores de 500.
+- [x] Identificar el atributo principal y el de menor valor de ambos personajes.
+- [ ] **En curso:** completar y revisar las dos fichas con alternativas, comparación y justificación; ya contienen datos, valores y total. Verificar las fichas restantes del equipo antes de cerrar la actividad.
 
 ### Actividad 2 — Relevamiento de requerimientos
 
-- [ ] Escribir el objetivo del juego y las responsabilidades de los dos participantes.
-- [ ] Definir cómo se forma el mazo inicial y cómo se reparten las cartas.
-- [ ] Definir quién inicia la partida y quién elige el atributo de cada enfrentamiento.
-- [ ] Especificar cómo se comparan los atributos y cómo se determina el ganador de una ronda.
-- [ ] Resolver la regla de empate y documentarla.
-- [ ] Definir dónde se colocan las cartas utilizadas y las cartas ganadas y en qué orden.
-- [ ] Definir cómo se asigna el siguiente turno.
-- [ ] Establecer las condiciones de victoria y de finalización de la partida.
-- [ ] Enumerar los datos que deben conservarse durante la ejecución y los que deben intercambiar las computadoras.
-- [ ] Enumerar los errores que debe contemplar el sistema y la respuesta esperada para cada uno.
+- [x] Escribir el objetivo del juego: alcanzar 15 rondas ganadas.
+- [x] Identificar a los dos participantes y sus acciones: elegir atributo cuando corresponde y elegir una carta de su mano.
+- [x] Definir el reparto de tres cartas a cada jugador desde un mazo común y la mezcla entre rondas.
+- [ ] Definir cómo se forma el mazo inicial y qué ocurre si tiene menos de seis cartas.
+- [ ] Definir quién es mano al iniciar la partida.
+- [x] Definir quién elige el atributo: la mano en el primer combate y el ganador del combate en el siguiente.
+- [x] Especificar la comparación por el atributo elegido y la victoria de ronda al alcanzar dos combates ganados.
+- [x] Resolver la regla de empate: gana quien no eligió el atributo.
+- [x] Definir que las cartas jugadas vuelven al mazo común al terminar la ronda.
+- [ ] Precisar el destino de las cartas no jugadas y el orden de devolución de todas las cartas.
+- [x] Definir la alternancia de la mano entre rondas y la elección del atributo por el ganador entre combates.
+- [ ] Precisar el orden de elección de atributo y carta y el mecanismo para mostrar ambas cartas simultáneamente.
+- [x] Establecer la victoria y finalización normal de la partida al alcanzar 15 rondas ganadas.
+- [x] Enumerar los datos de ejecución: mazo, cartas de cada jugador, cartas jugadas, combates ganados y rondas ganadas.
+- [ ] **En curso:** completar los datos de intercambio; hay una propuesta de mensajes de acciones y un modelo Accion, pero falta el protocolo y su identidad de partida.
+- [ ] **En curso:** completar errores y respuestas; el documento identifica sobrescritura y atributos inválidos, y el UML agrega excepciones de personaje, archivo, acción y mazo.
 - [ ] Separar los requerimientos funcionales de las condiciones técnicas de ejecución.
 - [ ] Revisar y entregar el documento de requerimientos y reglas.
 
 ### Actividad 3 — Modelo de clases
 
-- [ ] Definir las responsabilidades de Personaje, Carta, Mazo y los objetos que administrarán la partida.
-- [ ] Identificar y justificar las clases adicionales necesarias.
-- [ ] Definir los atributos de cada clase y cuáles deben quedar encapsulados.
-- [ ] Definir los métodos de cada clase con sus parámetros y valores de retorno.
-- [ ] Definir las relaciones entre las clases y las operaciones que se delegarán en otros objetos.
+- [x] Definir las responsabilidades principales de Personaje, Carta, Mazo y los objetos de partida (UML y descripción en Arquitectura).
+- [x] Identificar las clases adicionales: Jugador, Partida, Ronda, Combate, ControlTurno, LectorPersonaje, ArchivoPartida, Accion e interfaz de consola, con sus enumeraciones.
+- [ ] Justificar las clases adicionales y las decisiones de separación de responsabilidades.
+- [x] Definir los atributos de las clases y su encapsulamiento privado en el UML.
+- [ ] **En curso:** completar las firmas del modelo; la mayoría incluye parámetros y retornos, pero el constructor de Accion no tipa sus parámetros y existen diferencias con el borrador de métodos.
+- [x] Definir las relaciones principales y la delegación de Carta en Personaje (UML y Arquitectura).
 - [x] Elaborar el diagrama de clases UML (disponible en `docs/diagramas/UML.uxf`; revisión final pendiente).
-- [ ] Documentar las decisiones de diseño en [Arquitectura](Arquitectura.md) y comprobar su coherencia con el UML.
+- [ ] **En curso:** completar la justificación de decisiones en [Arquitectura](Arquitectura.md) y cerrar la revisión de coherencia; ya se documentaron responsabilidades y diferencias pendientes.
 
 ### Actividad 4 — Especificación de métodos
 
-- [ ] Identificar los métodos relevantes del modelo de clases.
-- [ ] Escribir el nombre y la responsabilidad de cada método.
-- [ ] Especificar sus parámetros de entrada y su valor de retorno, cuando corresponda.
-- [ ] Indicar las precondiciones y el resultado esperado de cada método.
-- [ ] Definir sus validaciones y el tratamiento de situaciones excepcionales.
+- [x] Identificar los métodos del modelo de clases en el UML, incluidos los de partida, ronda, combate, cartas, mazo, personajes, turnos, archivos e interfaz.
+- [ ] **En curso:** completar la responsabilidad de cada método; el borrador describe Jugar, la elección de atributo, la elección de carta y el reparto, pero no cubre todo el UML.
+- [ ] **En curso:** unificar parámetros y retornos del borrador con el UML y completar las firmas incompletas.
+- [ ] **En curso:** completar precondiciones y resultados; el borrador ya limita la elección a los seis atributos y a las cartas disponibles, y describe el reparto de tres cartas.
+- [ ] **En curso:** completar validaciones y excepciones por método; el UML ya enumera cuatro excepciones y el rechazo de acciones fuera de turno, ronda o combate.
 - [ ] Elaborar diagramas de Nassi-Schneiderman para los algoritmos que los necesiten.
 - [ ] Revisar con Taller que los contratos permitan implementar los métodos sin inventar reglas.
 
@@ -105,8 +114,9 @@ Estamos consolidando requerimientos y modelo de clases (actividades 2 y 3), con 
 
 - [ ] Definir la estructura del archivo de texto y cómo se reconoce cada dato.
 - [ ] Especificar el formato del nombre y de los seis atributos obligatorios.
-- [ ] Definir cómo se incorpora o referencia la descripción y el ASCII Art.
-- [ ] Documentar las validaciones de rango, suma y especialización de los atributos.
+- [ ] **En curso:** definir cómo se incorpora o referencia la descripción y el ASCII Art; solo está escrito el límite de 25 líneas y 120 caracteres, cuya interpretación falta precisar.
+- [x] Documentar las restricciones numéricas: seis atributos entre 250 y 750, total 3000, uno de al menos 650 y otro de como máximo 350, sin seis valores de 500 (documento revisado y consigna).
+- [ ] Especificar cómo se aplican esas restricciones al leer el archivo y cómo se informa cada incumplimiento.
 - [ ] Definir la respuesta ante campos faltantes, duplicados o incorrectos.
 - [ ] Definir la respuesta ante un archivo inexistente o que no se puede leer.
 - [ ] Preparar un archivo válido y ejemplos inválidos para cada error previsto.
@@ -114,13 +124,14 @@ Estamos consolidando requerimientos y modelo de clases (actividades 2 y 3), con 
 
 ### Actividad 6 — Archivo de partida compartida
 
-- [ ] Definir los datos y el formato del archivo de texto compartido.
-- [ ] Definir cómo se identifican la partida, los jugadores, su estado y el turno vigente.
-- [ ] Especificar cómo se registra la acción de cada jugador.
-- [ ] Determinar cuándo lee y cuándo actualiza el archivo cada computadora.
-- [ ] Definir cómo se detectan y rechazan datos que no corresponden al turno esperado.
+- [ ] **En curso:** definir datos y formato del archivo compartido; Accion propone jugador, tipo, ronda, combate y valor, pero faltan sintaxis y acuerdo sobre uno o dos archivos.
+- [ ] **En curso:** completar la identificación de partida, jugadores, estado y turno; ControlTurno y EstadoPartida ya modelan estados, actores pendientes y números de ronda y combate, pero falta identidad de partida y su representación en el archivo.
+- [ ] **En curso:** especificar el registro de acciones; el UML propone Registrar y cinco tipos de acción, pero no define formato, confirmación ni duplicados.
+- [ ] **En curso:** determinar cuándo lee y actualiza cada computadora; hay rutas propia y rival, contador de líneas leídas y LeerAccionesDelRival, sin frecuencia ni secuencia de operaciones acordadas.
+- [x] Definir la regla de autorización del turno en el UML: al elegir atributo actúa solo quien elige; al elegir cartas actúan ambos una vez cada uno; las acciones fuera de turno, ronda o combate se rechazan con AccionInvalidaException.
+- [ ] Especificar el algoritmo que valida los datos recibidos y conserva el estado ante una acción inválida o repetida.
 - [ ] Elegir y documentar el mecanismo para evitar accesos concurrentes inconsistentes.
-- [ ] Definir la respuesta ante archivo inaccesible, lectura fallida o escritura incompleta.
+- [ ] **En curso:** completar la respuesta ante archivo inaccesible, lectura fallida o escritura incompleta; el UML propone EstaDisponible y ArchivoNoDisponibleException, pero falta la política de recuperación.
 - [ ] Revisar con SSI la viabilidad del mecanismo en la red local y los permisos necesarios.
 - [ ] Entregar la especificación del archivo compartido, diferenciándolo de los archivos iniciales de personajes.
 
