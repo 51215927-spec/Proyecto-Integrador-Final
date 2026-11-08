@@ -35,9 +35,9 @@ Los valores de cada personaje deben cumplir estas condiciones:
 
 Un sistema externo al cliente de los jugadores carga todos los personajes en un archivo CSV compartido. Ese archivo proporciona los personajes con los que se forma el mazo inicial. La carga y edición del catálogo mediante ese sistema externo quedan fuera del alcance del cliente.
 
-El CSV de personajes contiene los datos iniciales; su función es distinta de la del archivo compartido que coordina las acciones y el estado de una partida. No se permiten personajes repetidos en el mazo. La estructura del CSV, el criterio para reconocer un personaje duplicado y la respuesta ante registros inválidos o duplicados todavía deben especificarse.
+El CSV de personajes contiene los datos iniciales; su función es distinta de la del archivo compartido que coordina las acciones y el estado de una partida. No se permiten personajes repetidos en el mazo. El sistema externo que carga los personajes es responsable de impedir duplicados. El cliente y el servidor de partida reciben ese catálogo bajo dicha condición; no se agrega una segunda responsabilidad de eliminación de duplicados. La estructura del CSV se especificará en la actividad 5.
 
-Si hay menos de seis cartas válidas disponibles, el sistema muestra el error «No se puede jugar porque no hay suficientes cartas» y no permite iniciar la partida.
+Si hay menos de seis cartas válidas disponibles, el sistema muestra el error «No se puede jugar porque no hay suficientes cartas» y termina la ejecución sin iniciar la partida.
 
 Se reparten tres cartas a cada jugador desde un mazo común. J1 es el jugador mano de la primera ronda.
 
@@ -54,7 +54,7 @@ Al terminar cada ronda, el rol de jugador mano pasa al otro jugador, independien
 
 Las cartas utilizadas se registran como cartas jugadas y no se vuelven a utilizar durante esa ronda. La elección del atributo se alterna entre jugadores en cada combate y no cambia quién es el jugador mano de la ronda.
 
-Esta alternancia reemplaza la regla anterior que asignaba la elección del siguiente atributo al ganador del combate. Falta especificar el mecanismo de comunicación que mantenga ocultas las elecciones hasta que ambos jugadores hayan elegido.
+Esta alternancia reemplaza la regla anterior que asignaba la elección del siguiente atributo al ganador del combate. La interfaz muestra las elecciones únicamente cuando ambos jugadores han elegido. No se garantiza su secreto frente a la consulta manual de los archivos compartidos.
 
 ## Victoria de ronda y nuevo reparto
 
@@ -74,16 +74,14 @@ La partida utiliza dos clientes, uno por jugador, y un servidor. Se comunican me
 
 Cada proceso es el único escritor de sus propios archivos y solo consulta en modo lectura los archivos de los demás. Un cliente registra sus elecciones, como la carta seleccionada y el atributo cuando le corresponde. El servidor lee las acciones de ambos clientes, las analiza y publica mensajes con los resultados, como quién ganó un combate. Los clientes leen los mensajes del servidor.
 
-Los clientes comprueban que los datos que envían sean correctos. El servidor se encarga del tratamiento de errores al iniciar la partida. Falta detallar las comprobaciones iniciales y la respuesta para cada error, así como las validaciones del servidor sobre las acciones recibidas y los fallos que ocurran durante la partida.
+Los clientes son responsables de que todos los datos que envían al servidor sean válidos. El servidor recibe esos datos bajo esa condición y gestiona las comprobaciones de inicio de partida. Ante cualquier error, tanto al iniciar como durante una partida, se termina la ejecución del juego completo; no hay recuperación ni continuación de la partida. Si el servidor no puede trabajar, la partida y los clientes también deben finalizar. El mecanismo para comunicar y coordinar esa finalización se especificará en la actividad 6.
 
 La escritura exclusiva por proceso evita que dos procesos sobrescriban el mismo archivo. Por sí sola no resuelve que un lector encuentre una escritura incompleta, que una acción se procese dos veces o que corresponda a otra partida, ronda o combate. Esas condiciones deben resolverse en la especificación del intercambio.
 
-Los clientes no deben mostrar las elecciones rivales antes de que ambos hayan elegido. Falta definir qué archivos puede leer cada cliente y cuándo publica el servidor la revelación, para mantener esa regla con este esquema.
+La interfaz de los clientes no muestra las elecciones rivales antes de que ambos hayan elegido. Se acepta que alguien con acceso a los archivos compartidos pueda consultar las elecciones por fuera del programa; impedir esa consulta no es un requisito del sistema.
 
-## Decisiones pendientes del intercambio
+## Detalles diferidos
 
-- Definir qué sucede si el CSV compartido no puede leerse o contiene datos inválidos.
-- Especificar cómo se identifica un personaje repetido y qué respuesta se da si el CSV contiene duplicados; la prohibición de repetidos ya está confirmada.
-- Definir el mecanismo de comunicación para mantener ocultas las elecciones y revelar las cartas y el atributo cuando ambos hayan elegido.
+Los tipos de acciones, los formatos de mensajes, su secuencia, su identificación y el mecanismo de finalización de todos los procesos ante errores se definirán en la actividad 6. No son decisiones que deban reabrirse para definir las reglas generales de la actividad 2.
 
-La arquitectura general de comunicación está confirmada. Sus datos y secuencias, las respuestas concretas ante errores y la separación entre requisitos funcionales y condiciones técnicas deben completarse según el [Plan](Plan.md). Este reglamento no cierra por sí solo el documento completo de requerimientos.
+La clasificación de requerimientos funcionales y condiciones técnicas y la revisión del documento de entrega siguen en el [Plan](Plan.md).

@@ -52,7 +52,7 @@ Esta decisión y las reglas confirmadas están redactadas en [Reglas del juego](
 
 - Aplicar la decisión de J1 como jugador mano inicial y la alternancia entre rondas al documento de entrega. Unificar la terminología de partida, ronda, combate, jugador mano y mano de cartas, y comprobar su coherencia con los contratos.
 - Ajustar los contratos del UML a la restauración del mazo completo al terminar cada ronda, incluidas las cartas no jugadas.
-- El mazo inicial se forma a partir del CSV compartido que genera un sistema externo al cliente. Los repetidos están prohibidos y menos de seis cartas válidas impiden iniciar la partida con un mensaje de error. Falta definir el formato y la detección y respuesta ante duplicados.
+- El mazo inicial se forma a partir del CSV compartido que genera un sistema externo al cliente. Los repetidos están prohibidos y menos de seis cartas válidas impiden iniciar la partida con un mensaje de error. El sistema externo de carga impide duplicados. Falta definir el formato en la actividad 5.
 - Especificar cómo se mantienen ocultas carta y atributo hasta registrar ambas elecciones; el orden de elección ya está definido en Reglas-del-juego.md.
 - Alinear las firmas del borrador con el UML: `Partida.Jugar(Jugador, Jugador): void` frente a constructor con jugadores y `Jugar(): Jugador`; elecciones en Jugador frente a `IInterfaz`; `Mazo.GetMano()` frente a `Repartir(cantidad)`.
 - Separar los archivos iniciales de personajes del intercambio de acciones de la partida; definir identidad de partida, turno, ronda y combate, acciones duplicadas o fuera de turno y escrituras incompletas.
@@ -89,7 +89,7 @@ La actividad 1 está completada. Estamos consolidando requerimientos y modelo de
 - [x] Registrar que carta y personaje son el mismo elemento y que no se utilizará una clase Carta adicional.
 - [x] Definir que menos de seis cartas válidas impiden iniciar la partida y muestran el error «No se puede jugar porque no hay suficientes cartas».
 - [x] Prohibir personajes repetidos en el mazo.
-- [ ] Definir cómo se identifica un personaje duplicado y la respuesta ante un CSV que contiene repetidos.
+- [x] Asignar la prevención de personajes duplicados al sistema externo de carga, fuera del cliente y del servidor de partida.
 - [x] Definir quién es jugador mano al iniciar la partida: J1, según confirmación del usuario.
 - [x] Reunir las reglas confirmadas en [Reglas del juego](Reglas-del-juego.md), diferenciando partida, ronda, combate, jugador mano y mano de cartas y señalando las decisiones pendientes.
 - [ ] Actualizar el documento de entrega con J1 como jugador mano inicial y la alternancia J1/J2 al terminar cada ronda, independientemente de su ganador.
@@ -101,13 +101,13 @@ La actividad 1 está completada. Estamos consolidando requerimientos y modelo de
 - [x] Definir la restauración del mazo completo al terminar cada ronda, incluidas las cartas no jugadas; se mezcla antes del nuevo reparto.
 - [x] Definir la alternancia del jugador mano entre rondas y del jugador que elige el atributo entre combates.
 - [x] Definir la secuencia: quien comienza el combate elige carta y atributo; el rival elige sin conocer esas elecciones; luego se revelan ambas cartas y el atributo.
-- [ ] Especificar el mecanismo de comunicación que garantice elecciones ocultas y revelación solo después de que ambos hayan elegido.
+- [x] Limitar la ocultación de elecciones a la interfaz: se revelan cuando ambos han elegido; se acepta que los archivos puedan consultarse manualmente. No se exige una garantía de secreto frente a ese acceso.
 - [x] Establecer la victoria y finalización normal de la partida al alcanzar 15 rondas ganadas.
 - [x] Enumerar los datos de ejecución: mazo, cartas de cada jugador, cartas jugadas, combates ganados y rondas ganadas.
 - [x] Definir la comunicación general: dos clientes publican sus elecciones; el servidor las lee, analiza y publica mensajes de resultados. Cada proceso solo escribe sus archivos y lee los de los demás.
 - [x] Asignar al cliente la validación de sus datos antes del envío y al servidor el tratamiento de errores al iniciar la partida.
-- [ ] Completar datos y secuencias del intercambio, identidad de partida, visibilidad de elecciones y respuestas concretas a errores iniciales y durante la partida.
-- [ ] **En curso:** completar errores y respuestas; el documento identifica sobrescritura y atributos inválidos, y el UML agrega excepciones de personaje, archivo, acción y mazo.
+- [x] Definir responsabilidades y política general de errores: el cliente garantiza envíos válidos; cualquier error termina el juego completo, incluido el fallo del servidor. Los tipos de acciones, secuencias y formatos se difieren a la actividad 6.
+- [x] Definir la respuesta ante errores iniciales y de ejecución: finalizar el juego completo, sin recuperación. Con menos de seis cartas se informa además el mensaje ya acordado.
 - [ ] Separar los requerimientos funcionales de las condiciones técnicas de ejecución.
 - [ ] Revisar y entregar el documento de requerimientos y reglas.
 
@@ -152,6 +152,10 @@ El PR de esta actividad permanecerá en borrador mientras existan tareas pendien
 - [ ] Revisar y entregar la especificación del formato común.
 
 ### Actividad 6 — Archivo de partida compartida
+
+Los tipos de acciones se planificarán en esta actividad, según decisión del usuario; los enumerados actualmente en el UML son antecedentes, no un protocolo aprobado. La validez de los envíos corresponde al cliente y cualquier error finaliza el juego completo.
+
+- [ ] Especificar cómo se detecta un fallo del servidor y cómo se comunica y coordina la finalización de ambos clientes y del servidor, sin recuperación de la partida.
 
 - [x] Definir un escritor exclusivo por archivo: cada cliente escribe sus acciones y el servidor sus mensajes y resultados; los demás procesos acceden en modo lectura.
 - [ ] Definir cantidad, rutas, permisos, datos y formato de los archivos de clientes y servidor; revisar Accion y agregar los mensajes de resultados.
