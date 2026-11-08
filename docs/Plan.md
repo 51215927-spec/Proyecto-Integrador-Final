@@ -2,6 +2,57 @@
 
 Plan basado en [la consigna](Consigna.md). Marcar una tarea cuando su resultado esté disponible y revisado. Las actividades de TI definen los contratos que se usarán en Taller; las decisiones pendientes deben resolverse antes de implementar el componente correspondiente.
 
+## Estado revisado — 8 de noviembre de 2026
+
+Alcance actual: únicamente TI (análisis y diseño). Taller queda pendiente y fuera del trabajo actual. El código todavía contiene `Hello, World!` y una prueba vacía; el diseño documentado no está implementado.
+
+Se revisaron el documento de avance aportado por el usuario y el [UML existente](diagramas/UML.uxf). El documento se utilizó como referencia local y no forma parte de la entrega del repositorio. Las casillas pendientes también incluyen tareas parcialmente desarrolladas: no significan que no exista ningún avance.
+
+| Actividad de TI | Estado y evidencia | Qué falta para cerrarla |
+|---|---|---|
+| 1. Personajes | Dos fichas con nombre, descripción, seis valores, total y atributos principal y menor. Ambos personajes cumplen las restricciones. | Comparar distribuciones alternativas, justificar explícitamente la estrategia y completar o verificar las referencias visuales y las fichas restantes del equipo. |
+| 2. Requerimientos | Reglas principales, mazo común, datos de ejecución y una propuesta de comunicación redactados. | Definir la mano inicial, completar errores y respuestas, separar requisitos funcionales y técnicos y resolver las precisiones indicadas abajo. |
+| 3. Modelo de clases | UML elaborado con clases, atributos privados, firmas y relaciones. | Justificar responsabilidades y decisiones, revisar coherencia con las reglas y cerrar las observaciones de arquitectura. |
+| 4. Métodos | Borrador de Partida, Jugador y Mazo. | Unificar las firmas con el UML y completar contratos, validaciones, excepciones y diagramas de algoritmos. |
+| 5. Archivos de personajes | Solo se indica un límite de ASCII: «máximo 25 líneas y 120 caracteres». | Aclarar si 120 es por línea o en total; definir sintaxis, campos, descripción, ASCII, errores y ejemplos válidos e inválidos. |
+| 6. Archivo de partida | Propuesta de archivo común de personajes y un archivo de mensajes por computadora; UML con rutas propia y rival. | Acordar con la consigna y SSI el uso de un archivo compartido o justificar la alternativa; especificar formato, identificación, lecturas, escrituras, concurrencia y recuperación de errores. |
+| 7. Pruebas | No se encontró un plan de casos desarrollado en el material revisado. | Diseñar condiciones iniciales, datos y resultados esperados para casos normales, límites y errores. |
+
+### Verificación de personajes
+
+Valores en orden: Fuerza, Velocidad, Resistencia, Inteligencia, Energía y Habilidad.
+
+| Personaje | Valores | Total | Principal / menor | Resultado |
+|---|---|---|---|---|
+| Lysander | 750, 550, 500, 250, 500, 550 | 3000 | Fuerza / Inteligencia | Cumple rango 250–750 y umbrales 650 y 350. |
+| Reched | 250, 700, 350, 750, 450, 500 | 3000 | Inteligencia / Fuerza | Cumple rango 250–750 y umbrales 650 y 350. |
+
+### Reglas ya redactadas
+
+- Participan dos jugadores y se reparten tres cartas a cada uno desde un mazo común.
+- La mano elige el primer atributo; ambos jugadores eligen su carta y la muestran simultáneamente. Gana el mayor valor y, ante empate, quien no eligió el atributo.
+- El ganador del combate elige el atributo siguiente. La ronda o «mano» se gana con dos combates ganados, por lo que puede terminar sin jugar la tercera carta.
+- Al terminar la ronda se devuelven las cartas jugadas al mazo, se mezcla, se reparte nuevamente y se alterna la mano. Gana la partida quien alcanza 15 rondas ganadas.
+
+### Precisiones pendientes antes de cerrar el diseño
+
+- Determinar cómo se elige la primera mano y confirmar que «mano» como jugador inicial y como ronda no genere ambigüedades en los contratos.
+- Aclarar el destino de las cartas no jugadas cuando la ronda termina tras dos combates y el orden de devolución. El UML ofrece `EntregarCartas`, pero no reemplaza una regla escrita.
+- Definir cómo se reúnen las cartas iniciales y qué ocurre si hay menos de seis disponibles. Las dos fichas revisadas no acreditan por sí solas un mazo suficiente.
+- Precisar el orden de elección de atributo y carta y cómo se garantiza que una computadora no revele su carta antes de que ambas elecciones estén registradas.
+- Alinear las firmas del borrador con el UML: `Partida.Jugar(Jugador, Jugador): void` frente a constructor con jugadores y `Jugar(): Jugador`; elecciones en Jugador frente a `IInterfaz`; `Mazo.GetMano()` frente a `Repartir(cantidad)`.
+- Separar los archivos iniciales de personajes del intercambio de acciones de la partida; definir identidad de partida, turno, ronda y combate, acciones duplicadas o fuera de turno y escrituras incompletas.
+
+### Orden de trabajo para TI
+
+1. Cerrar las precisiones de reglas y requerimientos de la actividad 2, completando en paralelo las justificaciones de personajes.
+2. Revisar el UML y justificar sus decisiones en Arquitectura (actividad 3).
+3. Completar las especificaciones de métodos según el modelo acordado (actividad 4).
+4. Definir los formatos de personajes y partida compartida con sus errores y ejemplos (actividades 5 y 6).
+5. Completar el plan de pruebas y revisar que todos los entregables de TI sean coherentes (actividad 7).
+
+Estamos consolidando requerimientos y modelo de clases (actividades 2 y 3), con un inicio de especificación de métodos (actividad 4). Ningún entregable completo de TI se considera cerrado solo por contar con un borrador.
+
 ## TI — Análisis de Sistemas
 
 ### Actividad 1 — Análisis y diseño de los personajes
@@ -37,7 +88,7 @@ Plan basado en [la consigna](Consigna.md). Marcar una tarea cuando su resultado 
 - [ ] Definir los atributos de cada clase y cuáles deben quedar encapsulados.
 - [ ] Definir los métodos de cada clase con sus parámetros y valores de retorno.
 - [ ] Definir las relaciones entre las clases y las operaciones que se delegarán en otros objetos.
-- [ ] Elaborar el diagrama de clases UML.
+- [x] Elaborar el diagrama de clases UML (disponible en `docs/diagramas/UML.uxf`; revisión final pendiente).
 - [ ] Documentar las decisiones de diseño en [Arquitectura](Arquitectura.md) y comprobar su coherencia con el UML.
 
 ### Actividad 4 — Especificación de métodos
@@ -89,6 +140,8 @@ Plan basado en [la consigna](Consigna.md). Marcar una tarea cuando su resultado 
 - [ ] Revisar y entregar el plan de pruebas con sus resultados esperados.
 
 ## Taller de Programación — C#
+
+Etapas conservadas como referencia futura. No se implementarán en el alcance actual, limitado a TI.
 
 ### Etapa 1 — Implementación de Personaje
 
