@@ -6,11 +6,11 @@ Plan basado en [la consigna](Consigna.md). Marcar una tarea cuando su resultado 
 
 Alcance actual: únicamente TI (análisis y diseño). Taller queda pendiente y fuera del trabajo actual. El código todavía contiene `Hello, World!` y una prueba vacía; el diseño documentado no está implementado.
 
-Se revisaron el documento de avance aportado por el usuario y el [UML existente](diagramas/UML.uxf). El documento se utilizó como referencia local y no forma parte de la entrega del repositorio. Cada casilla de TI refleja esa revisión: `[x]` indica un resultado comprobado, `[ ]` indica trabajo pendiente y **En curso** señala un avance parcial con el cierre que falta. Los resultados de personajes se limitan a Lysander y Reched; no acreditan las fichas del resto del equipo. Completar una tarea de diseño no implica aprobar el entregable completo ni implementar código.
+Se revisaron el documento de avance aportado por el usuario y el [UML existente](diagramas/UML.uxf). El documento se utilizó como referencia local y no forma parte de la entrega del repositorio. Cada casilla de TI refleja esa revisión y las confirmaciones posteriores del usuario: `[x]` indica un resultado comprobado o confirmado, `[ ]` indica trabajo pendiente y **En curso** señala un avance parcial con el cierre que falta. Los valores verificados de personajes corresponden a Lysander y Reched. El usuario confirmó que la actividad 1 está completada; se retiran los pendientes de alternativas, comparación, justificación y verificación de otras fichas como condiciones para reabrirla. La imagen se trabaja en Arte. Las demás actividades conservan su estado de revisión. Completar una tarea de diseño no implica implementar código.
 
 | Actividad de TI | Estado y evidencia | Qué falta para cerrarla |
 |---|---|---|
-| 1. Personajes | Dos fichas con nombre, descripción, seis valores, total y atributos principal y menor. Ambos personajes cumplen las restricciones. | Comparar distribuciones alternativas, justificar explícitamente la estrategia y completar o verificar las referencias visuales y las fichas restantes del equipo. |
+| 1. Personajes | Completada por confirmación del usuario. Lysander y Reched tienen nombre, descripción, seis valores, total y atributos principal y menor; ambos cumplen las restricciones. | Sin pendientes para esta actividad. |
 | 2. Requerimientos | Reglas principales, mazo común, datos de ejecución y una propuesta de comunicación redactados. | Definir la mano inicial, completar errores y respuestas, separar requisitos funcionales y técnicos y resolver las precisiones indicadas abajo. |
 | 3. Modelo de clases | UML elaborado con clases, atributos privados, firmas y relaciones. | Justificar responsabilidades y decisiones, revisar coherencia con las reglas y cerrar las observaciones de arquitectura. |
 | 4. Métodos | Borrador de Partida, Jugador y Mazo. | Unificar las firmas con el UML y completar contratos, validaciones, excepciones y diagramas de algoritmos. |
@@ -45,28 +45,26 @@ Valores en orden: Fuerza, Velocidad, Resistencia, Inteligencia, Energía y Habil
 
 ### Orden de trabajo para TI
 
-1. Cerrar las precisiones de reglas y requerimientos de la actividad 2, completando en paralelo las justificaciones de personajes.
+1. Cerrar las precisiones de reglas y requerimientos de la actividad 2. La actividad 1 está completada.
 2. Revisar el UML y justificar sus decisiones en Arquitectura (actividad 3).
 3. Completar las especificaciones de métodos según el modelo acordado (actividad 4).
 4. Definir los formatos de personajes y partida compartida con sus errores y ejemplos (actividades 5 y 6).
 5. Completar el plan de pruebas y revisar que todos los entregables de TI sean coherentes (actividad 7).
 
-Estamos consolidando requerimientos y modelo de clases (actividades 2 y 3), con un inicio de especificación de métodos (actividad 4). Ningún entregable completo de TI se considera cerrado solo por contar con un borrador.
+La actividad 1 está completada. Estamos consolidando requerimientos y modelo de clases (actividades 2 y 3), con un inicio de especificación de métodos (actividad 4). Los demás entregables de TI no se consideran cerrados solo por contar con un borrador.
 
 ## TI — Análisis de Sistemas
 
 ### Actividad 1 — Análisis y diseño de los personajes
 
+**Completada por confirmación del usuario.** Se conserva el registro de los datos y las validaciones revisadas, sin tareas adicionales pendientes para esta actividad.
+
 - [x] Escribir el nombre y la descripción de Lysander y Reched (fichas del documento revisado).
-- [ ] Completar o verificar la imagen o referencia visual de ambos personajes.
-- [ ] Proponer distintas distribuciones para Fuerza, Velocidad, Resistencia, Inteligencia, Energía y Habilidad.
-- [ ] Comparar las fortalezas y debilidades de las distribuciones propuestas.
 - [x] Elegir una distribución para Lysander y Reched (valores registrados en la tabla de verificación).
-- [ ] Justificar explícitamente la estrategia elegida y su relación con las fortalezas y debilidades.
 - [x] Comprobar que los seis valores de ambos personajes estén entre 250 y 750 y sumen exactamente 3000.
 - [x] Comprobar en ambos personajes que al menos un atributo sea mayor o igual a 650 y otro menor o igual a 350; ninguno tiene seis valores de 500.
 - [x] Identificar el atributo principal y el de menor valor de ambos personajes.
-- [ ] **En curso:** completar y revisar las dos fichas con alternativas, comparación y justificación; ya contienen datos, valores y total. Verificar las fichas restantes del equipo antes de cerrar la actividad.
+- [x] Dar por completada la actividad 1 según la confirmación del usuario.
 
 ### Actividad 2 — Relevamiento de requerimientos
 
