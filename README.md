@@ -5,3 +5,4 @@
 * [Consigna](docs\Consigna.md)
 * [Arquitectura](docs\Arquitectura.md)
 * [Plan](docs\Plan.md)
+* [Reglas del juego](docs/Reglas-del-juego.md)

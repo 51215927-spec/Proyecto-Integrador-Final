@@ -46,7 +46,7 @@ El documento de entrega debe distinguir estos conceptos:
 - **Jugador mano:** jugador que elige el atributo del primer combate de la ronda.
 - **Mano de cartas:** cartas disponibles de un jugador; no equivale a una ronda ni al rol de jugador mano.
 
-Esta decisión está registrada en el repositorio; todavía falta trasladar y revisar la redacción en el documento de entrega del usuario.
+Esta decisión y las reglas confirmadas están redactadas en [Reglas del juego](Reglas-del-juego.md). Todavía falta trasladar y revisar la redacción en el documento de entrega del usuario, si se mantiene por separado.
 
 ### Precisiones pendientes antes de cerrar el diseño
 
@@ -87,6 +87,7 @@ La actividad 1 está completada. Estamos consolidando requerimientos y modelo de
 - [x] Definir el reparto de tres cartas a cada jugador desde un mazo común y la mezcla entre rondas.
 - [ ] Definir cómo se forma el mazo inicial y qué ocurre si tiene menos de seis cartas.
 - [x] Definir quién es jugador mano al iniciar la partida: J1, según confirmación del usuario.
+- [x] Reunir las reglas confirmadas en [Reglas del juego](Reglas-del-juego.md), diferenciando partida, ronda, combate, jugador mano y mano de cartas y señalando las decisiones pendientes.
 - [ ] Actualizar el documento de entrega con J1 como jugador mano inicial y la alternancia J1/J2 al terminar cada ronda, independientemente de su ganador.
 - [ ] Diferenciar en todo el documento partida, ronda, combate, jugador mano y mano de cartas; sustituir «mano ganada» por «ronda ganada» y aclarar que se juegan hasta tres combates.
 - [x] Definir quién elige el atributo: la mano en el primer combate y el ganador del combate en el siguiente.
