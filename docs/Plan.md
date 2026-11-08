@@ -1,4 +1,4 @@
-﻿# Plan de trabajo — Juego Guerra
+# Plan de trabajo — Juego Guerra
 
 Plan basado en [la consigna](Consigna.md). Marcar una tarea cuando su resultado esté disponible y revisado. Las actividades de TI definen los contratos que se usarán en Taller; las decisiones pendientes deben resolverse antes de implementar el componente correspondiente.
 
@@ -31,12 +31,12 @@ Valores en orden: Fuerza, Velocidad, Resistencia, Inteligencia, Energía y Habil
 
 - Participan dos jugadores y se reparten tres cartas a cada uno desde un mazo común.
 - El jugador mano elige el primer atributo; ambos jugadores eligen su carta y la muestran simultáneamente. Gana el mayor valor y, ante empate, quien no eligió el atributo del combate.
-- El ganador del combate elige el atributo siguiente. La ronda se gana con dos combates ganados, por lo que puede terminar sin jugar la tercera carta.
+- La elección del atributo se alterna entre los jugadores en cada combate, independientemente del ganador. La ronda se gana con dos combates ganados, por lo que puede terminar sin jugar la tercera carta.
 - Al terminar la ronda se devuelven las cartas jugadas al mazo, se mezcla y se reparte nuevamente. Gana la partida quien alcanza 15 rondas ganadas.
 
 ### Decisión confirmada — jugador mano y terminología
 
-El usuario confirmó que al iniciar la partida se identifican J1 y J2. J1 es el jugador mano de la primera ronda. Al terminar cada ronda, el rol pasa al otro jugador: J1, J2, J1, J2, hasta finalizar la partida, independientemente de quién gane la ronda. Dentro de una ronda, el ganador de cada combate elige el siguiente atributo; esto no cambia quién es el jugador mano de esa ronda.
+El usuario confirmó que al iniciar la partida se identifican J1 y J2. J1 es el jugador mano de la primera ronda. Al terminar cada ronda, el rol pasa al otro jugador: J1, J2, J1, J2, hasta finalizar la partida, independientemente de quién gane la ronda. Dentro de una ronda, la elección del atributo se alterna entre los jugadores en cada combate, independientemente del ganador; esto no cambia quién es el jugador mano de esa ronda.
 
 El documento de entrega debe distinguir estos conceptos:
 
@@ -51,9 +51,9 @@ Esta decisión y las reglas confirmadas están redactadas en [Reglas del juego](
 ### Precisiones pendientes antes de cerrar el diseño
 
 - Aplicar la decisión de J1 como jugador mano inicial y la alternancia entre rondas al documento de entrega. Unificar la terminología de partida, ronda, combate, jugador mano y mano de cartas, y comprobar su coherencia con los contratos.
-- Aclarar el destino de las cartas no jugadas cuando la ronda termina tras dos combates y el orden de devolución. El UML ofrece `EntregarCartas`, pero no reemplaza una regla escrita.
-- El mazo inicial se forma a partir del CSV compartido que genera un sistema externo al cliente. Falta definir su formato, los duplicados y qué ocurre si hay menos de seis cartas válidas disponibles.
-- Precisar el orden de elección de atributo y carta y cómo se garantiza que una computadora no revele su carta antes de que ambas elecciones estén registradas.
+- Ajustar los contratos del UML a la restauración del mazo completo al terminar cada ronda, incluidas las cartas no jugadas.
+- El mazo inicial se forma a partir del CSV compartido que genera un sistema externo al cliente. Los repetidos están prohibidos y menos de seis cartas válidas impiden iniciar la partida con un mensaje de error. Falta definir el formato y la detección y respuesta ante duplicados.
+- Especificar cómo se mantienen ocultas carta y atributo hasta registrar ambas elecciones; el orden de elección ya está definido en Reglas-del-juego.md.
 - Alinear las firmas del borrador con el UML: `Partida.Jugar(Jugador, Jugador): void` frente a constructor con jugadores y `Jugar(): Jugador`; elecciones en Jugador frente a `IInterfaz`; `Mazo.GetMano()` frente a `Repartir(cantidad)`.
 - Separar los archivos iniciales de personajes del intercambio de acciones de la partida; definir identidad de partida, turno, ronda y combate, acciones duplicadas o fuera de turno y escrituras incompletas.
 
@@ -87,18 +87,21 @@ La actividad 1 está completada. Estamos consolidando requerimientos y modelo de
 - [x] Definir el reparto de tres cartas a cada jugador desde un mazo común y la mezcla entre rondas.
 - [x] Definir el origen del mazo inicial: personajes cargados en un CSV compartido por un sistema externo al cliente de los jugadores.
 - [x] Registrar que carta y personaje son el mismo elemento y que no se utilizará una clase Carta adicional.
-- [ ] Definir qué ocurre si hay menos de seis cartas válidas y cómo se tratan los personajes duplicados del CSV.
+- [x] Definir que menos de seis cartas válidas impiden iniciar la partida y muestran el error «No se puede jugar porque no hay suficientes cartas».
+- [x] Prohibir personajes repetidos en el mazo.
+- [ ] Definir cómo se identifica un personaje duplicado y la respuesta ante un CSV que contiene repetidos.
 - [x] Definir quién es jugador mano al iniciar la partida: J1, según confirmación del usuario.
 - [x] Reunir las reglas confirmadas en [Reglas del juego](Reglas-del-juego.md), diferenciando partida, ronda, combate, jugador mano y mano de cartas y señalando las decisiones pendientes.
 - [ ] Actualizar el documento de entrega con J1 como jugador mano inicial y la alternancia J1/J2 al terminar cada ronda, independientemente de su ganador.
 - [ ] Diferenciar en todo el documento partida, ronda, combate, jugador mano y mano de cartas; sustituir «mano ganada» por «ronda ganada» y aclarar que se juegan hasta tres combates.
-- [x] Definir quién elige el atributo: la mano en el primer combate y el ganador del combate en el siguiente.
+- [x] Definir quién elige el atributo: el jugador mano en el primer combate; después se alterna entre jugadores, independientemente del ganador. Reemplaza la regla anterior basada en el ganador.
 - [x] Especificar la comparación por el atributo elegido y la victoria de ronda al alcanzar dos combates ganados.
 - [x] Resolver la regla de empate: gana quien no eligió el atributo.
 - [x] Definir que las cartas jugadas vuelven al mazo común al terminar la ronda.
-- [ ] Precisar el destino de las cartas no jugadas y el orden de devolución de todas las cartas.
-- [x] Definir la alternancia de la mano entre rondas y la elección del atributo por el ganador entre combates.
-- [ ] Precisar el orden de elección de atributo y carta y el mecanismo para mostrar ambas cartas simultáneamente.
+- [x] Definir la restauración del mazo completo al terminar cada ronda, incluidas las cartas no jugadas; se mezcla antes del nuevo reparto.
+- [x] Definir la alternancia del jugador mano entre rondas y del jugador que elige el atributo entre combates.
+- [x] Definir la secuencia: quien comienza el combate elige carta y atributo; el rival elige sin conocer esas elecciones; luego se revelan ambas cartas y el atributo.
+- [ ] Especificar el mecanismo de comunicación que garantice elecciones ocultas y revelación solo después de que ambos hayan elegido.
 - [x] Establecer la victoria y finalización normal de la partida al alcanzar 15 rondas ganadas.
 - [x] Enumerar los datos de ejecución: mazo, cartas de cada jugador, cartas jugadas, combates ganados y rondas ganadas.
 - [ ] **En curso:** completar los datos de intercambio; hay una propuesta de mensajes de acciones y un modelo Accion, pero falta el protocolo y su identidad de partida.

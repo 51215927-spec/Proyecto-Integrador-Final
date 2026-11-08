@@ -35,7 +35,9 @@ Los valores de cada personaje deben cumplir estas condiciones:
 
 Un sistema externo al cliente de los jugadores carga todos los personajes en un archivo CSV compartido. Ese archivo proporciona los personajes con los que se forma el mazo inicial. La carga y edición del catálogo mediante ese sistema externo quedan fuera del alcance del cliente.
 
-El CSV de personajes contiene los datos iniciales; su función es distinta de la del archivo compartido que coordina las acciones y el estado de una partida. La estructura del CSV y el tratamiento de datos inválidos o duplicados todavía deben especificarse.
+El CSV de personajes contiene los datos iniciales; su función es distinta de la del archivo compartido que coordina las acciones y el estado de una partida. No se permiten personajes repetidos en el mazo. La estructura del CSV, el criterio para reconocer un personaje duplicado y la respuesta ante registros inválidos o duplicados todavía deben especificarse.
+
+Si hay menos de seis cartas válidas disponibles, el sistema muestra el error «No se puede jugar porque no hay suficientes cartas» y no permite iniciar la partida.
 
 Se reparten tres cartas a cada jugador desde un mazo común. J1 es el jugador mano de la primera ronda.
 
@@ -43,15 +45,16 @@ Al terminar cada ronda, el rol de jugador mano pasa al otro jugador, independien
 
 ## Combates
 
-1. El jugador mano elige el atributo del primer combate de la ronda.
-2. Cada jugador selecciona una carta de su mano para enfrentarla con la del rival. Ambas cartas se muestran al mismo tiempo.
-3. Se comparan los valores del atributo elegido en las dos cartas. Gana el combate quien tenga el valor más alto y suma un combate ganado en la ronda.
-4. Si los valores son iguales, gana el combate quien no eligió el atributo de ese combate.
-5. Si la ronda continúa, el ganador del combate elige el atributo del siguiente.
+1. En el primer combate de la ronda comienza el jugador mano. Mira sus cartas y elige qué carta jugar y qué atributo utilizar.
+2. El otro jugador elige una de sus cartas sin conocer la carta ni el atributo elegidos por su contrincante.
+3. Cuando ambos han elegido, se revelan las dos cartas y el atributo con el que se enfrentan.
+4. Se comparan los valores del atributo elegido en las dos cartas. Gana el combate quien tenga el valor más alto y suma un combate ganado en la ronda.
+5. Si los valores son iguales, gana el combate quien no eligió el atributo de ese combate.
+6. Si la ronda continúa, quien no eligió el atributo pasa a elegir carta y atributo en el siguiente combate, independientemente de quién haya ganado.
 
-Las cartas utilizadas se registran como cartas jugadas y no se vuelven a utilizar durante esa ronda. Elegir el atributo después de ganar un combate no cambia quién es el jugador mano de la ronda.
+Las cartas utilizadas se registran como cartas jugadas y no se vuelven a utilizar durante esa ronda. La elección del atributo se alterna entre jugadores en cada combate y no cambia quién es el jugador mano de la ronda.
 
-El orden exacto entre la selección de carta del jugador que elige el atributo y el anuncio de ese atributo todavía debe precisarse. También falta definir cómo se garantiza la revelación simultánea entre las dos computadoras.
+Esta alternancia reemplaza la regla anterior que asignaba la elección del siguiente atributo al ganador del combate. Falta especificar el mecanismo de comunicación que mantenga ocultas las elecciones hasta que ambos jugadores hayan elegido.
 
 ## Victoria de ronda y nuevo reparto
 
@@ -59,9 +62,7 @@ Gana la ronda el primer jugador que consigue dos combates ganados. Se le suma un
 
 Cada ronda tiene hasta tres combates. Si un jugador gana los dos primeros, la ronda termina inmediatamente y no se juega el tercero.
 
-Al terminar la ronda, las cartas jugadas vuelven al mazo común. Antes de comenzar la siguiente ronda se mezcla el mazo, se reparten nuevamente tres cartas a cada jugador y se alterna el jugador mano. El conteo de combates ganados comienza nuevamente para la nueva ronda; las rondas ganadas se acumulan durante la partida.
-
-Todavía debe definirse el destino de las cartas no jugadas cuando la ronda termina después de dos combates y el orden de devolución de las cartas.
+Al terminar cada ronda se restaura el mazo completo: vuelven todas las cartas repartidas, tanto las jugadas como las que quedaron sin jugar. No se acumulan cartas ganadas ni se pierden cartas entre rondas. Antes de comenzar la siguiente ronda se mezcla el mazo completo, se reparten nuevamente tres cartas a cada jugador y se alterna el jugador mano. El conteo de combates ganados comienza nuevamente para la nueva ronda; las rondas ganadas se acumulan durante la partida.
 
 ## Victoria de partida
 
@@ -69,8 +70,8 @@ La partida termina cuando un jugador alcanza 15 rondas ganadas. Ese jugador es e
 
 ## Decisiones pendientes
 
-- Definir qué sucede si el CSV compartido no puede leerse o contiene menos de seis cartas válidas disponibles para repartir, y cómo se tratan los personajes duplicados.
-- Precisar el destino de las cartas no jugadas al finalizar anticipadamente una ronda y el orden de devolución de todas las cartas.
-- Precisar el orden de elección de atributo y carta, y el mecanismo que permite mostrar ambas cartas simultáneamente.
+- Definir qué sucede si el CSV compartido no puede leerse o contiene datos inválidos.
+- Especificar cómo se identifica un personaje repetido y qué respuesta se da si el CSV contiene duplicados; la prohibición de repetidos ya está confirmada.
+- Definir el mecanismo de comunicación para mantener ocultas las elecciones y revelar las cartas y el atributo cuando ambos hayan elegido.
 
 La comunicación entre computadoras, las respuestas ante errores y la separación entre requisitos funcionales y condiciones técnicas siguen pendientes en la actividad 2 del [Plan](Plan.md). Este reglamento no cierra por sí solo el documento completo de requerimientos.
