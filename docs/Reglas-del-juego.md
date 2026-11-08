@@ -68,10 +68,22 @@ Al terminar cada ronda se restaura el mazo completo: vuelven todas las cartas re
 
 La partida termina cuando un jugador alcanza 15 rondas ganadas. Ese jugador es el ganador y no se inicia otra ronda.
 
-## Decisiones pendientes
+## Comunicación y responsabilidades
+
+La partida utiliza dos clientes, uno por jugador, y un servidor. Se comunican mediante archivos compartidos en la red local. El servidor de partida es una responsabilidad distinta de la carga externa del CSV de personajes; no se presupone que sean el mismo sistema.
+
+Cada proceso es el único escritor de sus propios archivos y solo consulta en modo lectura los archivos de los demás. Un cliente registra sus elecciones, como la carta seleccionada y el atributo cuando le corresponde. El servidor lee las acciones de ambos clientes, las analiza y publica mensajes con los resultados, como quién ganó un combate. Los clientes leen los mensajes del servidor.
+
+Los clientes comprueban que los datos que envían sean correctos. El servidor se encarga del tratamiento de errores al iniciar la partida. Falta detallar las comprobaciones iniciales y la respuesta para cada error, así como las validaciones del servidor sobre las acciones recibidas y los fallos que ocurran durante la partida.
+
+La escritura exclusiva por proceso evita que dos procesos sobrescriban el mismo archivo. Por sí sola no resuelve que un lector encuentre una escritura incompleta, que una acción se procese dos veces o que corresponda a otra partida, ronda o combate. Esas condiciones deben resolverse en la especificación del intercambio.
+
+Los clientes no deben mostrar las elecciones rivales antes de que ambos hayan elegido. Falta definir qué archivos puede leer cada cliente y cuándo publica el servidor la revelación, para mantener esa regla con este esquema.
+
+## Decisiones pendientes del intercambio
 
 - Definir qué sucede si el CSV compartido no puede leerse o contiene datos inválidos.
 - Especificar cómo se identifica un personaje repetido y qué respuesta se da si el CSV contiene duplicados; la prohibición de repetidos ya está confirmada.
 - Definir el mecanismo de comunicación para mantener ocultas las elecciones y revelar las cartas y el atributo cuando ambos hayan elegido.
 
-La comunicación entre computadoras, las respuestas ante errores y la separación entre requisitos funcionales y condiciones técnicas siguen pendientes en la actividad 2 del [Plan](Plan.md). Este reglamento no cierra por sí solo el documento completo de requerimientos.
+La arquitectura general de comunicación está confirmada. Sus datos y secuencias, las respuestas concretas ante errores y la separación entre requisitos funcionales y condiciones técnicas deben completarse según el [Plan](Plan.md). Este reglamento no cierra por sí solo el documento completo de requerimientos.

@@ -20,8 +20,18 @@ Según la decisión confirmada por el usuario, J1 es el jugador mano de la prime
 
 ## Decisiones por cerrar
 
+### Comunicación confirmada: dos clientes y un servidor
+
+Cada cliente escribe únicamente sus archivos de acciones; el servidor los lee, analiza las elecciones y escribe sus propios archivos de mensajes y resultados. Los clientes leen las publicaciones del servidor. Cada proceso tiene escritura exclusiva sobre sus archivos y acceso de solo lectura a los de otros procesos. Esto evita escritores concurrentes sobre un mismo archivo, pero requiere especificar cómo se publican mensajes completos y se reconocen mensajes ya procesados.
+
+El cliente valida los datos antes de enviarlos y el servidor gestiona los errores de inicio de partida. Falta detallar la política para cada error y el manejo de errores durante la ejecución, además de las comprobaciones del servidor al recibir acciones.
+
+El UML actual incluye Accion con jugador, tipo, numeroRonda, numeroCombate y valor, y los tipos RepartirCartas, ElegirAtributo, JugarCarta, FinDeRonda y FinDePartida. Son antecedentes a revisar: ArchivoPartida todavía usa rutaPropia/rutaRival y lectura directa del rival, y no modela el servidor. Deben redistribuirse las responsabilidades y definir mensajes de resultados, identidad de partida y visibilidad de elecciones sin revelar la carta ni el atributo antes de tiempo.
+
+### Revisiones pendientes
+
 - Unificar los métodos del borrador con las firmas y responsabilidades del UML antes de especificarlos o implementarlos.
 - Adaptar el UML y sus firmas a Personaje como único concepto de carta y revisar la diferencia con la consigna.
 - Ajustar el modelo a la restauración del mazo completo después de cada ronda, incluidas las cartas no jugadas. No se permiten personajes repetidos; con menos de seis cartas válidas se informa el error y no se inicia la partida. Falta especificar la detección y respuesta ante duplicados del CSV.
-- El UML propone dos rutas de acciones (propia y rival), mientras la consigna pide un archivo de partida compartida. La cantidad de archivos y el protocolo necesitan resolución y revisión con SSI; no se consideran aprobados.
+- Adaptar el UML al esquema confirmado de clientes y servidor con archivos de escritor exclusivo. Precisar cantidad, contenido, permisos y protocolo, y revisar con SSI y el docente su correspondencia con el archivo de partida compartida que exige la consigna.
 - Completar identidad de partida, detección de duplicados, sincronización, acceso concurrente y tratamiento de fallos. Las excepciones y los estados enumerados en el UML son un punto de partida, no un protocolo completo.

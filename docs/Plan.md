@@ -15,7 +15,7 @@ Se revisaron el documento de avance aportado por el usuario y el [UML existente]
 | 3. Modelo de clases | UML elaborado con clases, atributos privados, firmas y relaciones. | Justificar responsabilidades y decisiones, revisar coherencia con las reglas y cerrar las observaciones de arquitectura. |
 | 4. Métodos | Borrador de Partida, Jugador y Mazo. | Unificar las firmas con el UML y completar contratos, validaciones, excepciones y diagramas de algoritmos. |
 | 5. Archivos de personajes | Solo se indica un límite de ASCII: «máximo 25 líneas y 120 caracteres». | Aclarar si 120 es por línea o en total; definir sintaxis, campos, descripción, ASCII, errores y ejemplos válidos e inválidos. |
-| 6. Archivo de partida | Propuesta de archivo común de personajes y un archivo de mensajes por computadora; UML con rutas propia y rival. | Acordar con la consigna y SSI el uso de un archivo compartido o justificar la alternativa; especificar formato, identificación, lecturas, escrituras, concurrencia y recuperación de errores. |
+| 6. Archivo de partida | Confirmados dos clientes y un servidor, con archivos de escritura exclusiva por proceso; UML todavía con rutas propia y rival. | Revisar con la consigna y SSI el esquema confirmado de varios archivos compartidos; especificar formato, identificación, lecturas, escrituras, concurrencia y recuperación de errores. |
 | 7. Pruebas | No se encontró un plan de casos desarrollado en el material revisado. | Diseñar condiciones iniciales, datos y resultados esperados para casos normales, límites y errores. |
 
 ### Verificación de personajes
@@ -104,7 +104,9 @@ La actividad 1 está completada. Estamos consolidando requerimientos y modelo de
 - [ ] Especificar el mecanismo de comunicación que garantice elecciones ocultas y revelación solo después de que ambos hayan elegido.
 - [x] Establecer la victoria y finalización normal de la partida al alcanzar 15 rondas ganadas.
 - [x] Enumerar los datos de ejecución: mazo, cartas de cada jugador, cartas jugadas, combates ganados y rondas ganadas.
-- [ ] **En curso:** completar los datos de intercambio; hay una propuesta de mensajes de acciones y un modelo Accion, pero falta el protocolo y su identidad de partida.
+- [x] Definir la comunicación general: dos clientes publican sus elecciones; el servidor las lee, analiza y publica mensajes de resultados. Cada proceso solo escribe sus archivos y lee los de los demás.
+- [x] Asignar al cliente la validación de sus datos antes del envío y al servidor el tratamiento de errores al iniciar la partida.
+- [ ] Completar datos y secuencias del intercambio, identidad de partida, visibilidad de elecciones y respuestas concretas a errores iniciales y durante la partida.
 - [ ] **En curso:** completar errores y respuestas; el documento identifica sobrescritura y atributos inválidos, y el UML agrega excepciones de personaje, archivo, acción y mazo.
 - [ ] Separar los requerimientos funcionales de las condiciones técnicas de ejecución.
 - [ ] Revisar y entregar el documento de requerimientos y reglas.
@@ -112,6 +114,8 @@ La actividad 1 está completada. Estamos consolidando requerimientos y modelo de
 El PR de esta actividad permanecerá en borrador mientras existan tareas pendientes de la actividad 2. El usuario indicó que solo lo aceptará cuando todas estén realizadas; antes de solicitar su revisión final, comprobar cada casilla y la actualización del documento de entrega. La integración requiere además la revisión de un compañero prevista en CONTRIBUTING.md.
 
 ### Actividad 3 — Modelo de clases
+
+- [ ] Adaptar el UML a dos clientes y un servidor: reemplazar lectura directa del rival, asignar análisis y resultados al servidor y revisar ControlTurno, ArchivoPartida y Accion.
 
 - [ ] Adaptar el UML, sus relaciones y contratos a la decisión de unificar Carta y Personaje. Las casillas históricas sobre Carta describen el diagrama anterior, no una aprobación del diseño vigente.
 - [ ] Revisar con el docente la diferencia entre esta decisión y la separación explícita de Carta y Personaje que establece la consigna para Taller; conservar Taller fuera del alcance actual.
@@ -149,13 +153,14 @@ El PR de esta actividad permanecerá en borrador mientras existan tareas pendien
 
 ### Actividad 6 — Archivo de partida compartida
 
-- [ ] **En curso:** definir datos y formato del archivo compartido; Accion propone jugador, tipo, ronda, combate y valor, pero faltan sintaxis y acuerdo sobre uno o dos archivos.
+- [x] Definir un escritor exclusivo por archivo: cada cliente escribe sus acciones y el servidor sus mensajes y resultados; los demás procesos acceden en modo lectura.
+- [ ] Definir cantidad, rutas, permisos, datos y formato de los archivos de clientes y servidor; revisar Accion y agregar los mensajes de resultados.
 - [ ] **En curso:** completar la identificación de partida, jugadores, estado y turno; ControlTurno y EstadoPartida ya modelan estados, actores pendientes y números de ronda y combate, pero falta identidad de partida y su representación en el archivo.
 - [ ] **En curso:** especificar el registro de acciones; el UML propone Registrar y cinco tipos de acción, pero no define formato, confirmación ni duplicados.
 - [ ] **En curso:** determinar cuándo lee y actualiza cada computadora; hay rutas propia y rival, contador de líneas leídas y LeerAccionesDelRival, sin frecuencia ni secuencia de operaciones acordadas.
 - [x] Definir la regla de autorización del turno en el UML: al elegir atributo actúa solo quien elige; al elegir cartas actúan ambos una vez cada uno; las acciones fuera de turno, ronda o combate se rechazan con AccionInvalidaException.
 - [ ] Especificar el algoritmo que valida los datos recibidos y conserva el estado ante una acción inválida o repetida.
-- [ ] Elegir y documentar el mecanismo para evitar accesos concurrentes inconsistentes.
+- [ ] Completar la regla de escritor exclusivo con publicación y lectura de mensajes completos, confirmaciones y prevención de procesamiento duplicado.
 - [ ] **En curso:** completar la respuesta ante archivo inaccesible, lectura fallida o escritura incompleta; el UML propone EstaDisponible y ArchivoNoDisponibleException, pero falta la política de recuperación.
 - [ ] Revisar con SSI la viabilidad del mecanismo en la red local y los permisos necesarios.
 - [ ] Entregar la especificación del archivo compartido, diferenciándolo de los archivos iniciales de personajes.
