@@ -52,7 +52,7 @@ Esta decisión y las reglas confirmadas están redactadas en [Reglas del juego](
 
 - Aplicar la decisión de J1 como jugador mano inicial y la alternancia entre rondas al documento de entrega. Unificar la terminología de partida, ronda, combate, jugador mano y mano de cartas, y comprobar su coherencia con los contratos.
 - Aclarar el destino de las cartas no jugadas cuando la ronda termina tras dos combates y el orden de devolución. El UML ofrece `EntregarCartas`, pero no reemplaza una regla escrita.
-- Definir cómo se reúnen las cartas iniciales y qué ocurre si hay menos de seis disponibles. Las dos fichas revisadas no acreditan por sí solas un mazo suficiente.
+- El mazo inicial se forma a partir del CSV compartido que genera un sistema externo al cliente. Falta definir su formato, los duplicados y qué ocurre si hay menos de seis cartas válidas disponibles.
 - Precisar el orden de elección de atributo y carta y cómo se garantiza que una computadora no revele su carta antes de que ambas elecciones estén registradas.
 - Alinear las firmas del borrador con el UML: `Partida.Jugar(Jugador, Jugador): void` frente a constructor con jugadores y `Jugar(): Jugador`; elecciones en Jugador frente a `IInterfaz`; `Mazo.GetMano()` frente a `Repartir(cantidad)`.
 - Separar los archivos iniciales de personajes del intercambio de acciones de la partida; definir identidad de partida, turno, ronda y combate, acciones duplicadas o fuera de turno y escrituras incompletas.
@@ -85,7 +85,9 @@ La actividad 1 está completada. Estamos consolidando requerimientos y modelo de
 - [x] Escribir el objetivo del juego: alcanzar 15 rondas ganadas.
 - [x] Identificar a los dos participantes y sus acciones: elegir atributo cuando corresponde y elegir una carta de su mano.
 - [x] Definir el reparto de tres cartas a cada jugador desde un mazo común y la mezcla entre rondas.
-- [ ] Definir cómo se forma el mazo inicial y qué ocurre si tiene menos de seis cartas.
+- [x] Definir el origen del mazo inicial: personajes cargados en un CSV compartido por un sistema externo al cliente de los jugadores.
+- [x] Registrar que carta y personaje son el mismo elemento y que no se utilizará una clase Carta adicional.
+- [ ] Definir qué ocurre si hay menos de seis cartas válidas y cómo se tratan los personajes duplicados del CSV.
 - [x] Definir quién es jugador mano al iniciar la partida: J1, según confirmación del usuario.
 - [x] Reunir las reglas confirmadas en [Reglas del juego](Reglas-del-juego.md), diferenciando partida, ronda, combate, jugador mano y mano de cartas y señalando las decisiones pendientes.
 - [ ] Actualizar el documento de entrega con J1 como jugador mano inicial y la alternancia J1/J2 al terminar cada ronda, independientemente de su ganador.
@@ -108,6 +110,8 @@ El PR de esta actividad permanecerá en borrador mientras existan tareas pendien
 
 ### Actividad 3 — Modelo de clases
 
+- [ ] Adaptar el UML, sus relaciones y contratos a la decisión de unificar Carta y Personaje. Las casillas históricas sobre Carta describen el diagrama anterior, no una aprobación del diseño vigente.
+- [ ] Revisar con el docente la diferencia entre esta decisión y la separación explícita de Carta y Personaje que establece la consigna para Taller; conservar Taller fuera del alcance actual.
 - [x] Definir las responsabilidades principales de Personaje, Carta, Mazo y los objetos de partida (UML y descripción en Arquitectura).
 - [x] Identificar las clases adicionales: Jugador, Partida, Ronda, Combate, ControlTurno, LectorPersonaje, ArchivoPartida, Accion e interfaz de consola, con sus enumeraciones.
 - [ ] Justificar las clases adicionales y las decisiones de separación de responsabilidades.
@@ -129,6 +133,7 @@ El PR de esta actividad permanecerá en borrador mientras existan tareas pendien
 
 ### Actividad 5 — Formato de los archivos de personajes
 
+- [ ] Especificar el CSV compartido generado por el sistema externo y su relación con los archivos individuales de personajes exigidos por la consigna, incluyendo campos, ASCII Art, duplicados y errores de lectura.
 - [ ] Definir la estructura del archivo de texto y cómo se reconoce cada dato.
 - [ ] Especificar el formato del nombre y de los seis atributos obligatorios.
 - [ ] **En curso:** definir cómo se incorpora o referencia la descripción y el ASCII Art; solo está escrito el límite de 25 líneas y 120 caracteres, cuya interpretación falta precisar.
@@ -189,6 +194,8 @@ Etapas conservadas como referencia futura. No se implementarán en el alcance ac
 - [ ] Probar la carga con los archivos válidos e inválidos de la actividad 5.
 
 ### Etapa 3 — Implementación de Carta
+
+Referencia de la consigna para trabajo futuro. La decisión vigente del usuario unifica Carta y Personaje; las tareas siguientes no deben ejecutarse sin resolver esa diferencia y actualizar el modelo.
 
 - [ ] Crear la clase Carta con una referencia a Personaje según el UML.
 - [ ] Implementar las consultas de información que necesita mostrar la carta.

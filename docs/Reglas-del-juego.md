@@ -21,7 +21,7 @@ Cada jugador elige la carta de su mano que utilizará en cada combate. Cuando le
 
 ## Personajes y atributos
 
-Cada carta representa un personaje con seis atributos: Fuerza, Velocidad, Resistencia, Inteligencia, Energía y Habilidad. Todos pueden utilizarse en los combates.
+Carta y personaje designan el mismo elemento del juego. En el modelo se utilizará Personaje, sin una clase Carta adicional. Cada personaje tiene seis atributos: Fuerza, Velocidad, Resistencia, Inteligencia, Energía y Habilidad. Todos pueden utilizarse en los combates.
 
 Los valores de cada personaje deben cumplir estas condiciones:
 
@@ -32,6 +32,10 @@ Los valores de cada personaje deben cumplir estas condiciones:
 - No asignar 500 puntos a los seis atributos.
 
 ## Preparación y jugador mano
+
+Un sistema externo al cliente de los jugadores carga todos los personajes en un archivo CSV compartido. Ese archivo proporciona los personajes con los que se forma el mazo inicial. La carga y edición del catálogo mediante ese sistema externo quedan fuera del alcance del cliente.
+
+El CSV de personajes contiene los datos iniciales; su función es distinta de la del archivo compartido que coordina las acciones y el estado de una partida. La estructura del CSV y el tratamiento de datos inválidos o duplicados todavía deben especificarse.
 
 Se reparten tres cartas a cada jugador desde un mazo común. J1 es el jugador mano de la primera ronda.
 
@@ -65,7 +69,7 @@ La partida termina cuando un jugador alcanza 15 rondas ganadas. Ese jugador es e
 
 ## Decisiones pendientes
 
-- Definir cómo se forma el mazo inicial y qué sucede si hay menos de seis cartas disponibles para repartir.
+- Definir qué sucede si el CSV compartido no puede leerse o contiene menos de seis cartas válidas disponibles para repartir, y cómo se tratan los personajes duplicados.
 - Precisar el destino de las cartas no jugadas al finalizar anticipadamente una ronda y el orden de devolución de todas las cartas.
 - Precisar el orden de elección de atributo y carta, y el mecanismo que permite mostrar ambas cartas simultáneamente.
 
