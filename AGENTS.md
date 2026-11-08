@@ -1,6 +1,9 @@
 # Instrucciones para agentes
 
 - Responder siempre al usuario en español.
+- El alcance actual se limita a TI (análisis y diseño). Mantener Taller de Programación como trabajo futuro hasta que el usuario indique avanzar con la implementación.
+- No agregar a Git ni subir a GitHub los PDF aportados como referencia. Revisarlos localmente y trasladar los avances y pendientes pertinentes al plan; eliminarlos cuando el usuario lo solicite y se haya completado la actualización.
+- Antes de comenzar una nueva tarea de GitHub, actualizar las referencias remotas y sincronizar `main` mediante avance rápido, conservando los cambios locales. Crear la rama de la tarea desde el `main` actualizado; si hay divergencias, revisarlas sin sobrescribir trabajo ni integrar cambios sin la revisión requerida.
 - Leer `README.md`, `docs/Consigna.md`, `docs/Plan.md`, `docs/Arquitectura.md` y `CONTRIBUTING.md` antes de cambiar el alcance o la estructura del proyecto. La consigna es la fuente de requisitos; no dar por implementado algo que solo está documentado.
 - El proyecto principal es un juego de cartas «Guerra» de consola en C# y .NET 8. La consigna requiere personajes con seis atributos, cartas y mazos, reglas de partida y coordinación entre dos computadoras mediante un archivo compartido en red local.
 - Para cada personaje, validar que los seis atributos sumen exactamente 3000, que cada uno esté entre 250 y 750, que alguno sea al menos 650 y que alguno sea como máximo 350.
