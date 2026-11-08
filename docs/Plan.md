@@ -11,11 +11,11 @@ Se revisaron el documento de avance aportado por el usuario y el [UML existente]
 | Actividad de TI | Estado y evidencia | Qué falta para cerrarla |
 |---|---|---|
 | 1. Personajes | Completada por confirmación del usuario. Lysander y Reched tienen nombre, descripción, seis valores, total y atributos principal y menor; ambos cumplen las restricciones. | Sin pendientes para esta actividad. |
-| 2. Requerimientos | Reglas principales, mazo común, datos de ejecución y una propuesta de comunicación redactados. Confirmado: J1 comienza como jugador mano y el rol se alterna entre rondas. | Actualizar la terminología y las reglas del documento de entrega, completar errores y respuestas, separar requisitos funcionales y técnicos y resolver las precisiones indicadas abajo. |
+| 2. Requerimientos | Documento completo y revisado en [Reglas del juego](Reglas-del-juego.md), listo para copiar a la entrega. Incluye reglas, participantes, datos de ejecución, comunicación, errores y separación de requisitos funcionales y técnicos. | Sin tareas de redacción pendientes. La aceptación del PR y la revisión del compañero siguen pendientes; el protocolo detallado corresponde a la actividad 6. |
 | 3. Modelo de clases | UML elaborado con clases, atributos privados, firmas y relaciones. | Justificar responsabilidades y decisiones, revisar coherencia con las reglas y cerrar las observaciones de arquitectura. |
 | 4. Métodos | Borrador de Partida, Jugador y Mazo. | Unificar las firmas con el UML y completar contratos, validaciones, excepciones y diagramas de algoritmos. |
 | 5. Archivos de personajes | Solo se indica un límite de ASCII: «máximo 25 líneas y 120 caracteres». | Aclarar si 120 es por línea o en total; definir sintaxis, campos, descripción, ASCII, errores y ejemplos válidos e inválidos. |
-| 6. Archivo de partida | Confirmados dos clientes y un servidor, con archivos de escritura exclusiva por proceso; UML todavía con rutas propia y rival. | Revisar con la consigna y SSI el esquema confirmado de varios archivos compartidos; especificar formato, identificación, lecturas, escrituras, concurrencia y recuperación de errores. |
+| 6. Archivo de partida | Confirmados dos clientes y un servidor, con archivos de escritura exclusiva por proceso; UML todavía con rutas propia y rival. | Revisar con la consigna y SSI el esquema confirmado de varios archivos compartidos; especificar formato, identificación, lecturas, escrituras, concurrencia y finalización coordinada ante errores, sin recuperación. |
 | 7. Pruebas | No se encontró un plan de casos desarrollado en el material revisado. | Diseñar condiciones iniciales, datos y resultados esperados para casos normales, límites y errores. |
 
 ### Verificación de personajes
@@ -46,11 +46,11 @@ El documento de entrega debe distinguir estos conceptos:
 - **Jugador mano:** jugador que elige el atributo del primer combate de la ronda.
 - **Mano de cartas:** cartas disponibles de un jugador; no equivale a una ronda ni al rol de jugador mano.
 
-Esta decisión y las reglas confirmadas están redactadas en [Reglas del juego](Reglas-del-juego.md). Todavía falta trasladar y revisar la redacción en el documento de entrega del usuario, si se mantiene por separado.
+Esta decisión y las reglas confirmadas están redactadas en [Reglas del juego](Reglas-del-juego.md). El usuario indicó que copiará este archivo a su documento de entrega; se completó y revisó el contenido necesario para la actividad 2, sin dar por realizada esa copia externa.
 
 ### Precisiones pendientes antes de cerrar el diseño
 
-- Aplicar la decisión de J1 como jugador mano inicial y la alternancia entre rondas al documento de entrega. Unificar la terminología de partida, ronda, combate, jugador mano y mano de cartas, y comprobar su coherencia con los contratos.
+- Comprobar en la actividad 3 que los contratos del UML respeten la terminología y las reglas ya consolidadas en Reglas-del-juego.md.
 - Ajustar los contratos del UML a la restauración del mazo completo al terminar cada ronda, incluidas las cartas no jugadas.
 - El mazo inicial se forma a partir del CSV compartido que genera un sistema externo al cliente. Los repetidos están prohibidos y menos de seis cartas válidas impiden iniciar la partida con un mensaje de error. El sistema externo de carga impide duplicados. Falta definir el formato en la actividad 5.
 - Especificar cómo se mantienen ocultas carta y atributo hasta registrar ambas elecciones; el orden de elección ya está definido en Reglas-del-juego.md.
@@ -59,13 +59,13 @@ Esta decisión y las reglas confirmadas están redactadas en [Reglas del juego](
 
 ### Orden de trabajo para TI
 
-1. Cerrar las precisiones de reglas y requerimientos de la actividad 2. La actividad 1 está completada.
+1. Actividades 1 y 2 completadas en su documentación. La actividad 2 está lista para copiar a la entrega y para revisión del PR.
 2. Revisar el UML y justificar sus decisiones en Arquitectura (actividad 3).
 3. Completar las especificaciones de métodos según el modelo acordado (actividad 4).
 4. Definir los formatos de personajes y partida compartida con sus errores y ejemplos (actividades 5 y 6).
 5. Completar el plan de pruebas y revisar que todos los entregables de TI sean coherentes (actividad 7).
 
-La actividad 1 está completada. Estamos consolidando requerimientos y modelo de clases (actividades 2 y 3), con un inicio de especificación de métodos (actividad 4). Los demás entregables de TI no se consideran cerrados solo por contar con un borrador.
+Las actividades 1 y 2 tienen sus entregables documentados. Sigue pendiente revisar el modelo de clases (actividad 3), con un inicio de especificación de métodos (actividad 4). Los demás entregables de TI no se consideran cerrados solo por contar con un borrador.
 
 ## TI — Análisis de Sistemas
 
@@ -92,8 +92,8 @@ La actividad 1 está completada. Estamos consolidando requerimientos y modelo de
 - [x] Asignar la prevención de personajes duplicados al sistema externo de carga, fuera del cliente y del servidor de partida.
 - [x] Definir quién es jugador mano al iniciar la partida: J1, según confirmación del usuario.
 - [x] Reunir las reglas confirmadas en [Reglas del juego](Reglas-del-juego.md), diferenciando partida, ronda, combate, jugador mano y mano de cartas y señalando las decisiones pendientes.
-- [ ] Actualizar el documento de entrega con J1 como jugador mano inicial y la alternancia J1/J2 al terminar cada ronda, independientemente de su ganador.
-- [ ] Diferenciar en todo el documento partida, ronda, combate, jugador mano y mano de cartas; sustituir «mano ganada» por «ronda ganada» y aclarar que se juegan hasta tres combates.
+- [x] Preparar Reglas-del-juego.md como contenido de entrega que copiará el usuario, con J1 como jugador mano inicial y alternancia J1/J2 al terminar cada ronda.
+- [x] Diferenciar en todo el documento partida, ronda, combate, jugador mano y mano de cartas; usar «ronda ganada» y aclarar que se juegan hasta tres combates.
 - [x] Definir quién elige el atributo: el jugador mano en el primer combate; después se alterna entre jugadores, independientemente del ganador. Reemplaza la regla anterior basada en el ganador.
 - [x] Especificar la comparación por el atributo elegido y la victoria de ronda al alcanzar dos combates ganados.
 - [x] Resolver la regla de empate: gana quien no eligió el atributo.
@@ -103,13 +103,13 @@ La actividad 1 está completada. Estamos consolidando requerimientos y modelo de
 - [x] Definir la secuencia: quien comienza el combate elige carta y atributo; el rival elige sin conocer esas elecciones; luego se revelan ambas cartas y el atributo.
 - [x] Limitar la ocultación de elecciones a la interfaz: se revelan cuando ambos han elegido; se acepta que los archivos puedan consultarse manualmente. No se exige una garantía de secreto frente a ese acceso.
 - [x] Establecer la victoria y finalización normal de la partida al alcanzar 15 rondas ganadas.
-- [x] Enumerar los datos de ejecución: mazo, cartas de cada jugador, cartas jugadas, combates ganados y rondas ganadas.
+- [x] Completar los datos de ejecución: personajes y mazo, cartas disponibles y jugadas, jugadores, ronda, combate, jugador mano, elección de atributo, elecciones realizadas, marcadores, resultados y estado de partida.
 - [x] Definir la comunicación general: dos clientes publican sus elecciones; el servidor las lee, analiza y publica mensajes de resultados. Cada proceso solo escribe sus archivos y lee los de los demás.
 - [x] Asignar al cliente la validación de sus datos antes del envío y al servidor el tratamiento de errores al iniciar la partida.
 - [x] Definir responsabilidades y política general de errores: el cliente garantiza envíos válidos; cualquier error termina el juego completo, incluido el fallo del servidor. Los tipos de acciones, secuencias y formatos se difieren a la actividad 6.
 - [x] Definir la respuesta ante errores iniciales y de ejecución: finalizar el juego completo, sin recuperación. Con menos de seis cartas se informa además el mensaje ya acordado.
-- [ ] Separar los requerimientos funcionales de las condiciones técnicas de ejecución.
-- [ ] Revisar y entregar el documento de requerimientos y reglas.
+- [x] Separar los requerimientos funcionales de las condiciones técnicas de ejecución en Reglas-del-juego.md.
+- [x] Revisar la cobertura de la consigna y preparar el documento de requerimientos y reglas, listo para que el usuario lo copie a su entrega. No se afirma que ya haya realizado la copia ni presentado la entrega.
 
 El PR de esta actividad permanecerá en borrador mientras existan tareas pendientes de la actividad 2. El usuario indicó que solo lo aceptará cuando todas estén realizadas; antes de solicitar su revisión final, comprobar cada casilla y la actualización del documento de entrega. La integración requiere además la revisión de un compañero prevista en CONTRIBUTING.md.
 
