@@ -51,9 +51,6 @@ Antes de modificar el proyecto, seguí la [guía de colaboración](CONTRIBUTING.
 
 ## Autores
 
-<!-- Completar los nombres y reemplazar los textos de perfil por enlaces de GitHub. Agregar filas según la cantidad de integrantes. -->
-
-| Integrante | Perfil de GitHub |
-|---|---|
-| [Nombre y apellido] | [Perfil de GitHub] |
-| [Nombre y apellido] | [Perfil de GitHub] |
+- [51215927-spec](https://github.com/51215927-spec)
+- [50509098-JC](https://github.com/50509098-JC)
+- [Chino18cm](https://github.com/Chino18cm)
