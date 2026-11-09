@@ -126,7 +126,7 @@ El PR de esta actividad permanecerá en borrador mientras existan tareas pendien
 - [x] Reflejar J1 como mano inicial, alternancia por ronda y combate, empate, dos victorias por ronda y 15 rondas por partida.
 - [x] Documentar recuperación de todas las cartas y ocultación en interfaz hasta completar ambas elecciones.
 - [x] Unificar las firmas de referencia en UML y Arquitectura; adecuar los borradores anteriores en la actividad 4.
-- [x] Revisar la notación frente a UML 2.5.1, exportar con UMLet y comprobar que las 21 relaciones conecten a bordes sin atravesar cajas.
+- [x] Revisar la notación frente a UML 2.5.1, exportar con UMLet y comprobar que las 17 relaciones conecten a bordes sin atravesar cajas.
 - [ ] Completar entidades, relaciones y firmas de integración del intercambio cuando se defina el protocolo en la actividad 6.
 
 ### Actividad 4 — Especificación de métodos
@@ -265,6 +265,8 @@ Los Analistas coordinan los entregables y comunican los cambios a Taller. Los ca
 
 ## Resultado de la revisión del modelo — 8 de noviembre de 2026
 
-Se actualizó el UML y se justificaron contratos y responsabilidades en Arquitectura, incluyendo consultas de combate y ronda necesarias para presentar resultados y recuperar cartas sin exponer colecciones privadas. Se comprobó el XML del diagrama y se revisaron firmas, tipos y dependencias contra las bibliotecas. `git diff --check` no encontró problemas y `dotnet build Proyecto-Integrador-Final.sln` terminó con cero errores y advertencias. Esta compilación solo verifica la base inicial existente; no acredita implementación ni funcionamiento del juego. No se agregaron pruebas de código para un cambio documental. La revisión visual se completó mediante exportación con UMLet 15.1 y se verificaron geométricamente las 21 relaciones, sin tramos que atraviesen cajas y con extremos conectados a bordes. Se consultó UML 2.5.1 y se corrigió la notación de enumeraciones, miembros estáticos y realización de interfaz. La integración del protocolo sigue pendiente; el PR permanece en borrador para revisión de un compañero.
+Se actualizó el UML y se justificaron contratos y responsabilidades en Arquitectura, incluyendo consultas de combate y ronda necesarias para presentar resultados y recuperar cartas sin exponer colecciones privadas. Se comprobó el XML del diagrama y se revisaron firmas, tipos y dependencias contra las bibliotecas. `git diff --check` no encontró problemas y `dotnet build Proyecto-Integrador-Final.sln` terminó con cero errores y advertencias. Esta compilación solo verifica la base inicial existente; no acredita implementación ni funcionamiento del juego. No se agregaron pruebas de código para un cambio documental. La revisión visual se completó mediante exportación con UMLet 15.1 y se verificaron geométricamente las 17 relaciones, sin tramos que atraviesen cajas y con extremos conectados a bordes. Se consultó UML 2.5.1 y se corrigió la notación de enumeraciones, miembros estáticos y realización de interfaz. La integración del protocolo sigue pendiente; el PR permanece en borrador para revisión de un compañero.
 
 Corrección de notación solicitada por el usuario: referencias y colecciones se muestran solo como asociaciones, con roles separados, multiplicidad y visibilidad explícita. Datos.Modelo conserva lectura pública, escritura privada y carácter estático en la relación.
+
+Por indicación del usuario, se retiraron las cuatro flechas de dependencia `.>`; el uso de las bibliotecas y entidades se explica en Arquitectura. Las asociaciones y la realización de la interfaz de DataBases se conservan.

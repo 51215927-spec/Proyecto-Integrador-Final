@@ -484,50 +484,6 @@ propiedad estatica; escritura privada</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>440</x>
-      <y>1840</y>
-      <w>20</w>
-      <h>220</h>
-    </coordinates>
-    <panel_attributes>lt=.&gt;</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;210.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>590</x>
-      <y>1160</y>
-      <w>520</w>
-      <h>400</h>
-    </coordinates>
-    <panel_attributes>lt=.&gt;</panel_attributes>
-    <additional_attributes>10.0;390.0;10.0;350.0;470.0;350.0;470.0;10.0;510.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>790</x>
-      <y>390</y>
-      <w>320</w>
-      <h>1270</h>
-    </coordinates>
-    <panel_attributes>lt=.&gt;</panel_attributes>
-    <additional_attributes>10.0;1260.0;50.0;1260.0;50.0;10.0;310.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1050</x>
-      <y>1200</y>
-      <w>1160</w>
-      <h>420</h>
-    </coordinates>
-    <panel_attributes>lt=.&gt;</panel_attributes>
-    <additional_attributes>50.0;410.0;10.0;410.0;10.0;320.0;1110.0;320.0;1110.0;10.0;1150.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
       <x>2890</x>
       <y>1260</y>
       <w>20</w>
