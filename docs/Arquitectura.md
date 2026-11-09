@@ -1,40 +1,88 @@
 # Arquitectura
 
-[UML](diagramas/UML.uxf)
+Modelo de análisis y diseño de TI, actualizado el 8 de noviembre de 2026 a partir de las decisiones del usuario. Las clases del [UML](diagramas/UML.uxf) todavía no están implementadas; la aplicación conserva `Hello, World!`. Los requisitos están en [Reglas del juego](Reglas-del-juego.md) y el seguimiento en [Plan](Plan.md).
 
-## Estado del diseño
+## Distribución y responsabilidades
 
-El UML es una propuesta de análisis de TI; todavía no hay implementación de estas clases. La revisión del 8 de noviembre de 2026 y los pendientes se registran en [Plan](Plan.md).
+El servidor coordina la partida y analiza los enfrentamientos. Los dos clientes solicitan elecciones y presentan los resultados. Cada proceso dispone de su propio `Datos.Modelo` en memoria: compartir archivos no comparte objetos ni actualiza automáticamente las tablas.
 
-El UML existente separa Personaje y Carta, pero el usuario decidió unificarlos: carta y personaje son el mismo elemento, representado por Personaje. No se incorporará una clase que solo envuelva una referencia al personaje y un string. El UML y sus contratos todavía deben adaptarse a esta decisión; no se ha decidido trasladar el ASCII Art a otra clase.
+| Clase | Datos encapsulados | Responsabilidad y delegación |
+|---|---|---|
+| Personaje | Nombre, ASCII y seis atributos. | Representar una carta válida; ofrecer consultas y configurar su persistencia. No lee archivos directamente. |
+| Mazo | Colección de personajes disponibles. | Mezclar, retirar elementos al repartir y reincorporarlos. Recibe objetos ya cargados. |
+| Jugador | Nombre, mano disponible y rondas ganadas. | Administrar sus cartas y marcador. Las consultas devuelven una copia de la colección. |
+| Partida | Dos jugadores, mazo, ronda actual, número de ronda y jugador mano. | Coordinar inicio, reparto, rondas, recuperación y victoria. Delega la comparación a Combate y el seguimiento de ronda a Ronda. |
+| Ronda | Jugador mano, rival y combates registrados. | Determinar el siguiente elector y el ganador de ronda. Calcula las victorias desde los combates, evitando contadores duplicados. |
+| Combate | Participantes, atributo, elecciones y ganador. | Registrar las elecciones y resolver la comparación. Los campos aún no elegidos y el ganador pendiente son anulables. |
+| InterfazConsola | Sin estado de dominio propio obligatorio. | Construir las pantallas del juego y solicitar opciones usando Utilidades. No determina ganadores. |
+| Datos (estática) | Modelo con escritura privada. | Inicializar el modelo de datos del proceso y ofrecer acceso a sus tablas. No aplica las reglas del juego. |
 
-Mazo administra la colección común de personajes y Jugador conserva su mano y marcador. Partida coordina Ronda y Combate. ControlTurno regula quién puede actuar; IInterfaz separa la interacción de consola y ArchivoPartida representa el intercambio de acciones mediante Accion. Estas responsabilidades requieren completar su justificación y sus contratos.
+Partida conserva el jugador mano; Ronda recibe ese rol al construirse y lo mantiene durante sus combates. Jugador no conserva otra copia mutable del mismo rol. Las entidades del juego se conservan porque representan conceptos propios del problema y permiten explicar sus reglas.
 
-El mazo inicial proviene de un CSV compartido generado por un sistema externo al cliente de los jugadores. Ese sistema de carga queda fuera del alcance del cliente. El CSV es una fuente de datos iniciales y no sustituye al archivo de intercambio de la partida; faltan definir su formato, lectura y validaciones.
+## Firmas y contratos del modelo
 
-La unificación de Carta y Personaje es una decisión del usuario que difiere de la separación y delegación explícitas de la etapa 3 de Taller en la consigna. Se conserva la consigna sin modificar y se deberá revisar esta diferencia con el docente antes de la entrega; Taller permanece fuera del alcance actual.
+El UML contiene los tipos de todos los parámetros y retornos. Estos contratos de diseño orientan la actividad 4; no sustituyen sus especificaciones detalladas ni los diagramas de algoritmos.
 
-Las reglas de empate a favor de quien no eligió, dos combates para ganar una ronda y 15 rondas para ganar una partida coinciden entre el avance revisado y el UML.
+### Personaje
 
-Según la decisión confirmada por el usuario, J1 es el jugador mano de la primera ronda y el rol se alterna entre J1 y J2 al finalizar cada ronda, independientemente del ganador. El jugador mano elige el primer atributo; después la elección se alterna entre jugadores en cada combate, independientemente del ganador y sin modificar ese rol durante la ronda. Esta decisión reemplaza la regla anterior basada en el ganador; el UML debe revisarse para reflejarla. La interfaz no revela carta y atributo hasta que ambos hayan elegido; no se garantiza secreto ante la lectura manual de archivos compartidos. La terminología y el documento listo para copiar a la entrega se registran en [Plan](Plan.md#decisión-confirmada--jugador-mano-y-terminología); falta comprobar su coherencia con los contratos del modelo.
+`Personaje(nombre: string, ascii: string, fuerza: int, velocidad: int, resistencia: int, inteligencia: int, energia: int, habilidad: int)` construye un objeto válido. `Validar(): void` es privado: exige seis valores entre 250 y 750, suma exactamente 3000, alguno de al menos 650 y alguno de como máximo 350. Se rechazan datos inválidos al construir; no hay modificación pública de atributos.
 
-## Decisiones por cerrar
+`GetNombre(): string`, `GetAscii(): string` y `GetAtributo(tipo: TipoAtributo): int` ofrecen las consultas necesarias. TipoAtributo enumera Fuerza, Velocidad, Resistencia, Inteligencia, Energia y Habilidad.
 
-### Comunicación confirmada: dos clientes y un servidor
+Implementa `IEntidad<Personaje>` de DataBases y declara `Configurar(entidad: ConstructorEntidad<Personaje>): void`, estático. La configuración declara archivo y columnas mediante expresiones sobre los campos privados. El formato concreto, ruta y posible necesidad de identificadores se completarán en la actividad 5 junto con las referencias necesarias para el intercambio de la actividad 6.
 
-Cada cliente escribe únicamente sus archivos de acciones; el servidor los lee, analiza las elecciones y escribe sus propios archivos de mensajes y resultados. Los clientes leen las publicaciones del servidor. Cada proceso tiene escritura exclusiva sobre sus archivos y acceso de solo lectura a los de otros procesos. Esto evita escritores concurrentes sobre un mismo archivo, pero requiere especificar cómo se publican mensajes completos y se reconocen mensajes ya procesados.
+### Mazo y Jugador
 
-El cliente garantiza la validez de los datos enviados al servidor. El sistema externo de carga garantiza un catálogo sin personajes duplicados. Ante cualquier error al iniciar o durante la ejecución se termina el juego completo, sin recuperación: si el servidor no puede continuar, los clientes también finalizan. El mecanismo de notificación y finalización se especificará en la actividad 6; no se presume que un fallo de un proceso cierre automáticamente los demás.
+`Mazo(personajes: List<Personaje>)` conserva una colección propia. `Mezclar(): void` cambia su orden. `Repartir(cantidad: int): Personaje[]` retira y devuelve elementos disponibles; no fabrica cartas ni devuelve cantidades parciales silenciosamente. `Devolver(personajes: Personaje[]): void` reincorpora elementos. `GetCantidad(): int` consulta los disponibles. Al iniciar, Partida exige al menos seis personajes válidos; el sistema externo garantiza un catálogo sin duplicados.
 
-El UML actual incluye Accion con jugador, tipo, numeroRonda, numeroCombate y valor, y los tipos RepartirCartas, ElegirAtributo, JugarCarta, FinDeRonda y FinDePartida. Son antecedentes a revisar: ArchivoPartida todavía usa rutaPropia/rutaRival y lectura directa del rival, y no modela el servidor. Deben redistribuirse las responsabilidades y definir mensajes de resultados, identidad de partida y visibilidad de elecciones sin revelar la carta ni el atributo antes de tiempo.
+`Jugador(nombre: string)` crea una mano vacía y un marcador en cero. `RecibirCartas(personajes: Personaje[]): void` incorpora el reparto; `QuitarCarta(personaje: Personaje): void` retira una carta disponible. `EntregarCartas(): Personaje[]` devuelve las restantes y vacía la mano. `GetCartas(): Personaje[]` devuelve una copia. `SumarRondaGanada(): void`, `GetRondasGanadas(): int` y `GetNombre(): string` administran y consultan sus datos.
 
-### Revisiones pendientes
+### Partida, Ronda y Combate
 
-- Unificar los métodos del borrador con las firmas y responsabilidades del UML antes de especificarlos o implementarlos.
-- Adaptar el UML y sus firmas a Personaje como único concepto de carta y revisar la diferencia con la consigna.
-- Ajustar el modelo a la restauración del mazo completo después de cada ronda, incluidas las cartas no jugadas. No se permiten personajes repetidos; con menos de seis cartas válidas se informa el error y no se inicia la partida. La prevención de duplicados corresponde al sistema externo de carga.
-- Adaptar el UML al esquema confirmado de clientes y servidor con archivos de escritor exclusivo. Precisar cantidad, contenido, permisos y protocolo, y revisar con SSI y el docente su correspondencia con el archivo de partida compartida que exige la consigna.
-- Completar identidad de partida, detección de duplicados, sincronización, acceso concurrente y tratamiento de fallos. Las excepciones y los estados enumerados en el UML son un punto de partida, no un protocolo completo.
+`Partida(j1: Jugador, j2: Jugador, mazo: Mazo)` recibe sus entidades. `Jugar(): Jugador` representa la coordinación completa en el servidor y devuelve al ganador solo en una terminación normal. Ante un error no devuelve un ganador ficticio: se propaga el fallo al punto de ejecución para finalizar. La integración con registros de elecciones y publicaciones queda pendiente de la actividad 6; no se presupone acceso directo del servidor a la consola de un cliente.
 
+Los métodos privados son `Iniciar(): void`, `RepartirCartas(): void`, `JugarRonda(): void`, `RecogerCartas(): void`, `CambiarMano(): void`, `EstaTerminada(): bool` y `DeterminarGanadorPartida(): Jugador`. J1 comienza como mano. Al terminar cada ronda se devuelve al mazo tanto lo jugado en sus combates como lo restante en las manos, una sola vez; después se alterna el jugador mano. Si alguien alcanzó 15 rondas, no se reparte otra ronda.
 
-Los tipos de acciones y mensajes se planificarán en la actividad 6 por decisión del usuario. El modelo confía en la validación de los clientes y no incorpora una garantía de secreto frente al acceso manual a los archivos compartidos.
+`Ronda(mano: Jugador, rival: Jugador)` identifica los participantes. `AgregarCombate(combate: Combate): void` admite combates resueltos, en orden, mientras la ronda siga abierta. `EstaDefinida(): bool` comprueba dos victorias. `GetGanador(): Jugador` exige una ronda definida. `GetQuienEligeProximo(): Jugador` exige una ronda abierta: mano en el primer combate, rival en el segundo y mano en el tercero, independientemente de los resultados. La lista empieza vacía y puede contener hasta tres combates. `GetCombates(): Combate[]` devuelve una copia de los combates registrados para recuperar sus cartas al cerrar la ronda.
+
+`Combate(quienElige: Jugador, rival: Jugador)` inicia el enfrentamiento. `SetAtributo(tipo: TipoAtributo): void` y `SetCarta(jugador: Jugador, personaje: Personaje): void` registran elecciones una sola vez. `EstaCompleto(): bool` exige atributo y ambas cartas. `Resolver(): Jugador` exige un combate completo, compara el atributo y asigna la victoria al rival del elector ante empate. Una vez resuelto no se modifican elecciones. `GetGanador(): Jugador` exige resolución previa. `GetAtributo(): TipoAtributo` y `GetCarta(jugador: Jugador): Personaje` permiten consultar las elecciones de un combate completo para presentar el resultado y recuperar las cartas. La interfaz conoce a los dos participantes; el control de revelación se mantiene en el flujo del cliente. El tratamiento exacto de llamadas inválidas se especificará en la actividad 4.
+
+Las cartas retiradas de las manos siguen referenciadas por los combates, permitiendo recuperarlas al cerrar la ronda. La interfaz solo revela ambas cartas y el atributo cuando se completaron las dos elecciones; no se exige secreto ante la lectura manual de los archivos.
+
+## Datos y persistencia
+
+Se usa la API pública de [DataBases](../Mis-Librerias/DataBases/README.md). `Datos` es estática y expone `Modelo: Modelo { get; private set; }` e `Iniciar(): void`. Iniciar registra las entidades mediante ConstructorModelo, construye el modelo y carga las tablas iniciales requeridas para el proceso. La configuración concreta de las tablas de intercambio se completará en la actividad 6.
+
+Las llamadas `Datos.Modelo.Cargar<T>(exigirArchivo)`, `Tabla<T>()` y `Guardar<T>()` permiten recargar, consultar/modificar y publicar datos. No se agregan métodos que solo reenvíen estas operaciones. Los archivos obligatorios, como el catálogo inicial, se cargan exigiendo su existencia. Las tablas de intercambio necesitarán una política explícita de creación inicial en la actividad 6.
+
+La biblioteca reconstruye objetos por sus constructores, interpreta tipos y permite configurar miembros privados. Las listas y objetos no se guardan como columnas: las relaciones usan claves configuradas y se resuelven mediante Uno/ Muchos. No se presupone que todo el grafo de Partida se pueda guardar automáticamente ni que todas las entidades del juego necesiten persistirse.
+
+Cada proceso guarda únicamente sus propias tablas y carga las publicadas por otros; no se utiliza GuardarTodo indiscriminadamente. Guardar reemplaza la tabla completa del archivo. Las actualizaciones requieren Cargar explícito; las referencias a objetos anteriores pueden quedar desactualizadas tras una recarga. El catálogo se carga al iniciar y no se recarga en medio de una partida; la estrategia para incorporar mensajes al estado vivo se definirá en la actividad 6.
+
+DataBases ya proporciona bloqueo por archivo, archivo temporal y reemplazo, además de detección de cambios. No ofrece transacciones entre archivos ni decide qué mensaje ya fue procesado. Su documentación no acredita pruebas en carpetas de red: la verificación en el recurso compartido de SSI sigue pendiente.
+
+## Presentación con Utilidades
+
+[Utilidades](../Mis-Librerias/Utilidades/README.md) aporta Funciones, DecoracionConsola y MyConsole; ColoresMenu y FormatoMenu configuran los menús. En el UML se muestran como dependencias externas, sin reproducir sus implementaciones.
+
+| Firma de InterfazConsola | Delegación |
+|---|---|
+| `MostrarMano(jugador: Jugador): void` | MyConsole para ASCII y DecoracionConsola para atributos. |
+| `PedirCarta(jugador: Jugador): Personaje` | PedirOpcionMenu devuelve un índice desde cero sobre una copia de la mano disponible. |
+| `PedirAtributo(): TipoAtributo` | PedirEnum<TipoAtributo> limita la elección a los seis valores. |
+| `MostrarMarcador(j1: Jugador, j2: Jugador, ronda: int): void` | MostrarTabla presenta marcadores y ronda. |
+| `MostrarEsperando(mensaje: string): void` | Mensaje de espera sin solicitar entradas. |
+| `MostrarCombate(combate: Combate): void` | Presenta elecciones completas, atributo y ganador resuelto. |
+| `MostrarGanadorRonda(ganador: Jugador): void` | Presenta el resultado de ronda. |
+| `MostrarGanadorPartida(ganador: Jugador): void` | Presenta el resultado final. |
+| `MostrarError(mensaje: string): void` | Mensaje de error de la biblioteca. |
+
+El menú con FormatoMenu y flechas limpia la pantalla e historial. Para conservar la mano visible se puede usar SeleccionNumerica o incorporar el contexto al propio menú. La escritura de pantalla se hace mediante MyConsole para respetar su historial. La validación de opciones de entrada pertenece al cliente; una opción de teclado inválida se vuelve a pedir. Los fallos de lectura, persistencia o ejecución siguen la política de cierre completo sin recuperación.
+
+## Decisiones pendientes y límites de cierre
+
+- Actividad 4: completar precondiciones, excepciones, secuencias y algoritmos sobre estas firmas; el borrador anterior deja de ser fuente de firmas vigentes.
+- Actividad 5: especificar columnas, ASCII, descripción, rutas y ejemplos del catálogo, coherentes con el formato propio de DataBases y el sistema externo.
+- Actividad 6: definir registros de elecciones y publicaciones, identificación de partida/ronda/combate, referencias a personajes, permisos, secuencia, mensajes procesados y cierre coordinado ante fallos. Después completar sus entidades y relaciones en el UML y la integración de Partida y clientes. No se inventan aquí sus firmas.
+- Revisar con el docente la representación unificada de carta y personaje frente a la separación exigida para Taller, y con SSI el esquema de varios archivos compartidos. La consigna se conserva intacta y Taller continúa fuera de alcance.
+- Obtener revisión de un compañero antes de integrar el PR. El modelo de dominio y las dependencias están actualizados; la actividad 3 no se considera cerrada integralmente mientras sus fronteras de comunicación y la revisión docente sigan pendientes.

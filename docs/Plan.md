@@ -12,10 +12,10 @@ Se revisaron el documento de avance aportado por el usuario y el [UML existente]
 |---|---|---|
 | 1. Personajes | Completada por confirmación del usuario. Lysander y Reched tienen nombre, descripción, seis valores, total y atributos principal y menor; ambos cumplen las restricciones. | Sin pendientes para esta actividad. |
 | 2. Requerimientos | Documento completo y revisado en [Reglas del juego](Reglas-del-juego.md), listo para copiar a la entrega. Incluye reglas, participantes, datos de ejecución, comunicación, errores y separación de requisitos funcionales y técnicos. | Sin tareas de redacción pendientes. La aceptación del PR y la revisión del compañero siguen pendientes; el protocolo detallado corresponde a la actividad 6. |
-| 3. Modelo de clases | UML elaborado con clases, atributos privados, firmas y relaciones. | Justificar responsabilidades y decisiones, revisar coherencia con las reglas y cerrar las observaciones de arquitectura. |
+| 3. Modelo de clases | Dominio actualizado en UML y Arquitectura, con Datos y bibliotecas; firmas y responsabilidades revisadas. | Integración del protocolo tras actividad 6, revisión docente y de un compañero. |
 | 4. Métodos | Borrador de Partida, Jugador y Mazo. | Unificar las firmas con el UML y completar contratos, validaciones, excepciones y diagramas de algoritmos. |
 | 5. Archivos de personajes | Solo se indica un límite de ASCII: «máximo 25 líneas y 120 caracteres». | Aclarar si 120 es por línea o en total; definir sintaxis, campos, descripción, ASCII, errores y ejemplos válidos e inválidos. |
-| 6. Archivo de partida | Confirmados dos clientes y un servidor, con archivos de escritura exclusiva por proceso; UML todavía con rutas propia y rival. | Revisar con la consigna y SSI el esquema confirmado de varios archivos compartidos; especificar formato, identificación, lecturas, escrituras, concurrencia y finalización coordinada ante errores, sin recuperación. |
+| 6. Archivo de partida | Dos clientes y servidor; intercambio mediante Datos y DataBases. | Definir registros, identificación, secuencia, permisos, publicación y cierre coordinado. Verificar funcionamiento en red local. |
 | 7. Pruebas | No se encontró un plan de casos desarrollado en el material revisado. | Diseñar condiciones iniciales, datos y resultados esperados para casos normales, límites y errores. |
 
 ### Verificación de personajes
@@ -50,11 +50,11 @@ Esta decisión y las reglas confirmadas están redactadas en [Reglas del juego](
 
 ### Precisiones pendientes antes de cerrar el diseño
 
-- Comprobar en la actividad 3 que los contratos del UML respeten la terminología y las reglas ya consolidadas en Reglas-del-juego.md.
-- Ajustar los contratos del UML a la restauración del mazo completo al terminar cada ronda, incluidas las cartas no jugadas.
+- Contratos de dominio revisados frente a las reglas; falta completar su integración con el protocolo de la actividad 6.
+- Restauración completa del mazo documentada en UML y Arquitectura; completar la especificación detallada en la actividad 4.
 - El mazo inicial se forma a partir del CSV compartido que genera un sistema externo al cliente. Los repetidos están prohibidos y menos de seis cartas válidas impiden iniciar la partida con un mensaje de error. El sistema externo de carga impide duplicados. Falta definir el formato en la actividad 5.
 - Especificar cómo se mantienen ocultas carta y atributo hasta registrar ambas elecciones; el orden de elección ya está definido en Reglas-del-juego.md.
-- Alinear las firmas del borrador con el UML: `Partida.Jugar(Jugador, Jugador): void` frente a constructor con jugadores y `Jugar(): Jugador`; elecciones en Jugador frente a `IInterfaz`; `Mazo.GetMano()` frente a `Repartir(cantidad)`.
+- En la actividad 4 usar las firmas vigentes del UML y Arquitectura para sustituir las diferencias del borrador anterior.
 - Separar los archivos iniciales de personajes del intercambio de acciones de la partida; definir identidad de partida, turno, ronda y combate, acciones duplicadas o fuera de turno y escrituras incompletas.
 
 ### Orden de trabajo para TI
@@ -65,7 +65,7 @@ Esta decisión y las reglas confirmadas están redactadas en [Reglas del juego](
 4. Definir los formatos de personajes y partida compartida con sus errores y ejemplos (actividades 5 y 6).
 5. Completar el plan de pruebas y revisar que todos los entregables de TI sean coherentes (actividad 7).
 
-Las actividades 1 y 2 tienen sus entregables documentados. Sigue pendiente revisar el modelo de clases (actividad 3), con un inicio de especificación de métodos (actividad 4). Los demás entregables de TI no se consideran cerrados solo por contar con un borrador.
+Las actividades 1 y 2 tienen sus entregables documentados. Sigue pendiente revisar el modelo de clases (actividad 3), con el dominio y dependencias actualizados y la integración de comunicación pendiente. La actividad 4 conserva un borrador por adecuar. Los demás entregables de TI no se consideran cerrados solo por contar con un borrador.
 
 ## TI — Análisis de Sistemas
 
@@ -115,18 +115,21 @@ El PR de esta actividad permanecerá en borrador mientras existan tareas pendien
 
 ### Actividad 3 — Modelo de clases
 
-- [ ] Adaptar el UML a dos clientes y un servidor: reemplazar lectura directa del rival, asignar análisis y resultados al servidor y revisar ControlTurno, ArchivoPartida y Accion.
+**En curso:** modelo de dominio actualizado según la recapitulación aceptada por el usuario. No hay implementación. El detalle vigente está en [Arquitectura](Arquitectura.md).
 
-- [ ] Adaptar el UML, sus relaciones y contratos a la decisión de unificar Carta y Personaje. Las casillas históricas sobre Carta describen el diagrama anterior, no una aprobación del diseño vigente.
-- [ ] Revisar con el docente la diferencia entre esta decisión y la separación explícita de Carta y Personaje que establece la consigna para Taller; conservar Taller fuera del alcance actual.
-- [x] Definir las responsabilidades principales de Personaje, Carta, Mazo y los objetos de partida (UML y descripción en Arquitectura).
-- [x] Identificar las clases adicionales: Jugador, Partida, Ronda, Combate, ControlTurno, LectorPersonaje, ArchivoPartida, Accion e interfaz de consola, con sus enumeraciones.
-- [ ] Justificar las clases adicionales y las decisiones de separación de responsabilidades.
-- [x] Definir los atributos de las clases y su encapsulamiento privado en el UML.
-- [ ] **En curso:** completar las firmas del modelo; la mayoría incluye parámetros y retornos, pero el constructor de Accion no tipa sus parámetros y existen diferencias con el borrador de métodos.
-- [x] Definir las relaciones principales y la delegación de Carta en Personaje (UML y Arquitectura).
-- [x] Elaborar el diagrama de clases UML (disponible en `docs/diagramas/UML.uxf`; revisión final pendiente).
-- [ ] **En curso:** completar la justificación de decisiones en [Arquitectura](Arquitectura.md) y cerrar la revisión de coherencia; ya se documentaron responsabilidades y diferencias pendientes.
+- [x] Representar Personaje, Mazo, Jugador, Partida, Ronda y Combate con atributos privados, firmas tipadas y relaciones.
+- [x] Adaptar todas las referencias al concepto unificado de Personaje.
+- [x] Asignar coordinación del dominio al servidor y presentación a los clientes, sin comunicación directa entre rivales.
+- [x] Incorporar Datos estática y las dependencias de DataBases sin duplicar la lectura CSV.
+- [x] Describir InterfazConsola delegando entradas, menús y presentación en Utilidades.
+- [x] Justificar responsabilidades, encapsulamiento, delegación y decisiones en Arquitectura.
+- [x] Reflejar J1 como mano inicial, alternancia por ronda y combate, empate, dos victorias por ronda y 15 rondas por partida.
+- [x] Documentar recuperación de todas las cartas y ocultación en interfaz hasta completar ambas elecciones.
+- [x] Unificar las firmas de referencia en UML y Arquitectura; adecuar los borradores anteriores en la actividad 4.
+- [ ] Completar entidades, relaciones y firmas de integración del intercambio cuando se defina el protocolo en la actividad 6.
+- [ ] Revisar con el docente la diferencia entre Personaje unificado y la separación requerida para Taller.
+- [ ] Revisar con SSI y el docente el esquema de archivos compartidos y verificar la biblioteca en red local.
+- [ ] Obtener revisión de un compañero antes de integrar el PR y cerrar la actividad.
 
 ### Actividad 4 — Especificación de métodos
 
@@ -262,3 +265,7 @@ Referencia de la consigna para trabajo futuro. La decisión vigente del usuario 
 - [ ] Preparar la defensa de las decisiones de diseño, estrategias de personajes, clases y métodos de cada integrante.
 
 Los Analistas coordinan los entregables y comunican los cambios a Taller. Los cambios para GitHub siguen las ramas, los commits y la revisión por un compañero establecidos en [CONTRIBUTING](../CONTRIBUTING.md).
+
+## Resultado de la revisión del modelo — 8 de noviembre de 2026
+
+Se actualizó el UML y se justificaron contratos y responsabilidades en Arquitectura, incluyendo consultas de combate y ronda necesarias para presentar resultados y recuperar cartas sin exponer colecciones privadas. Se comprobó el XML del diagrama y se revisaron firmas, tipos y dependencias contra las bibliotecas. `git diff --check` no encontró problemas y `dotnet build Proyecto-Integrador-Final.sln` terminó con cero errores y advertencias. Esta compilación solo verifica la base inicial existente; no acredita implementación ni funcionamiento del juego. No se agregaron pruebas de código para un cambio documental. La revisión visual en UMLet y la integración del protocolo siguen pendientes; el PR se prepara en borrador para revisión de un compañero.
