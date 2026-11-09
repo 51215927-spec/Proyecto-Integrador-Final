@@ -13,7 +13,7 @@ Se revisaron el documento de avance aportado por el usuario y el [UML existente]
 | 1. Personajes | Completada por confirmación del usuario. Lysander y Reched tienen nombre, descripción, seis valores, total y atributos principal y menor; ambos cumplen las restricciones. | Sin pendientes para esta actividad. |
 | 2. Requerimientos | Documento completo y revisado en [Reglas del juego](Reglas-del-juego.md), listo para copiar a la entrega. Incluye reglas, participantes, datos de ejecución, comunicación, errores y separación de requisitos funcionales y técnicos. | Sin tareas de redacción pendientes. La aceptación del PR y la revisión del compañero siguen pendientes; el protocolo detallado corresponde a la actividad 6. |
 | 3. Modelo de clases | Completada por confirmación del usuario. UML y Arquitectura revisados, con firmas, relaciones, responsabilidades y justificación. | Sin pendientes propios. El modelado de comunicación y su integración se realizan en la actividad 6. |
-| 4. Métodos | Borrador de Partida, Jugador y Mazo. | Unificar las firmas con el UML y completar contratos, validaciones y excepciones. |
+| 4. Métodos | Completada por confirmación del usuario. Las 58 especificaciones están redactadas en Arquitectura, con un párrafo por método y sin validaciones repetidas. | Sin pendientes propios. Los formatos y la integración corresponden a las actividades 5 y 6. |
 | 5. Archivos de personajes | Solo se indica un límite de ASCII: «máximo 25 líneas y 120 caracteres». | Aclarar si 120 es por línea o en total; definir sintaxis, campos, descripción, ASCII, errores y ejemplos válidos e inválidos. |
 | 6. Archivo de partida | Dos clientes y servidor; intercambio mediante Datos y DataBases. | Definir registros, identificación, secuencia, permisos, publicación y cierre coordinado. Verificar funcionamiento en red local. |
 | 7. Pruebas | No se encontró un plan de casos desarrollado en el material revisado. | Diseñar condiciones iniciales, datos y resultados esperados para casos normales, límites y errores. |
@@ -51,21 +51,21 @@ Esta decisión y las reglas confirmadas están redactadas en [Reglas del juego](
 ### Precisiones pendientes antes de cerrar el diseño
 
 - Contratos de dominio revisados frente a las reglas; falta completar su integración con el protocolo de la actividad 6.
-- Restauración completa del mazo documentada en UML y Arquitectura; completar la especificación detallada en la actividad 4.
+- Restauración completa del mazo especificada en UML y Arquitectura, incluidas las cartas no jugadas y la devolución única al cerrar la ronda.
 - El mazo inicial se forma a partir del CSV compartido que genera un sistema externo al cliente. Los repetidos están prohibidos y menos de seis cartas válidas impiden iniciar la partida con un mensaje de error. El sistema externo de carga impide duplicados. Falta definir el formato en la actividad 5.
 - Especificar cómo se mantienen ocultas carta y atributo hasta registrar ambas elecciones; el orden de elección ya está definido en Reglas-del-juego.md.
-- En la actividad 4 usar las firmas vigentes del UML y Arquitectura para sustituir las diferencias del borrador anterior.
+- Las especificaciones de la actividad 4 se redactan directamente desde el UML y Arquitectura. Se corrige la referencia anterior a un borrador: el usuario confirmó que no existe.
 - Separar los archivos iniciales de personajes del intercambio de acciones de la partida; definir identidad de partida, turno, ronda y combate, acciones duplicadas o fuera de turno y escrituras incompletas.
 
 ### Orden de trabajo para TI
 
 1. Actividades 1 y 2 completadas en su documentación. La actividad 2 está lista para copiar a la entrega y para revisión del PR.
 2. Actividad 3 completada: UML y justificación revisados. La ampliación del modelo para comunicación corresponde a la actividad 6.
-3. Completar las especificaciones de métodos según el modelo acordado (actividad 4).
+3. Actividad 4 completada: especificaciones de métodos revisadas y aceptadas por el usuario.
 4. Definir los formatos de personajes y partida compartida con sus errores y ejemplos (actividades 5 y 6).
 5. Completar el plan de pruebas y revisar que todos los entregables de TI sean coherentes (actividad 7).
 
-Las actividades 1, 2 y 3 tienen sus entregables documentados; el usuario dio por terminada la actividad 3. La actividad 4 conserva un borrador por adecuar. El modelado e integración de comunicación se completarán en la actividad 6. Los demás entregables de TI no se consideran cerrados solo por contar con un borrador.
+Las actividades 1, 2, 3 y 4 tienen sus entregables documentados; el usuario confirmó el cierre de las actividades 3 y 4. El modelado e integración de comunicación se completarán en la actividad 6. Los demás entregables de TI no se consideran cerrados solo por contar con documentación parcial.
 
 ## TI — Análisis de Sistemas
 
@@ -128,17 +128,24 @@ El PR de esta actividad permanecerá en borrador mientras existan tareas pendien
 - [x] Conservar el jugador mano solo en Ronda; Partida calcula el rol al construir cada ronda según su número.
 - [x] Revisar consultas necesarias para la presentación, multiplicidades de inicialización y contratos que evitan registrar combates repetidos o ajenos.
 - [x] Documentar recuperación de todas las cartas y ocultación en interfaz hasta completar ambas elecciones.
-- [x] Unificar las firmas de referencia en UML y Arquitectura; adecuar los borradores anteriores en la actividad 4.
+- [x] Unificar las firmas de referencia en UML y Arquitectura, base de las especificaciones de la actividad 4.
 - [x] Revisar la notación frente a UML 2.5.1, exportar con UMLet y comprobar que las 16 relaciones conecten a bordes sin atravesar cajas.
 - [x] Dar por terminada la actividad 3 según confirmación del usuario; trasladar el modelado de comunicación a la actividad 6.
 
 ### Actividad 4 — Especificación de métodos
 
-- [x] Identificar en el UML los métodos vigentes de Personaje, Mazo, Jugador, Partida, Ronda, Combate, Datos e InterfazConsola.
-- [ ] **En curso:** completar la responsabilidad de cada método; el borrador describe Jugar, la elección de atributo, la elección de carta y el reparto, pero no cubre todo el UML.
-- [ ] **En curso:** unificar parámetros y retornos del borrador con el UML y completar las firmas incompletas.
-- [ ] **En curso:** completar precondiciones y resultados; el borrador ya limita la elección a los seis atributos y a las cartas disponibles, y describe el reparto de tres cartas.
-- [ ] Completar validaciones y excepciones por método a partir de los contratos vigentes y las excepciones de DataBases y Utilidades.
+Completada por confirmación del usuario el 9 de noviembre de 2026, después de revisar y simplificar las especificaciones de [Arquitectura](Arquitectura.md). El código incluido es ilustrativo y no constituye implementación. No se utilizan diagramas NS, según la decisión registrada.
+
+- [x] Identificar las clases y métodos vigentes del UML, incluidas las operaciones externas representadas.
+- [x] Organizar Arquitectura con una sección por clase y una subsección por método o constructor.
+- [x] Explicar responsabilidad y motivo de existencia de cada método.
+- [x] Precisar accesibilidad, carácter de instancia o estático, parámetros y retorno.
+- [x] Especificar precondiciones, resultados, efectos, validaciones y errores, incluidas las dependencias de DataBases y Utilidades.
+- [x] Describir las secuencias de combate, ronda, partida y recuperación de cartas, con un ejemplo ilustrativo de comparación.
+- [x] Distinguir las especificaciones actuales de los formatos y protocolo pendientes de las actividades 5 y 6.
+- [x] Revisar las especificaciones con el usuario y resolver observaciones antes de dar la actividad por cerrada.
+
+Verificación documental: las 58 operaciones del UML tienen una subsección de especificación, incluidos constructores y contratos externos. `git diff --check` no detectó errores y `dotnet build Proyecto-Integrador-Final.sln` terminó sin errores ni advertencias. La compilación verifica la base existente, no acredita implementación del diseño. Se precisó la retirada de cartas desde Combate.SetCarta y su recuperación única al cerrar la ronda. Formatos de archivos, protocolo e integración permanecen pendientes en las actividades 5 y 6.
 
 ### Actividad 5 — Formato de los archivos de personajes
 
