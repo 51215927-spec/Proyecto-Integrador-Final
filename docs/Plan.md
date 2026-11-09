@@ -276,3 +276,5 @@ Por indicación del usuario, se retiraron las cuatro flechas de dependencia `.>`
 Datos se amplió con constantes de rutas y configuración explícita de TipoProceso. Los valores reales de red y las entidades de intercambio siguen pendientes; no se implementó código.
 
 Se ajustaron las dimensiones de las cajas al texto y se verificaron las exportaciones PNG y SVG de UMLet: sin textos recortados ni relaciones atravesando cajas.
+
+Se compactó la distribución de clases y se recalcularon los recorridos de las relaciones, conservando las cajas ajustadas al texto. La exportación de UMLet se revisó visualmente.
