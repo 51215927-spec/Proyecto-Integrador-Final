@@ -1,50 +1,119 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <diagram program="umletino" version="15.1">
   <zoom_level>10</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>40</x>
-      <y>722</y>
-      <w>463</w>
-      <h>178</h>
+      <y>60</y>
+      <w>320</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>Partida
+--
+- numeroRonda: int
+_- RONDAS_PARA_GANAR: int = 15 {readOnly}_
+--
++ Partida(j1: Jugador, j2: Jugador, mazo: Mazo)
++ Jugar(): Jugador
+- Iniciar(): void
+- RepartirCartas(): void
+- JugarRonda(): void
+- RecogerCartas(): void
+- EstaTerminada(): bool
+- DeterminarGanadorPartida(): Jugador</panel_attributes>
+    <additional_attributes />
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>600</x>
+      <y>60</y>
+      <w>310</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>Jugador
+--
+- nombre: string
+- rondasGanadas: int
+--
++ Jugador(nombre: string)
++ RecibirCartas(personajes: Personaje[]): void
++ QuitarCarta(personaje: Personaje): void
++ EntregarCartas(): Personaje[]
++ GetCartas(): Personaje[]
++ SumarRondaGanada(): void
++ GetRondasGanadas(): int
++ GetNombre(): string</panel_attributes>
+    <additional_attributes />
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1130</x>
+      <y>60</y>
+      <w>280</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>Mazo
 --
-- cartas: List&lt;Carta&gt;
 --
-+ Mazo(cartas: List&lt;Carta&gt;)
++ Mazo(personajes: List&lt;Personaje&gt;)
 + Mezclar(): void
-+ Repartir(cantidad: int): Carta[]
-+ Devolver(cartas: Carta[]): void
++ Repartir(cantidad: int): Personaje[]
++ Devolver(personajes: Personaje[]): void
 + GetCantidad(): int</panel_attributes>
-    <additional_attributes></additional_attributes>
+    <additional_attributes />
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>40</x>
-      <y>1288</y>
-      <w>463</w>
-      <h>160</h>
+      <y>420</y>
+      <w>300</w>
+      <h>140</h>
     </coordinates>
-    <panel_attributes>Carta
+    <panel_attributes>Ronda
 --
-- personaje: Personaje
 --
-+ Carta(personaje: Personaje)
-+ ObtenerValor(tipo: TipoAtributo): int
-+ GetNombre(): string
-+ GetAscii(): string</panel_attributes>
-    <additional_attributes></additional_attributes>
++ Ronda(mano: Jugador, rival: Jugador)
++ AgregarCombate(combate: Combate): void
++ EstaDefinida(): bool
++ GetGanador(): Jugador
++ GetQuienEligeProximo(): Jugador
++ GetCombates(): Combate[]</panel_attributes>
+    <additional_attributes />
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>40</x>
-      <y>1638</y>
-      <w>463</w>
-      <h>376</h>
+      <x>600</x>
+      <y>420</y>
+      <w>380</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>Combate
+--
+- atributo: TipoAtributo [0..1]
+--
++ Combate(quienElige: Jugador, rival: Jugador)
++ SetAtributo(tipo: TipoAtributo): void
++ SetCarta(jugador: Jugador, personaje: Personaje): void
++ EstaCompleto(): bool
++ Resolver(): Jugador
++ GetGanador(): Jugador
++ GetAtributo(): TipoAtributo
++ GetCarta(jugador: Jugador): Personaje
++ GetParticipantes(): Jugador[]</panel_attributes>
+    <additional_attributes />
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1130</x>
+      <y>420</y>
+      <w>400</w>
+      <h>300</h>
     </coordinates>
     <panel_attributes>Personaje
 --
@@ -57,219 +126,68 @@
 - energia: int
 - habilidad: int
 --
-+ Personaje(nombre: string, ascii: string,
-      fuerza, velocidad, resistencia,
-      inteligencia, energia, habilidad: int)
++ Personaje(nombre: string, ascii: string, fuerza: int,
+    velocidad: int, resistencia: int, inteligencia: int,
+    energia: int, habilidad: int)
 + GetNombre(): string
 + GetAscii(): string
 + GetAtributo(tipo: TipoAtributo): int
-+ GetAtributoPrincipal(): TipoAtributo
-+ GetAtributoMenor(): TipoAtributo
-- Validar(): void</panel_attributes>
-    <additional_attributes></additional_attributes>
+- Validar(): void
+_+ Configurar(entidad: ConstructorEntidad&lt;Personaje&gt;): void_</panel_attributes>
+    <additional_attributes />
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>40</x>
-      <y>2114</y>
-      <w>463</w>
-      <h>124</h>
+      <y>820</y>
+      <w>390</w>
+      <h>190</h>
     </coordinates>
-    <panel_attributes>&lt;&lt;static&gt;&gt;
-LectorPersonaje
+    <panel_attributes>InterfazConsola
 --
 --
-+ Leer(ruta: string): Personaje
-+ LeerTodos(carpeta: string): List&lt;Personaje&gt;</panel_attributes>
-    <additional_attributes></additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1144</x>
-      <y>722</y>
-      <w>302</w>
-      <h>322</h>
-    </coordinates>
-    <panel_attributes>Jugador
---
-- nombre: string
-- cartas: List&lt;Carta&gt;
-- esMano: bool
-- rondasGanadas: int
---
-+ Jugador(nombre: string)
-+ RecibirCartas(cartas: Carta[]): void
-+ QuitarCarta(carta: Carta): void
-+ EntregarCartas(): Carta[]
-+ GetCartas(): Carta[]
-+ SumarRondaGanada(): void
-+ SetEsMano(valor: bool): void
-+ GetEsMano(): bool
-+ GetRondasGanadas(): int
-+ GetNombre(): string</panel_attributes>
-    <additional_attributes></additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>613</x>
-      <y>722</y>
-      <w>421</w>
-      <h>466</h>
-    </coordinates>
-    <panel_attributes>Partida
---
-- jugador1: Jugador
-- jugador2: Jugador
-- mazo: Mazo
-- rondaActual: Ronda
-- numeroRonda: int
-- turno: ControlTurno
-- interfaz: IInterfaz
-- archivo: ArchivoPartida
-_- RONDAS_PARA_GANAR: int = 15_
---
-+ Partida(j1, j2: Jugador, mazo: Mazo,
-      interfaz: IInterfaz, archivo: ArchivoPartida)
-+ Jugar(): Jugador
-- Iniciar(): void
-- RepartirCartas(): void
-- JugarRonda(): void
-- JugarCombate(quienElige: Jugador): Combate
-- ObtenerAtributo(quienElige: Jugador): TipoAtributo
-- ObtenerCarta(jugador: Jugador): Carta
-- RecogerCartas(): void
-- CambiarMano(): void
-- DeterminarGanadorPartida(): Jugador
-- EstaTerminada(): bool</panel_attributes>
-    <additional_attributes></additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>613</x>
-      <y>1288</y>
-      <w>421</w>
-      <h>250</h>
-    </coordinates>
-    <panel_attributes>Ronda
---
-- jugadorMano: Jugador
-- jugadorRival: Jugador
-- combates: List&lt;Combate&gt;
-- combatesGanadosMano: int
-- combatesGanadosRival: int
---
-+ Ronda(mano: Jugador, rival: Jugador)
-+ AgregarCombate(combate: Combate): void
-+ EstaDefinida(): bool
-+ GetGanador(): Jugador
-+ GetQuienEligeProximo(): Jugador</panel_attributes>
-    <additional_attributes></additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>613</x>
-      <y>1638</y>
-      <w>421</w>
-      <h>286</h>
-    </coordinates>
-    <panel_attributes>Combate
---
-- atributo: TipoAtributo
-- jugadorQueElige: Jugador
-- jugadorRival: Jugador
-- cartaQueElige: Carta
-- cartaRival: Carta
-- ganador: Jugador
---
-+ Combate(quienElige: Jugador, rival: Jugador)
-+ SetAtributo(tipo: TipoAtributo): void
-+ SetCarta(jugador: Jugador, carta: Carta): void
-+ EstaCompleto(): bool
-+ Resolver(): Jugador
-+ GetGanador(): Jugador</panel_attributes>
-    <additional_attributes></additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>613</x>
-      <y>300</y>
-      <w>421</w>
-      <h>322</h>
-    </coordinates>
-    <panel_attributes>ControlTurno
---
-- jugadorLocal: Jugador
-- quienElige: Jugador
-- pendientes: List&lt;Jugador&gt;
-- estado: EstadoPartida
-- numeroRonda: int
-- numeroCombate: int
---
-+ ControlTurno(jugadorLocal: Jugador)
-+ IniciarRonda(numero: int): void
-+ IniciarEleccionAtributo(quienElige: Jugador): void
-+ IniciarEleccionCartas(j1: Jugador, j2: Jugador): void
-+ PuedeActuar(jugador: Jugador): bool
-+ EsTurnoLocal(): bool
-+ RegistrarAccion(accion: Accion): void
-+ GetEstado(): EstadoPartida</panel_attributes>
-    <additional_attributes></additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>40</x>
-      <y>300</y>
-      <w>463</w>
-      <h>250</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;interface&gt;&gt;
-IInterfaz
---
---
-+ MostrarMarcador(j1: Jugador, j2: Jugador, ronda: int): void
 + MostrarMano(jugador: Jugador): void
-+ PedirAtributo(jugador: Jugador): TipoAtributo
-+ PedirCarta(jugador: Jugador): Carta
++ PedirCarta(jugador: Jugador): Personaje
++ PedirAtributo(): TipoAtributo
++ MostrarMarcador(j1: Jugador, j2: Jugador, ronda: int): void
 + MostrarEsperando(mensaje: string): void
 + MostrarCombate(combate: Combate): void
 + MostrarGanadorRonda(ganador: Jugador): void
 + MostrarGanadorPartida(ganador: Jugador): void
 + MostrarError(mensaje: string): void</panel_attributes>
-    <additional_attributes></additional_attributes>
+    <additional_attributes />
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>40</x>
-      <y>50</y>
-      <w>463</w>
-      <h>142</h>
+      <x>600</x>
+      <y>820</y>
+      <w>390</w>
+      <h>170</h>
     </coordinates>
-    <panel_attributes>InterfazConsola
+    <panel_attributes>Datos
 --
-- jugadorLocal: Jugador
+_+ RUTA_PERSONAJES: string {readOnly}_
+_+ RUTA_ELECCIONES_J1: string {readOnly}_
+_+ RUTA_ELECCIONES_J2: string {readOnly}_
+_+ RUTA_PUBLICACIONES_SERVIDOR: string {readOnly}_
+_- tipoProceso: TipoProceso [0..1]_
 --
-+ InterfazConsola(jugadorLocal: Jugador)
-- LeerOpcion(minimo: int, maximo: int): int
-- DibujarCarta(carta: Carta): string</panel_attributes>
-    <additional_attributes></additional_attributes>
+_+ Configurar(tipo: TipoProceso): void_
+_+ GetTipoProceso(): TipoProceso_
+_+ Iniciar(): void_</panel_attributes>
+    <additional_attributes />
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1144</x>
-      <y>1288</y>
-      <w>302</w>
-      <h>178</h>
+      <x>1130</x>
+      <y>780</y>
+      <w>110</w>
+      <h>150</h>
     </coordinates>
-    <panel_attributes>&lt;&lt;enum&gt;&gt;
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
 TipoAtributo
 --
 + Fuerza
@@ -278,364 +196,310 @@ TipoAtributo
 + Inteligencia
 + Energia
 + Habilidad</panel_attributes>
-    <additional_attributes></additional_attributes>
+    <additional_attributes />
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1144</x>
-      <y>300</y>
-      <w>260</w>
-      <h>178</h>
+      <x>600</x>
+      <y>1150</y>
+      <w>340</w>
+      <h>90</h>
     </coordinates>
-    <panel_attributes>&lt;&lt;enum&gt;&gt;
-EstadoPartida
+    <panel_attributes>DataBases::Modelo
 --
-+ EsperandoRival
-+ RepartiendoCartas
-+ EligiendoAtributo
-+ EligiendoCartas
-+ ResolviendoCombate
-+ Terminada</panel_attributes>
-    <additional_attributes></additional_attributes>
++ Cargar&lt;T&gt;(exigirArchivo: bool = false): Tabla&lt;T&gt;
++ Tabla&lt;T&gt;(): Tabla&lt;T&gt;
++ Guardar&lt;T&gt;(): void</panel_attributes>
+    <additional_attributes />
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>40</x>
+      <y>1080</y>
+      <w>140</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>Utilidades
+--
+Funciones
+DecoracionConsola
+MyConsole
+ColoresMenu
+FormatoMenu</panel_attributes>
+    <additional_attributes />
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1576</x>
-      <y>722</y>
-      <w>421</w>
-      <h>196</h>
-    </coordinates>
-    <panel_attributes>ArchivoPartida
---
-- rutaPropia: string
-- rutaRival: string
-- lineasLeidas: int
---
-+ ArchivoPartida(rutaPropia: string, rutaRival: string)
-+ Registrar(accion: Accion): void
-+ LeerAccionesDelRival(): Accion[]
-+ EstaDisponible(): bool</panel_attributes>
-    <additional_attributes></additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1576</x>
-      <y>1288</y>
-      <w>421</w>
-      <h>214</h>
-    </coordinates>
-    <panel_attributes>Accion
---
-- jugador: string
-- tipo: TipoAccion
-- numeroRonda: int
-- numeroCombate: int
-- valor: string
---
-+ Accion(jugador, tipo, ronda, combate, valor)
-+ GetTipo(): TipoAccion
-+ GetValor(): string</panel_attributes>
-    <additional_attributes></additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1576</x>
-      <y>1638</y>
-      <w>421</w>
-      <h>160</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;enum&gt;&gt;
-TipoAccion
---
-+ RepartirCartas
-+ ElegirAtributo
-+ JugarCarta
-+ FinDeRonda
-+ FinDePartida</panel_attributes>
-    <additional_attributes></additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1024</x>
-      <y>782</y>
-      <w>130</w>
-      <h>20</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;
-m2=2
-r2=jugador1 / jugador2</panel_attributes>
-    <additional_attributes>10.0;10.0;120.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>493</x>
-      <y>782</y>
-      <w>130</w>
-      <h>20</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;
-m2=1
-r2=mazo</panel_attributes>
-    <additional_attributes>120.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>843</x>
-      <y>612</y>
-      <w>20</w>
-      <h>120</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;
-m2=1
-r2=turno</panel_attributes>
-    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1024</x>
-      <y>340</y>
-      <w>130</w>
-      <h>20</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;
-m2=1
-r2=estado</panel_attributes>
-    <additional_attributes>10.0;10.0;120.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>230</x>
-      <y>540</y>
-      <w>543</w>
-      <h>192</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;
-m2=1
-r2=interfaz</panel_attributes>
-    <additional_attributes>533.0;182.0;533.0;132.0;10.0;132.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>964</x>
-      <y>662</y>
-      <w>832</w>
+      <x>1130</x>
+      <y>1040</y>
+      <w>400</w>
       <h>70</h>
     </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+DataBases::IEntidad&lt;Personaje&gt;
+--
+_+ Configurar(entidad: ConstructorEntidad&lt;Personaje&gt;): void_</panel_attributes>
+    <additional_attributes />
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>760</x>
+      <y>1330</y>
+      <w>430</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>Distribucion por procesos:
+Servidor: Partida coordina Mazo, Jugador, Ronda y Combate.
+Clientes: InterfazConsola solicita elecciones y muestra resultados.
+Cada proceso tiene su propio Datos.Modelo en memoria.
+Persistencia e intercambio: DataBases, CSV compartidos.
+Cada proceso guarda solo sus propias tablas.
+Integracion de elecciones, registros y mensajes: actividad 6.
+Este diagrama no especifica todavia el protocolo completo.</panel_attributes>
+    <additional_attributes />
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>40</x>
+      <y>1330</y>
+      <w>610</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>Reglas y contratos:
+J1 es mano inicial; alternancia de mano por ronda y de atributo por combate.
+Empate: gana quien no eligio. Ronda: 2 combates ganados; partida: 15 rondas.
+Al terminar la ronda vuelven todos los personajes, incluidos los no jugados.
+Personaje: suma 3000; valores 250..750; alguno &gt;=650 y alguno &lt;=350.
+No mostrar elecciones rivales hasta completar ambas. Error: cierre completo sin recuperacion.
+Diseno de TI, sin implementacion. Contratos detallados: Arquitectura.md y actividad 4.</panel_attributes>
+    <additional_attributes />
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>350</x>
+      <y>90</y>
+      <w>260</w>
+      <h>20</h>
+    </coordinates>
     <panel_attributes>lt=-&gt;
 m2=1
-r2=archivo</panel_attributes>
-    <additional_attributes>10.0;60.0;10.0;10.0;822.0;10.0;822.0;60.0</additional_attributes>
+r2=- jugador1</panel_attributes>
+    <additional_attributes>10.0;10.0;250.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>110</x>
-      <y>182</y>
-      <w>20</w>
-      <h>128</h>
+      <x>350</x>
+      <y>140</y>
+      <w>260</w>
+      <h>30</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;.
-&lt;&lt;implementa&gt;&gt;</panel_attributes>
-    <additional_attributes>10.0;118.0;10.0;10.0</additional_attributes>
+    <panel_attributes>lt=-&gt;
+m2=1
+r2=- jugador2</panel_attributes>
+    <additional_attributes>10.0;10.0;50.0;10.0;50.0;20.0;250.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>663</x>
-      <y>1178</y>
+      <x>240</x>
+      <y>10</y>
+      <w>900</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m2=1
+r2=- mazo</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0;850.0;10.0;850.0;80.0;890.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>130</x>
+      <y>260</y>
       <w>20</w>
-      <h>120</h>
+      <h>170</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 m2=0..1
-r2=rondaActual</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+r2=- rondaActual</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;160.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>663</x>
-      <y>1528</y>
-      <w>20</w>
-      <h>120</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;
-m2=1..3
-r2=combates</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>120</x>
-      <y>890</y>
-      <w>20</w>
-      <h>408</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;
-m2=0..n
-r2=cartas</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;398.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>423</x>
-      <y>1034</y>
-      <w>791</w>
-      <h>264</h>
+      <x>330</x>
+      <y>480</y>
+      <w>280</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 m2=0..3
-r2=cartas</panel_attributes>
-    <additional_attributes>781.0;10.0;781.0;204.0;10.0;204.0;10.0;254.0</additional_attributes>
+r2=- combates</panel_attributes>
+    <additional_attributes>10.0;10.0;50.0;10.0;50.0;30.0;270.0;30.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>120</x>
-      <y>1438</y>
-      <w>20</w>
+      <x>330</x>
+      <y>250</y>
+      <w>310</w>
       <h>210</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 m2=1
-r2=personaje</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;200.0</additional_attributes>
+r2=- jugadorMano</panel_attributes>
+    <additional_attributes>10.0;200.0;240.0;200.0;240.0;50.0;300.0;50.0;300.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>493</x>
-      <y>1358</y>
+      <x>330</x>
+      <y>170</y>
+      <w>630</w>
+      <h>380</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m2=1
+r2=- jugadorRival</panel_attributes>
+    <additional_attributes>10.0;370.0;40.0;370.0;40.0;140.0;620.0;140.0;620.0;10.0;580.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>640</x>
+      <y>250</y>
       <w>130</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m2=1
+r2=- jugadorQueElige</panel_attributes>
+    <additional_attributes>10.0;170.0;10.0;110.0;120.0;110.0;120.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>770</x>
+      <y>230</y>
+      <w>200</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m2=1
+r2=- jugadorRival</panel_attributes>
+    <additional_attributes>10.0;190.0;10.0;150.0;190.0;150.0;190.0;10.0;140.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>850</x>
+      <y>0</y>
+      <w>180</w>
+      <h>430</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m2=0..1
+r2=- ganador</panel_attributes>
+    <additional_attributes>50.0;420.0;170.0;420.0;170.0;10.0;10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>970</x>
+      <y>460</y>
+      <w>170</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m2=0..1
+r2=- cartaQueElige</panel_attributes>
+    <additional_attributes>10.0;10.0;50.0;10.0;50.0;40.0;160.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>970</x>
+      <y>560</y>
+      <w>170</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m2=0..1
+r2=- cartaRival</panel_attributes>
+    <additional_attributes>10.0;10.0;50.0;10.0;50.0;80.0;160.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1260</x>
+      <y>170</y>
+      <w>40</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m2=0..*
+r2=- personajes</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;210.0;30.0;210.0;30.0;250.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>900</x>
+      <y>110</y>
+      <w>240</w>
       <h>340</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-m2=2
-r2=cartaQueElige / cartaRival</panel_attributes>
-    <additional_attributes>120.0;330.0;65.0;330.0;65.0;10.0;10.0;10.0</additional_attributes>
+m2=0..3
+r2=- cartas</panel_attributes>
+    <additional_attributes>10.0;10.0;190.0;10.0;190.0;330.0;230.0;330.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1024</x>
-      <y>772</y>
-      <w>472</w>
-      <h>956</h>
+      <x>720</x>
+      <y>980</y>
+      <w>60</w>
+      <h>180</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-m2=2
-r2=jugadorQueElige / jugadorRival</panel_attributes>
-    <additional_attributes>10.0;946.0;462.0;946.0;462.0;10.0;422.0;10.0</additional_attributes>
+m2=0..1
+r2=_+ Modelo {readOnly}_
+propiedad estatica; escritura privada</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;130.0;50.0;130.0;50.0;170.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1024</x>
-      <y>1456</y>
-      <w>281</w>
-      <h>222</h>
+      <x>1300</x>
+      <y>710</y>
+      <w>210</w>
+      <h>340</h>
     </coordinates>
-    <panel_attributes>lt=-&gt;
-m2=1
-r2=atributo</panel_attributes>
-    <additional_attributes>10.0;212.0;271.0;212.0;271.0;10.0</additional_attributes>
+    <panel_attributes>lt=.&gt;&gt;</panel_attributes>
+    <additional_attributes>200.0;10.0;200.0;290.0;10.0;290.0;10.0;330.0</additional_attributes>
   </element>
   <element>
-    <id>Relation</id>
+    <id>UMLClass</id>
     <coordinates>
-      <x>1646</x>
-      <y>908</y>
-      <w>20</w>
-      <h>390</h>
+      <x>1010</x>
+      <y>1150</y>
+      <w>110</w>
+      <h>100</h>
     </coordinates>
-    <panel_attributes>lt=-&gt;
-m2=0..n
-r2=acciones</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;380.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1646</x>
-      <y>1492</y>
-      <w>20</w>
-      <h>156</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;
-m2=1
-r2=tipo</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;146.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>120</x>
-      <y>2004</y>
-      <w>20</w>
-      <h>120</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;.
-&lt;&lt;crea&gt;&gt;</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLNote</id>
-    <coordinates>
-      <x>613</x>
-      <y>50</y>
-      <w>421</w>
-      <h>150</h>
-    </coordinates>
-    <panel_attributes>Regulacion de turnos (ControlTurno):
-- EligiendoAtributo: solo actua quien elige.
-- EligiendoCartas: actuan ambos, una vez c/u.
-- Accion fuera de turno, ronda o combate:
-  AccionInvalidaException.
-- La interfaz local solo pide datos si
-  PuedeActuar(jugadorLocal) es true;
-  si no, MostrarEsperando.</panel_attributes>
-    <additional_attributes></additional_attributes>
-  </element>
-  <element>
-    <id>UMLNote</id>
-    <coordinates>
-      <x>1144</x>
-      <y>1828</y>
-      <w>330</w>
-      <h>115</h>
-    </coordinates>
-    <panel_attributes>Excepciones propias:
-- PersonajeInvalidoException
-- ArchivoNoDisponibleException
-- AccionInvalidaException
-- MazoInsuficienteException</panel_attributes>
-    <additional_attributes></additional_attributes>
-  </element>
-  <element>
-    <id>UMLNote</id>
-    <coordinates>
-      <x>1144</x>
-      <y>1968</y>
-      <w>330</w>
-      <h>115</h>
-    </coordinates>
-    <panel_attributes>Reglas clave:
-- Empate en Combate: gana quien NO eligio
-  el atributo (jugadorRival).
-- Ronda: termina con 2 combates ganados.
-- Partida: gana quien llegue a 15 rondas.</panel_attributes>
-    <additional_attributes></additional_attributes>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+TipoProceso
+--
++ Servidor
++ ClienteJ1
++ ClienteJ2</panel_attributes>
+    <additional_attributes />
   </element>
 </diagram>

@@ -25,7 +25,7 @@ La aplicación todavía muestra `Hello, World!` y las pruebas son iniciales. El 
 - [Reglas del juego](docs/Reglas-del-juego.md): funcionamiento esperado del sistema.
 - [Plan de trabajo](docs/Plan.md): estado de las actividades y próximos pasos.
 - [Arquitectura](docs/Arquitectura.md): decisiones de diseño y revisiones pendientes.
-- [Diagrama UML](docs/diagramas/UML.uxf): modelo de clases para abrir con UMLet, pendiente de ajustes.
+- [Diagrama UML](docs/diagramas/UML.uxf): modelo de dominio actualizado para abrir con UMLet; integración del protocolo pendiente de la actividad 6.
 - [Guía de colaboración](CONTRIBUTING.md): organización del trabajo, ramas, commits y revisión de cambios.
 
 ## Cómo usarlo

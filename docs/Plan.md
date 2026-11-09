@@ -1,6 +1,6 @@
 # Plan de trabajo — Juego Guerra
 
-Plan basado en [la consigna](Consigna.md). Marcar una tarea cuando su resultado esté disponible y revisado. Las actividades de TI definen los contratos que se usarán en Taller; las decisiones pendientes deben resolverse antes de implementar el componente correspondiente.
+Plan basado en [la consigna](Consigna.md). Marcar una tarea cuando su resultado esté disponible y revisado. Las actividades de TI definen los contratos que se usarán en Taller; las decisiones pendientes deben resolverse antes de implementar el componente correspondiente. Por decisión del usuario, no se utilizarán diagramas Nassi-Schneiderman (NS); el comportamiento de los métodos se documentará por escrito con sus entradas, resultados, precondiciones y validaciones. La consigna original se conserva como referencia sin modificar.
 
 ## Estado revisado — 8 de noviembre de 2026
 
@@ -12,10 +12,10 @@ Se revisaron el documento de avance aportado por el usuario y el [UML existente]
 |---|---|---|
 | 1. Personajes | Completada por confirmación del usuario. Lysander y Reched tienen nombre, descripción, seis valores, total y atributos principal y menor; ambos cumplen las restricciones. | Sin pendientes para esta actividad. |
 | 2. Requerimientos | Documento completo y revisado en [Reglas del juego](Reglas-del-juego.md), listo para copiar a la entrega. Incluye reglas, participantes, datos de ejecución, comunicación, errores y separación de requisitos funcionales y técnicos. | Sin tareas de redacción pendientes. La aceptación del PR y la revisión del compañero siguen pendientes; el protocolo detallado corresponde a la actividad 6. |
-| 3. Modelo de clases | UML elaborado con clases, atributos privados, firmas y relaciones. | Justificar responsabilidades y decisiones, revisar coherencia con las reglas y cerrar las observaciones de arquitectura. |
-| 4. Métodos | Borrador de Partida, Jugador y Mazo. | Unificar las firmas con el UML y completar contratos, validaciones, excepciones y diagramas de algoritmos. |
+| 3. Modelo de clases | Completada por confirmación del usuario. UML y Arquitectura revisados, con firmas, relaciones, responsabilidades y justificación. | Sin pendientes propios. El modelado de comunicación y su integración se realizan en la actividad 6. |
+| 4. Métodos | Borrador de Partida, Jugador y Mazo. | Unificar las firmas con el UML y completar contratos, validaciones y excepciones. |
 | 5. Archivos de personajes | Solo se indica un límite de ASCII: «máximo 25 líneas y 120 caracteres». | Aclarar si 120 es por línea o en total; definir sintaxis, campos, descripción, ASCII, errores y ejemplos válidos e inválidos. |
-| 6. Archivo de partida | Confirmados dos clientes y un servidor, con archivos de escritura exclusiva por proceso; UML todavía con rutas propia y rival. | Revisar con la consigna y SSI el esquema confirmado de varios archivos compartidos; especificar formato, identificación, lecturas, escrituras, concurrencia y finalización coordinada ante errores, sin recuperación. |
+| 6. Archivo de partida | Dos clientes y servidor; intercambio mediante Datos y DataBases. | Definir registros, identificación, secuencia, permisos, publicación y cierre coordinado. Verificar funcionamiento en red local. |
 | 7. Pruebas | No se encontró un plan de casos desarrollado en el material revisado. | Diseñar condiciones iniciales, datos y resultados esperados para casos normales, límites y errores. |
 
 ### Verificación de personajes
@@ -32,7 +32,7 @@ Valores en orden: Fuerza, Velocidad, Resistencia, Inteligencia, Energía y Habil
 - Participan dos jugadores y se reparten tres cartas a cada uno desde un mazo común.
 - El jugador mano elige el primer atributo; ambos jugadores eligen su carta y la muestran simultáneamente. Gana el mayor valor y, ante empate, quien no eligió el atributo del combate.
 - La elección del atributo se alterna entre los jugadores en cada combate, independientemente del ganador. La ronda se gana con dos combates ganados, por lo que puede terminar sin jugar la tercera carta.
-- Al terminar la ronda se devuelven las cartas jugadas al mazo, se mezcla y se reparte nuevamente. Gana la partida quien alcanza 15 rondas ganadas.
+- Al terminar la ronda se restaura el mazo completo, incluidas las cartas no jugadas. Si nadie alcanzó 15 rondas ganadas, se mezcla y se reparte nuevamente; de lo contrario finaliza la partida.
 
 ### Decisión confirmada — jugador mano y terminología
 
@@ -50,22 +50,22 @@ Esta decisión y las reglas confirmadas están redactadas en [Reglas del juego](
 
 ### Precisiones pendientes antes de cerrar el diseño
 
-- Comprobar en la actividad 3 que los contratos del UML respeten la terminología y las reglas ya consolidadas en Reglas-del-juego.md.
-- Ajustar los contratos del UML a la restauración del mazo completo al terminar cada ronda, incluidas las cartas no jugadas.
+- Contratos de dominio revisados frente a las reglas; falta completar su integración con el protocolo de la actividad 6.
+- Restauración completa del mazo documentada en UML y Arquitectura; completar la especificación detallada en la actividad 4.
 - El mazo inicial se forma a partir del CSV compartido que genera un sistema externo al cliente. Los repetidos están prohibidos y menos de seis cartas válidas impiden iniciar la partida con un mensaje de error. El sistema externo de carga impide duplicados. Falta definir el formato en la actividad 5.
 - Especificar cómo se mantienen ocultas carta y atributo hasta registrar ambas elecciones; el orden de elección ya está definido en Reglas-del-juego.md.
-- Alinear las firmas del borrador con el UML: `Partida.Jugar(Jugador, Jugador): void` frente a constructor con jugadores y `Jugar(): Jugador`; elecciones en Jugador frente a `IInterfaz`; `Mazo.GetMano()` frente a `Repartir(cantidad)`.
+- En la actividad 4 usar las firmas vigentes del UML y Arquitectura para sustituir las diferencias del borrador anterior.
 - Separar los archivos iniciales de personajes del intercambio de acciones de la partida; definir identidad de partida, turno, ronda y combate, acciones duplicadas o fuera de turno y escrituras incompletas.
 
 ### Orden de trabajo para TI
 
 1. Actividades 1 y 2 completadas en su documentación. La actividad 2 está lista para copiar a la entrega y para revisión del PR.
-2. Revisar el UML y justificar sus decisiones en Arquitectura (actividad 3).
+2. Actividad 3 completada: UML y justificación revisados. La ampliación del modelo para comunicación corresponde a la actividad 6.
 3. Completar las especificaciones de métodos según el modelo acordado (actividad 4).
 4. Definir los formatos de personajes y partida compartida con sus errores y ejemplos (actividades 5 y 6).
 5. Completar el plan de pruebas y revisar que todos los entregables de TI sean coherentes (actividad 7).
 
-Las actividades 1 y 2 tienen sus entregables documentados. Sigue pendiente revisar el modelo de clases (actividad 3), con un inicio de especificación de métodos (actividad 4). Los demás entregables de TI no se consideran cerrados solo por contar con un borrador.
+Las actividades 1, 2 y 3 tienen sus entregables documentados; el usuario dio por terminada la actividad 3. La actividad 4 conserva un borrador por adecuar. El modelado e integración de comunicación se completarán en la actividad 6. Los demás entregables de TI no se consideran cerrados solo por contar con un borrador.
 
 ## TI — Análisis de Sistemas
 
@@ -115,28 +115,30 @@ El PR de esta actividad permanecerá en borrador mientras existan tareas pendien
 
 ### Actividad 3 — Modelo de clases
 
-- [ ] Adaptar el UML a dos clientes y un servidor: reemplazar lectura directa del rival, asignar análisis y resultados al servidor y revisar ControlTurno, ArchivoPartida y Accion.
+**Completada por confirmación del usuario.** El UML y su justificación están revisados. No hay implementación. El detalle vigente está en [Arquitectura](Arquitectura.md). Las tareas de modelado e integración de comunicación se trasladan a la actividad 6.
 
-- [ ] Adaptar el UML, sus relaciones y contratos a la decisión de unificar Carta y Personaje. Las casillas históricas sobre Carta describen el diagrama anterior, no una aprobación del diseño vigente.
-- [ ] Revisar con el docente la diferencia entre esta decisión y la separación explícita de Carta y Personaje que establece la consigna para Taller; conservar Taller fuera del alcance actual.
-- [x] Definir las responsabilidades principales de Personaje, Carta, Mazo y los objetos de partida (UML y descripción en Arquitectura).
-- [x] Identificar las clases adicionales: Jugador, Partida, Ronda, Combate, ControlTurno, LectorPersonaje, ArchivoPartida, Accion e interfaz de consola, con sus enumeraciones.
-- [ ] Justificar las clases adicionales y las decisiones de separación de responsabilidades.
-- [x] Definir los atributos de las clases y su encapsulamiento privado en el UML.
-- [ ] **En curso:** completar las firmas del modelo; la mayoría incluye parámetros y retornos, pero el constructor de Accion no tipa sus parámetros y existen diferencias con el borrador de métodos.
-- [x] Definir las relaciones principales y la delegación de Carta en Personaje (UML y Arquitectura).
-- [x] Elaborar el diagrama de clases UML (disponible en `docs/diagramas/UML.uxf`; revisión final pendiente).
-- [ ] **En curso:** completar la justificación de decisiones en [Arquitectura](Arquitectura.md) y cerrar la revisión de coherencia; ya se documentaron responsabilidades y diferencias pendientes.
+- [x] Representar Personaje, Mazo, Jugador, Partida, Ronda y Combate con atributos privados, firmas tipadas y relaciones.
+- [x] Adaptar todas las referencias al concepto unificado de Personaje.
+- [x] Asignar coordinación del dominio al servidor y presentación a los clientes, sin comunicación directa entre rivales.
+- [x] Incorporar Datos estática y las dependencias de DataBases sin duplicar la lectura CSV.
+- [x] Definir en Datos constantes de rutas y Configurar(TipoProceso), con identidad fija de servidor, cliente J1 o cliente J2 antes de Iniciar.
+- [x] Describir InterfazConsola delegando entradas, menús y presentación en Utilidades.
+- [x] Justificar responsabilidades, encapsulamiento, delegación y decisiones en Arquitectura.
+- [x] Reflejar J1 como mano inicial, alternancia por ronda y combate, empate, dos victorias por ronda y 15 rondas por partida.
+- [x] Conservar el jugador mano solo en Ronda; Partida calcula el rol al construir cada ronda según su número.
+- [x] Revisar consultas necesarias para la presentación, multiplicidades de inicialización y contratos que evitan registrar combates repetidos o ajenos.
+- [x] Documentar recuperación de todas las cartas y ocultación en interfaz hasta completar ambas elecciones.
+- [x] Unificar las firmas de referencia en UML y Arquitectura; adecuar los borradores anteriores en la actividad 4.
+- [x] Revisar la notación frente a UML 2.5.1, exportar con UMLet y comprobar que las 16 relaciones conecten a bordes sin atravesar cajas.
+- [x] Dar por terminada la actividad 3 según confirmación del usuario; trasladar el modelado de comunicación a la actividad 6.
 
 ### Actividad 4 — Especificación de métodos
 
-- [x] Identificar los métodos del modelo de clases en el UML, incluidos los de partida, ronda, combate, cartas, mazo, personajes, turnos, archivos e interfaz.
+- [x] Identificar en el UML los métodos vigentes de Personaje, Mazo, Jugador, Partida, Ronda, Combate, Datos e InterfazConsola.
 - [ ] **En curso:** completar la responsabilidad de cada método; el borrador describe Jugar, la elección de atributo, la elección de carta y el reparto, pero no cubre todo el UML.
 - [ ] **En curso:** unificar parámetros y retornos del borrador con el UML y completar las firmas incompletas.
 - [ ] **En curso:** completar precondiciones y resultados; el borrador ya limita la elección a los seis atributos y a las cartas disponibles, y describe el reparto de tres cartas.
-- [ ] **En curso:** completar validaciones y excepciones por método; el UML ya enumera cuatro excepciones y el rechazo de acciones fuera de turno, ronda o combate.
-- [ ] Elaborar diagramas de Nassi-Schneiderman para los algoritmos que los necesiten.
-- [ ] Revisar con Taller que los contratos permitan implementar los métodos sin inventar reglas.
+- [ ] Completar validaciones y excepciones por método a partir de los contratos vigentes y las excepciones de DataBases y Utilidades.
 
 ### Actividad 5 — Formato de los archivos de personajes
 
@@ -153,21 +155,23 @@ El PR de esta actividad permanecerá en borrador mientras existan tareas pendien
 
 ### Actividad 6 — Archivo de partida compartida
 
-Los tipos de acciones se planificarán en esta actividad, según decisión del usuario; los enumerados actualmente en el UML son antecedentes, no un protocolo aprobado. La validez de los envíos corresponde al cliente y cualquier error finaliza el juego completo.
+Los registros de elecciones y publicaciones se definirán en esta actividad. El acceso a archivos se realiza mediante Datos y DataBases. La validez de los envíos corresponde al cliente y cualquier fallo de ejecución finaliza el juego completo, sin recuperación.
 
-- [ ] Especificar cómo se detecta un fallo del servidor y cómo se comunica y coordina la finalización de ambos clientes y del servidor, sin recuperación de la partida.
-
-- [x] Definir un escritor exclusivo por archivo: cada cliente escribe sus acciones y el servidor sus mensajes y resultados; los demás procesos acceden en modo lectura.
-- [ ] Definir cantidad, rutas, permisos, datos y formato de los archivos de clientes y servidor; revisar Accion y agregar los mensajes de resultados.
-- [ ] **En curso:** completar la identificación de partida, jugadores, estado y turno; ControlTurno y EstadoPartida ya modelan estados, actores pendientes y números de ronda y combate, pero falta identidad de partida y su representación en el archivo.
-- [ ] **En curso:** especificar el registro de acciones; el UML propone Registrar y cinco tipos de acción, pero no define formato, confirmación ni duplicados.
-- [ ] **En curso:** determinar cuándo lee y actualiza cada computadora; hay rutas propia y rival, contador de líneas leídas y LeerAccionesDelRival, sin frecuencia ni secuencia de operaciones acordadas.
-- [x] Definir la regla de autorización del turno en el UML: al elegir atributo actúa solo quien elige; al elegir cartas actúan ambos una vez cada uno; las acciones fuera de turno, ronda o combate se rechazan con AccionInvalidaException.
-- [ ] Especificar el algoritmo que valida los datos recibidos y conserva el estado ante una acción inválida o repetida.
-- [ ] Completar la regla de escritor exclusivo con publicación y lectura de mensajes completos, confirmaciones y prevención de procesamiento duplicado.
-- [ ] **En curso:** completar la respuesta ante archivo inaccesible, lectura fallida o escritura incompleta; el UML propone EstaDisponible y ArchivoNoDisponibleException, pero falta la política de recuperación.
-- [ ] Revisar con SSI la viabilidad del mecanismo en la red local y los permisos necesarios.
-- [ ] Entregar la especificación del archivo compartido, diferenciándolo de los archivos iniciales de personajes.
+- [x] Definir un escritor exclusivo por archivo: cada cliente escribe sus elecciones y el servidor sus publicaciones; los demás procesos leen.
+- [ ] Definir las entidades de intercambio y sus campos, cantidad de archivos, rutas, permisos y configuración en DataBases.
+- [ ] Especificar la identificación de partida, jugadores, estado, ronda, combate y jugador autorizado a elegir.
+- [ ] Definir cómo se relacionan los registros de intercambio con los personajes del catálogo.
+- [ ] Determinar cuándo cada proceso ejecuta Cargar<T> y Guardar<T> y qué tablas puede guardar.
+- [ ] Especificar la secuencia de elecciones y la publicación de resultados sin revelar elecciones anticipadamente en la interfaz.
+- [ ] Definir cómo se reconocen registros ya procesados, repetidos o correspondientes a otra partida, ronda o combate.
+- [ ] Especificar publicación de mensajes completos y coherencia entre archivos, considerando que Guardar reemplaza una tabla completa y no hay transacciones entre archivos.
+- [ ] Especificar la creación inicial de las tablas y cuáles requieren archivos existentes al cargarse.
+- [ ] Definir la detección de fallos y el cierre coordinado de clientes y servidor, sin recuperación.
+- [ ] Verificar con SSI el acceso, permisos, bloqueos y reemplazo de archivos en la red local.
+- [ ] Incorporar al UML y Arquitectura las entidades de elecciones de los clientes y publicaciones del servidor, con atributos, relaciones y configuración en Datos.
+- [ ] Definir los métodos que conectan los registros de intercambio con Partida y los clientes, conforme al protocolo acordado.
+- [ ] Revisar la coherencia de esas ampliaciones con las reglas y el modelo de dominio ya cerrado en la actividad 3.
+- [ ] Entregar la especificación de intercambio, diferenciándola del catálogo inicial de personajes.
 
 ### Actividad 7 — Casos de prueba
 
@@ -196,61 +200,63 @@ Etapas conservadas como referencia futura. No se implementarán en el alcance ac
 - [ ] Implementar las operaciones de consulta conservando el encapsulamiento.
 - [ ] Agregar en `test/` pruebas de personajes válidos y de cada restricción de puntajes.
 
-### Etapa 2 — Lectura de archivos de personajes
+### Etapa 2 — Carga de personajes con Datos y DataBases
 
-- [ ] Implementar la lectura del formato de texto definido en TI.
-- [ ] Interpretar los campos y validar los datos obligatorios y duplicados.
-- [ ] Construir objetos Personaje a partir de los datos válidos.
-- [ ] Implementar las respuestas previstas para archivos inexistentes, ilegibles o inválidos.
-- [ ] Separar lectura, validación y construcción según las responsabilidades del diseño.
-- [ ] Probar la carga con los archivos válidos e inválidos de la actividad 5.
+- [ ] Referenciar DataBases e implementar Personaje.Configurar con el formato definido en TI.
+- [ ] Crear Datos estática con sus constantes de rutas, Configurar, GetTipoProceso, Modelo e Iniciar conforme al diseño.
+- [ ] Fijar las rutas absolutas reales del recurso de SSI y configurar el rol antes de inicializar el modelo.
+- [ ] Cargar el catálogo obligatorio mediante Modelo.Cargar<Personaje>(exigirArchivo: true).
+- [ ] Obtener los personajes de la tabla cargada para construir el mazo inicial.
+- [ ] Mantener la validación de puntajes en el constructor de Personaje y la interpretación del CSV en DataBases.
+- [ ] Aplicar la finalización prevista para archivos inexistentes, ilegibles o inválidos.
+- [ ] Probar la carga con los ejemplos de la actividad 5, sin reimplementar el lector CSV.
 
-### Etapa 3 — Implementación de Carta
+### Etapa 3 — Jugador e interacción de consola
 
-Referencia de la consigna para trabajo futuro. La decisión vigente del usuario unifica Carta y Personaje; las tareas siguientes no deben ejecutarse sin resolver esa diferencia y actualizar el modelo.
-
-- [ ] Crear la clase Carta con una referencia a Personaje según el UML.
-- [ ] Implementar las consultas de información que necesita mostrar la carta.
-- [ ] Implementar la consulta del atributo usado en el enfrentamiento mediante delegación.
-- [ ] Comprobar que Carta no duplique los datos que pertenecen a Personaje.
-- [ ] Probar que las consultas de Carta devuelvan la información de su personaje.
+- [ ] Crear Jugador con nombre, mano de personajes y marcador de rondas ganadas.
+- [ ] Implementar recepción, consulta, retiro y entrega de personajes sin exponer la colección interna.
+- [ ] Implementar InterfazConsola utilizando Funciones, DecoracionConsola y MyConsole de Utilidades.
+- [ ] Seleccionar un Personaje de la mano disponible mediante PedirOpcionMenu y el atributo mediante PedirEnum<TipoAtributo>.
+- [ ] Presentar mano, marcador, esperas, resultados y errores según los contratos de TI.
+- [ ] Comprobar que la interfaz no revele las elecciones rivales hasta completar ambas elecciones.
 
 ### Etapa 4 — Administración del mazo
 
-- [ ] Crear la clase Mazo y su almacenamiento de cartas según el diseño.
-- [ ] Implementar la incorporación de cartas y la consulta de cantidad disponible.
-- [ ] Implementar la mezcla y comprobar que conserve las cartas originales.
-- [ ] Implementar el reparto entre los jugadores según las reglas acordadas.
-- [ ] Implementar la obtención y el retiro de la carta que participa de una ronda.
-- [ ] Implementar la incorporación de las cartas ganadas en el orden especificado.
-- [ ] Probar las operaciones con un mazo vacío, una carta y varias cartas.
+- [ ] Crear Mazo con su colección privada de Personaje.
+- [ ] Implementar Mezclar, Repartir, Devolver y GetCantidad conforme a las firmas del UML.
+- [ ] Comprobar que el reparto retire los elementos entregados y respete su disponibilidad.
+- [ ] Restaurar el mazo completo al cerrar cada ronda, incluyendo personajes jugados y no jugados, sin pérdidas ni repeticiones.
+- [ ] Impedir iniciar una partida con menos de seis personajes válidos y mostrar el mensaje acordado.
+- [ ] Probar mazo vacío, reparto insuficiente, mezcla y recuperación completa.
 
 ### Etapa 5 — Implementación de las reglas
 
-- [ ] Implementar la preparación de una partida y la asignación del turno inicial.
-- [ ] Implementar la selección del atributo y la validación de la elección.
-- [ ] Comparar los valores del atributo en las cartas enfrentadas.
-- [ ] Determinar el ganador de la ronda y aplicar la regla de empate acordada.
-- [ ] Transferir las cartas involucradas según el resultado de la ronda.
-- [ ] Asignar el turno siguiente según las reglas.
-- [ ] Detectar las condiciones de finalización y comunicar el resultado de la partida.
-- [ ] Ejecutar las pruebas de rondas, empates, turnos y jugadores sin cartas.
+- [ ] Implementar Partida, Ronda y Combate con los contratos acordados en TI.
+- [ ] Iniciar con J1 como jugador mano y repartir tres personajes a cada jugador.
+- [ ] Registrar carta y atributo del elector y después la carta del rival según la secuencia definida.
+- [ ] Resolver cada combate por el atributo elegido; ante empate gana quien no eligió el atributo.
+- [ ] Retirar de la mano los personajes jugados para impedir reutilizarlos durante la ronda.
+- [ ] Alternar el elector de atributo entre combates, independientemente del ganador.
+- [ ] Cerrar la ronda al alcanzar dos combates ganados y sumar una ronda al marcador del vencedor.
+- [ ] Recuperar todos los personajes y alternar el jugador mano al terminar cada ronda.
+- [ ] Finalizar al alcanzar 15 rondas ganadas, sin iniciar otra ronda.
+- [ ] Ejecutar las pruebas de combates, empates, alternancia, cierre anticipado de ronda y fin de partida.
 
 ### Etapa 6 — Comunicación entre computadoras
 
-- [ ] Comprobar desde ambas computadoras el acceso al archivo compartido configurado en SSI.
-- [ ] Implementar la lectura del estado de partida según el formato acordado.
-- [ ] Implementar el registro de acciones y la actualización del estado compartido.
-- [ ] Validar la identidad de la partida y el turno antes de aceptar una acción.
-- [ ] Implementar el mecanismo acordado para evitar inconsistencias por acceso concurrente.
-- [ ] Manejar los errores de acceso, lectura y escritura según la especificación.
-- [ ] Probar el intercambio entre dos computadoras y registrar los resultados.
-- [ ] Probar la pérdida de acceso y el rechazo de información de un turno incorrecto.
+- [ ] Implementar las entidades y configuraciones de intercambio definidas en la actividad 6 de TI.
+- [ ] Comprobar el acceso al recurso compartido desde los dos clientes y el servidor.
+- [ ] Cargar y publicar mediante Datos.Modelo, guardando solo las tablas propias de cada proceso.
+- [ ] Implementar la secuencia de elecciones, análisis en el servidor y presentación de resultados en los clientes.
+- [ ] Aplicar identificación y control de registros procesados conforme al protocolo acordado.
+- [ ] Comprobar bloqueos y publicación de archivos completos con DataBases en la red local.
+- [ ] Implementar el cierre coordinado ante fallos, sin recuperación de la partida.
+- [ ] Probar el intercambio entre dos computadoras, registros repetidos o fuera de secuencia y pérdida de acceso; registrar los resultados.
 
 ### Etapa 7 — Integración
 
-- [ ] Integrar la carga de personajes, cartas, mazos, reglas y comunicación en la aplicación de consola.
-- [ ] Comprobar que las interfaces implementadas coincidan con los contratos de TI.
+- [ ] Integrar la carga de personajes, mazo, jugadores, reglas, consola y comunicación en la aplicación de consola.
+- [ ] Comprobar que las firmas y responsabilidades implementadas coincidan con los contratos de TI.
 - [ ] Resolver con los Analistas las diferencias detectadas y actualizar la documentación afectada.
 - [ ] Ejecutar `dotnet build Proyecto-Integrador-Final.sln` y corregir los errores de compilación.
 - [ ] Ejecutar `dotnet test Proyecto-Integrador-Final.sln` y corregir los fallos de las pruebas.
@@ -262,3 +268,21 @@ Referencia de la consigna para trabajo futuro. La decisión vigente del usuario 
 - [ ] Preparar la defensa de las decisiones de diseño, estrategias de personajes, clases y métodos de cada integrante.
 
 Los Analistas coordinan los entregables y comunican los cambios a Taller. Los cambios para GitHub siguen las ramas, los commits y la revisión por un compañero establecidos en [CONTRIBUTING](../CONTRIBUTING.md).
+
+## Resultado de la revisión del modelo — 8 de noviembre de 2026
+
+Se actualizó el UML y se justificaron contratos y responsabilidades en Arquitectura, incluyendo consultas de combate y ronda necesarias para presentar resultados y recuperar cartas sin exponer colecciones privadas. Se comprobó el XML del diagrama y se revisaron firmas, tipos y dependencias contra las bibliotecas. `git diff --check` no encontró problemas y `dotnet build Proyecto-Integrador-Final.sln` terminó con cero errores y advertencias. Esta compilación solo verifica la base inicial existente; no acredita implementación ni funcionamiento del juego. No se agregaron pruebas de código para un cambio documental. La revisión visual se completó mediante exportación con UMLet 15.1 y se verificaron geométricamente las 16 relaciones, sin tramos que atraviesen cajas y con extremos conectados a bordes. Se consultó UML 2.5.1 y se corrigió la notación de enumeraciones, miembros estáticos y realización de interfaz. La integración del protocolo sigue pendiente; el PR permanece en borrador para revisión de un compañero.
+
+Corrección de notación solicitada por el usuario: referencias y colecciones se muestran solo como asociaciones, con roles separados, multiplicidad y visibilidad explícita. Datos.Modelo conserva lectura pública, escritura privada y carácter estático en la relación.
+
+Por indicación del usuario, se retiraron las cuatro flechas de dependencia `.>`; el uso de las bibliotecas y entidades se explica en Arquitectura. Las asociaciones y la realización de la interfaz de DataBases se conservan.
+
+Datos se amplió con constantes de rutas y configuración explícita de TipoProceso. Los valores reales de red y las entidades de intercambio siguen pendientes; no se implementó código.
+
+Se ajustaron las dimensiones de las cajas al texto y se verificaron las exportaciones PNG y SVG de UMLet: sin textos recortados ni relaciones atravesando cajas.
+
+Se compactó la distribución de clases y se recalcularon los recorridos de las relaciones, conservando las cajas ajustadas al texto. La exportación de UMLet se revisó visualmente.
+
+Revisión final del dominio: jugador mano pertenece solo a Ronda; Combate ofrece GetParticipantes para presentar sus elecciones y Datos.Modelo tiene multiplicidad 0..1 hasta inicializarse. Se revisaron firmas, encapsulamiento y coherencia de reglas. Por decisión posterior del usuario, la actividad 3 se da por terminada y el modelado de entidades, relaciones y firmas de intercambio queda asignado exclusivamente a la actividad 6. Los detalles de métodos, formato del catálogo y pruebas permanecen en sus actividades respectivas; la revisión de un compañero sigue siendo requisito para integrar el PR.
+
+Cierre de la actividad 3 por confirmación del usuario: sin tareas propias pendientes. El modelado de elecciones y publicaciones, su configuración en Datos y los métodos de integración de clientes y Partida quedan en la actividad 6. Este cierre documental no integra el PR ni implica implementación.
