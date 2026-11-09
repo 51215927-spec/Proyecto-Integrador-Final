@@ -12,7 +12,7 @@ Se revisaron el documento de avance aportado por el usuario y el [UML existente]
 |---|---|---|
 | 1. Personajes | Completada por confirmación del usuario. Lysander y Reched tienen nombre, descripción, seis valores, total y atributos principal y menor; ambos cumplen las restricciones. | Sin pendientes para esta actividad. |
 | 2. Requerimientos | Documento completo y revisado en [Reglas del juego](Reglas-del-juego.md), listo para copiar a la entrega. Incluye reglas, participantes, datos de ejecución, comunicación, errores y separación de requisitos funcionales y técnicos. | Sin tareas de redacción pendientes. La aceptación del PR y la revisión del compañero siguen pendientes; el protocolo detallado corresponde a la actividad 6. |
-| 3. Modelo de clases | Dominio actualizado en UML y Arquitectura, con Datos y bibliotecas; firmas y responsabilidades revisadas. | Completar entidades, relaciones y firmas de integración del intercambio tras definir el protocolo en la actividad 6. |
+| 3. Modelo de clases | Completada por confirmación del usuario. UML y Arquitectura revisados, con firmas, relaciones, responsabilidades y justificación. | Sin pendientes propios. El modelado de comunicación y su integración se realizan en la actividad 6. |
 | 4. Métodos | Borrador de Partida, Jugador y Mazo. | Unificar las firmas con el UML y completar contratos, validaciones y excepciones. |
 | 5. Archivos de personajes | Solo se indica un límite de ASCII: «máximo 25 líneas y 120 caracteres». | Aclarar si 120 es por línea o en total; definir sintaxis, campos, descripción, ASCII, errores y ejemplos válidos e inválidos. |
 | 6. Archivo de partida | Dos clientes y servidor; intercambio mediante Datos y DataBases. | Definir registros, identificación, secuencia, permisos, publicación y cierre coordinado. Verificar funcionamiento en red local. |
@@ -60,12 +60,12 @@ Esta decisión y las reglas confirmadas están redactadas en [Reglas del juego](
 ### Orden de trabajo para TI
 
 1. Actividades 1 y 2 completadas en su documentación. La actividad 2 está lista para copiar a la entrega y para revisión del PR.
-2. Revisar el UML y justificar sus decisiones en Arquitectura (actividad 3).
+2. Actividad 3 completada: UML y justificación revisados. La ampliación del modelo para comunicación corresponde a la actividad 6.
 3. Completar las especificaciones de métodos según el modelo acordado (actividad 4).
 4. Definir los formatos de personajes y partida compartida con sus errores y ejemplos (actividades 5 y 6).
 5. Completar el plan de pruebas y revisar que todos los entregables de TI sean coherentes (actividad 7).
 
-Las actividades 1 y 2 tienen sus entregables documentados. Sigue pendiente revisar el modelo de clases (actividad 3), con el dominio y dependencias actualizados y la integración de comunicación pendiente. La actividad 4 conserva un borrador por adecuar. Los demás entregables de TI no se consideran cerrados solo por contar con un borrador.
+Las actividades 1, 2 y 3 tienen sus entregables documentados; el usuario dio por terminada la actividad 3. La actividad 4 conserva un borrador por adecuar. El modelado e integración de comunicación se completarán en la actividad 6. Los demás entregables de TI no se consideran cerrados solo por contar con un borrador.
 
 ## TI — Análisis de Sistemas
 
@@ -115,7 +115,7 @@ El PR de esta actividad permanecerá en borrador mientras existan tareas pendien
 
 ### Actividad 3 — Modelo de clases
 
-**En curso:** modelo de dominio actualizado según la recapitulación aceptada por el usuario. No hay implementación. El detalle vigente está en [Arquitectura](Arquitectura.md).
+**Completada por confirmación del usuario.** El UML y su justificación están revisados. No hay implementación. El detalle vigente está en [Arquitectura](Arquitectura.md). Las tareas de modelado e integración de comunicación se trasladan a la actividad 6.
 
 - [x] Representar Personaje, Mazo, Jugador, Partida, Ronda y Combate con atributos privados, firmas tipadas y relaciones.
 - [x] Adaptar todas las referencias al concepto unificado de Personaje.
@@ -130,7 +130,7 @@ El PR de esta actividad permanecerá en borrador mientras existan tareas pendien
 - [x] Documentar recuperación de todas las cartas y ocultación en interfaz hasta completar ambas elecciones.
 - [x] Unificar las firmas de referencia en UML y Arquitectura; adecuar los borradores anteriores en la actividad 4.
 - [x] Revisar la notación frente a UML 2.5.1, exportar con UMLet y comprobar que las 16 relaciones conecten a bordes sin atravesar cajas.
-- [ ] Completar entidades, relaciones y firmas de integración del intercambio cuando se defina el protocolo en la actividad 6.
+- [x] Dar por terminada la actividad 3 según confirmación del usuario; trasladar el modelado de comunicación a la actividad 6.
 
 ### Actividad 4 — Especificación de métodos
 
@@ -168,7 +168,9 @@ Los registros de elecciones y publicaciones se definirán en esta actividad. El 
 - [ ] Especificar la creación inicial de las tablas y cuáles requieren archivos existentes al cargarse.
 - [ ] Definir la detección de fallos y el cierre coordinado de clientes y servidor, sin recuperación.
 - [ ] Verificar con SSI el acceso, permisos, bloqueos y reemplazo de archivos en la red local.
-- [ ] Completar las entidades y firmas de integración pendientes en el UML y Arquitectura.
+- [ ] Incorporar al UML y Arquitectura las entidades de elecciones de los clientes y publicaciones del servidor, con atributos, relaciones y configuración en Datos.
+- [ ] Definir los métodos que conectan los registros de intercambio con Partida y los clientes, conforme al protocolo acordado.
+- [ ] Revisar la coherencia de esas ampliaciones con las reglas y el modelo de dominio ya cerrado en la actividad 3.
 - [ ] Entregar la especificación de intercambio, diferenciándola del catálogo inicial de personajes.
 
 ### Actividad 7 — Casos de prueba
@@ -281,4 +283,6 @@ Se ajustaron las dimensiones de las cajas al texto y se verificaron las exportac
 
 Se compactó la distribución de clases y se recalcularon los recorridos de las relaciones, conservando las cajas ajustadas al texto. La exportación de UMLet se revisó visualmente.
 
-Revisión final del dominio: jugador mano pertenece solo a Ronda; Combate ofrece GetParticipantes para presentar sus elecciones y Datos.Modelo tiene multiplicidad 0..1 hasta inicializarse. Se revisaron firmas, encapsulamiento y coherencia de reglas. El único pendiente de modelado de la actividad 3 es incorporar entidades, relaciones y firmas de intercambio tras definir el protocolo en la actividad 6. Los detalles de métodos, formato del catálogo y pruebas permanecen en sus actividades respectivas; la revisión de un compañero sigue siendo requisito para integrar el PR.
+Revisión final del dominio: jugador mano pertenece solo a Ronda; Combate ofrece GetParticipantes para presentar sus elecciones y Datos.Modelo tiene multiplicidad 0..1 hasta inicializarse. Se revisaron firmas, encapsulamiento y coherencia de reglas. Por decisión posterior del usuario, la actividad 3 se da por terminada y el modelado de entidades, relaciones y firmas de intercambio queda asignado exclusivamente a la actividad 6. Los detalles de métodos, formato del catálogo y pruebas permanecen en sus actividades respectivas; la revisión de un compañero sigue siendo requisito para integrar el PR.
+
+Cierre de la actividad 3 por confirmación del usuario: sin tareas propias pendientes. El modelado de elecciones y publicaciones, su configuración en Datos y los métodos de integración de clientes y Partida quedan en la actividad 6. Este cierre documental no integra el PR ni implica implementación.
