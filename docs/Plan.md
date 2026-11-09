@@ -12,7 +12,7 @@ Se revisaron el documento de avance aportado por el usuario y el [UML existente]
 |---|---|---|
 | 1. Personajes | Completada por confirmación del usuario. Lysander y Reched tienen nombre, descripción, seis valores, total y atributos principal y menor; ambos cumplen las restricciones. | Sin pendientes para esta actividad. |
 | 2. Requerimientos | Documento completo y revisado en [Reglas del juego](Reglas-del-juego.md), listo para copiar a la entrega. Incluye reglas, participantes, datos de ejecución, comunicación, errores y separación de requisitos funcionales y técnicos. | Sin tareas de redacción pendientes. La aceptación del PR y la revisión del compañero siguen pendientes; el protocolo detallado corresponde a la actividad 6. |
-| 3. Modelo de clases | Dominio actualizado en UML y Arquitectura, con Datos y bibliotecas; firmas y responsabilidades revisadas. | Integración del protocolo tras actividad 6, revisión docente y de un compañero. |
+| 3. Modelo de clases | Dominio actualizado en UML y Arquitectura, con Datos y bibliotecas; firmas y responsabilidades revisadas. | Completar entidades, relaciones y firmas de integración del intercambio tras definir el protocolo en la actividad 6. |
 | 4. Métodos | Borrador de Partida, Jugador y Mazo. | Unificar las firmas con el UML y completar contratos, validaciones y excepciones. |
 | 5. Archivos de personajes | Solo se indica un límite de ASCII: «máximo 25 líneas y 120 caracteres». | Aclarar si 120 es por línea o en total; definir sintaxis, campos, descripción, ASCII, errores y ejemplos válidos e inválidos. |
 | 6. Archivo de partida | Dos clientes y servidor; intercambio mediante Datos y DataBases. | Definir registros, identificación, secuencia, permisos, publicación y cierre coordinado. Verificar funcionamiento en red local. |
@@ -32,7 +32,7 @@ Valores en orden: Fuerza, Velocidad, Resistencia, Inteligencia, Energía y Habil
 - Participan dos jugadores y se reparten tres cartas a cada uno desde un mazo común.
 - El jugador mano elige el primer atributo; ambos jugadores eligen su carta y la muestran simultáneamente. Gana el mayor valor y, ante empate, quien no eligió el atributo del combate.
 - La elección del atributo se alterna entre los jugadores en cada combate, independientemente del ganador. La ronda se gana con dos combates ganados, por lo que puede terminar sin jugar la tercera carta.
-- Al terminar la ronda se devuelven las cartas jugadas al mazo, se mezcla y se reparte nuevamente. Gana la partida quien alcanza 15 rondas ganadas.
+- Al terminar la ronda se restaura el mazo completo, incluidas las cartas no jugadas. Si nadie alcanzó 15 rondas ganadas, se mezcla y se reparte nuevamente; de lo contrario finaliza la partida.
 
 ### Decisión confirmada — jugador mano y terminología
 
@@ -126,10 +126,8 @@ El PR de esta actividad permanecerá en borrador mientras existan tareas pendien
 - [x] Reflejar J1 como mano inicial, alternancia por ronda y combate, empate, dos victorias por ronda y 15 rondas por partida.
 - [x] Documentar recuperación de todas las cartas y ocultación en interfaz hasta completar ambas elecciones.
 - [x] Unificar las firmas de referencia en UML y Arquitectura; adecuar los borradores anteriores en la actividad 4.
+- [x] Revisar la notación frente a UML 2.5.1, exportar con UMLet y comprobar que las 21 relaciones conecten a bordes sin atravesar cajas.
 - [ ] Completar entidades, relaciones y firmas de integración del intercambio cuando se defina el protocolo en la actividad 6.
-- [ ] Revisar con el docente la diferencia entre Personaje unificado y la separación requerida para Taller.
-- [ ] Revisar con SSI y el docente el esquema de archivos compartidos y verificar la biblioteca en red local.
-- [ ] Obtener revisión de un compañero antes de integrar el PR y cerrar la actividad.
 
 ### Actividad 4 — Especificación de métodos
 
@@ -138,7 +136,6 @@ El PR de esta actividad permanecerá en borrador mientras existan tareas pendien
 - [ ] **En curso:** unificar parámetros y retornos del borrador con el UML y completar las firmas incompletas.
 - [ ] **En curso:** completar precondiciones y resultados; el borrador ya limita la elección a los seis atributos y a las cartas disponibles, y describe el reparto de tres cartas.
 - [ ] Completar validaciones y excepciones por método a partir de los contratos vigentes y las excepciones de DataBases y Utilidades.
-- [ ] Revisar con Taller que los contratos permitan implementar los métodos sin inventar reglas.
 
 ### Actividad 5 — Formato de los archivos de personajes
 
