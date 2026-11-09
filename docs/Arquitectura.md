@@ -37,12 +37,6 @@ El diagrama se exportó con UMLet 15.1 y se revisó visualmente. Se separaron lo
 
 ## Especificación de clases y métodos — actividad 4
 
-Las firmas y accesibilidades proceden del UML. Las subsecciones siguientes especifican el comportamiento para la futura implementación; no describen código existente. Un constructor no declara retorno; `void` significa que la operación no devuelve un valor. Los métodos son de instancia salvo que se indique `static`. Público permite su uso desde otros componentes; privado reserva la operación a la propia clase para proteger su secuencia interna.
-
-Como criterio de diseño de esta actividad, un argumento obligatorio nulo produce `ArgumentNullException`; un valor numérico o de enumeración fuera del dominio permitido, `ArgumentOutOfRangeException`; un argumento incompatible con el contrato, `ArgumentException`; y una operación incompatible con el estado actual, `InvalidOperationException`. Cada método precisa los casos aplicables. Las validaciones se realizan antes de modificar su estado; un rechazo de entrada no debe dejar cambios parciales. Las excepciones técnicas de las bibliotecas se propagan, sin convertirlas en resultados válidos. El punto de ejecución informa el fallo y finaliza; el cierre entre procesos se definirá en la actividad 6. Una opción de teclado incorrecta se vuelve a pedir y no constituye un fallo de ejecución.
-
-Las colecciones devueltas son copias de la colección, no clones profundos: conservan referencias a los objetos del dominio. La identidad de jugadores y personajes dentro de una partida es la referencia al objeto, no su nombre. La actividad 6 deberá resolver los identificadores de mensajes a esas referencias; esta convención no define todavía claves del catálogo. La prevención de duplicados del catálogo sigue siendo responsabilidad del sistema externo.
-
 ### Personaje
 
 Representa una carta válida con nombre, ASCII y seis atributos privados. No ofrece modificación pública de esos valores. Implementa `IEntidad<Personaje>` sin encargarse de leer archivos.
