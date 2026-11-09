@@ -35,35 +35,428 @@ Las firmas conservan nombres de tipos y colecciones de C# para orientar la futur
 
 El diagrama se exportó con UMLet 15.1 y se revisó visualmente. Se separaron los roles para evitar superponer sus etiquetas. También se comprobaron geométricamente las 16 relaciones: extremos en bordes, tramos ortogonales y ningún tramo dentro de cajas de clases, paquete o notas. Estas comprobaciones no acreditan todavía el protocolo de comunicación.
 
-## Firmas y contratos del modelo
+## Especificación de clases y métodos — actividad 4
 
-El UML contiene los tipos de todos los parámetros y retornos. Estos contratos de diseño orientan la actividad 4; no sustituyen sus especificaciones detalladas de comportamiento por escrito.
+Las firmas y accesibilidades proceden del UML. Las subsecciones siguientes especifican el comportamiento para la futura implementación; no describen código existente. Un constructor no declara retorno; `void` significa que la operación no devuelve un valor. Los métodos son de instancia salvo que se indique `static`. Público permite su uso desde otros componentes; privado reserva la operación a la propia clase para proteger su secuencia interna.
+
+Como criterio de diseño de esta actividad, un argumento obligatorio nulo produce `ArgumentNullException`; un valor numérico o de enumeración fuera del dominio permitido, `ArgumentOutOfRangeException`; un argumento incompatible con el contrato, `ArgumentException`; y una operación incompatible con el estado actual, `InvalidOperationException`. Cada método precisa los casos aplicables. Las validaciones se realizan antes de modificar su estado; un rechazo de entrada no debe dejar cambios parciales. Las excepciones técnicas de las bibliotecas se propagan, sin convertirlas en resultados válidos. El punto de ejecución informa el fallo y finaliza; el cierre entre procesos se definirá en la actividad 6. Una opción de teclado incorrecta se vuelve a pedir y no constituye un fallo de ejecución.
+
+Las colecciones devueltas son copias de la colección, no clones profundos: conservan referencias a los objetos del dominio. La identidad de jugadores y personajes dentro de una partida es la referencia al objeto, no su nombre. La actividad 6 deberá resolver los identificadores de mensajes a esas referencias; esta convención no define todavía claves del catálogo. La prevención de duplicados del catálogo sigue siendo responsabilidad del sistema externo.
 
 ### Personaje
 
-`Personaje(nombre: string, ascii: string, fuerza: int, velocidad: int, resistencia: int, inteligencia: int, energia: int, habilidad: int)` construye un objeto válido. `Validar(): void` es privado: exige seis valores entre 250 y 750, suma exactamente 3000, alguno de al menos 650 y alguno de como máximo 350. Se rechazan datos inválidos al construir; no hay modificación pública de atributos.
+Representa una carta válida con nombre, ASCII y seis atributos privados. No ofrece modificación pública de esos valores. Implementa `IEntidad<Personaje>` sin encargarse de leer archivos.
 
-`GetNombre(): string`, `GetAscii(): string` y `GetAtributo(tipo: TipoAtributo): int` ofrecen las consultas necesarias. TipoAtributo enumera Fuerza, Velocidad, Resistencia, Inteligencia, Energia y Habilidad.
+#### Constructor `Personaje(nombre: string, ascii: string, fuerza: int, velocidad: int, resistencia: int, inteligencia: int, energia: int, habilidad: int)`
 
-Implementa `IEntidad<Personaje>` de DataBases y declara `Configurar(entidad: ConstructorEntidad<Personaje>): void`, estático. La configuración declara archivo y columnas mediante expresiones sobre los campos privados. El formato concreto, ruta y posible necesidad de identificadores se completarán en la actividad 5 junto con las referencias necesarias para el intercambio de la actividad 6.
+- **Características:** público, de instancia, sin retorno declarado. Recibe dos textos y los seis atributos enteros homónimos.
+- **Contrato:** nombre y ASCII no nulos; nombre no vacío ni compuesto solo por espacios. Conserva los datos y ejecuta Validar antes de completar la construcción. Nulos producen `ArgumentNullException`; nombre vacío, `ArgumentException`; valores numéricos inválidos se rechazan según Validar. El formato y límite del ASCII se precisarán en la actividad 5.
+- **Por qué existe:** garantiza que el resto del dominio reciba personajes válidos y no tenga que reparar sus atributos.
 
-### Mazo y Jugador
+#### `Validar(): void`
 
-`Mazo(personajes: List<Personaje>)` conserva una colección propia. `Mezclar(): void` cambia su orden. `Repartir(cantidad: int): Personaje[]` retira y devuelve elementos disponibles; no fabrica cartas ni devuelve cantidades parciales silenciosamente. `Devolver(personajes: Personaje[]): void` reincorpora elementos. `GetCantidad(): int` consulta los disponibles. Al iniciar, Partida exige al menos seis personajes válidos; el sistema externo garantiza un catálogo sin duplicados.
+- **Características:** privado, de instancia, sin parámetros ni retorno. Consulta los campos asignados durante la construcción y no los modifica.
+- **Contrato:** comprueba primero cada atributo en el intervalo inclusivo 250–750; después, total exactamente 3000, alguno mayor o igual a 650 y alguno menor o igual a 350. Seis valores de 500 quedan excluidos por los umbrales. Atributo fuera de rango produce `ArgumentOutOfRangeException`; total o umbrales incorrectos, `ArgumentException`.
+- **Por qué existe:** concentra las restricciones en una operación interna. No necesita acceso público porque los atributos no tienen modificadores públicos.
 
-`Jugador(nombre: string)` crea una mano vacía y un marcador en cero. `RecibirCartas(personajes: Personaje[]): void` incorpora el reparto; `QuitarCarta(personaje: Personaje): void` retira una carta disponible. `EntregarCartas(): Personaje[]` devuelve las restantes y vacía la mano. `GetCartas(): Personaje[]` devuelve una copia. `SumarRondaGanada(): void`, `GetRondasGanadas(): int` y `GetNombre(): string` administran y consultan sus datos.
+#### `GetNombre(): string`
 
-### Partida, Ronda y Combate
+- **Características:** público, de instancia y sin parámetros; retorna el nombre conservado.
+- **Contrato:** requiere construcción válida, no modifica estado y no tiene errores de dominio en ese estado.
+- **Por qué existe:** permite identificar la carta sin exponer el campo para escritura.
 
-`Partida(j1: Jugador, j2: Jugador, mazo: Mazo)` recibe dos participantes distintos y su mazo. El número de ronda comienza en 1 al iniciar el juego. `Jugar(): Jugador` representa la coordinación completa en el servidor y devuelve al ganador solo en una terminación normal. Ante un error no devuelve un ganador ficticio: se propaga el fallo al punto de ejecución para finalizar. La integración con registros de elecciones y publicaciones queda pendiente de la actividad 6; no se presupone acceso directo del servidor a la consola de un cliente.
+#### `GetAscii(): string`
 
-Los métodos privados son `Iniciar(): void`, `RepartirCartas(): void`, `JugarRonda(): void`, `RecogerCartas(): void`, `EstaTerminada(): bool` y `DeterminarGanadorPartida(): Jugador`. J1 comienza como mano. Al terminar cada ronda se devuelve al mazo tanto lo jugado en sus combates como lo restante en las manos, una sola vez. Si hay una ronda siguiente, se incrementa el número y se construye con el jugador mano que corresponde por paridad. Si alguien alcanzó 15 rondas, no se reparte otra ronda.
+- **Características:** público, de instancia y sin parámetros; retorna el texto ASCII conservado.
+- **Contrato:** requiere construcción válida; no imprime ni modifica datos y no tiene errores de dominio en ese estado.
+- **Por qué existe:** separa los datos visuales de su presentación en consola.
 
-`Ronda(mano: Jugador, rival: Jugador)` identifica los participantes. `AgregarCombate(combate: Combate): void` admite combates resueltos de sus mismos participantes, una sola vez y con el elector correspondiente a su posición, mientras la ronda siga abierta. No se registra el mismo combate dos veces ni se reutilizan personajes ya jugados en ella. `EstaDefinida(): bool` comprueba dos victorias. `GetGanador(): Jugador` exige una ronda definida. `GetQuienEligeProximo(): Jugador` exige una ronda abierta: mano en el primer combate, rival en el segundo y mano en el tercero, independientemente de los resultados. La lista empieza vacía y puede contener hasta tres combates. `GetCombates(): Combate[]` devuelve una copia de los combates registrados para recuperar sus cartas al cerrar la ronda.
+#### `GetAtributo(tipo: TipoAtributo): int`
 
-`Combate(quienElige: Jugador, rival: Jugador)` inicia el enfrentamiento. `SetAtributo(tipo: TipoAtributo): void` y `SetCarta(jugador: Jugador, personaje: Personaje): void` registran elecciones una sola vez. `EstaCompleto(): bool` exige atributo y ambas cartas. `Resolver(): Jugador` exige un combate completo, compara el atributo y asigna la victoria al rival del elector ante empate. Solo se aceptan elecciones de los dos participantes y valores definidos de TipoAtributo. Una vez resuelto no se modifican elecciones; Resolver no vuelve a producir efectos si ya se resolvió, sino que devuelve el resultado existente. `GetGanador(): Jugador` exige resolución previa. `GetAtributo(): TipoAtributo` y `GetCarta(jugador: Jugador): Personaje` permiten consultar las elecciones de un combate completo para presentar el resultado y recuperar las cartas. `GetParticipantes(): Jugador[]` devuelve una copia con los dos participantes en orden elector y rival; permite a MostrarCombate consultar sus nombres y cartas sin acceder a relaciones privadas ni depender de estado implícito de la interfaz. El control de revelación se mantiene en el flujo del cliente. El tratamiento exacto de llamadas inválidas se especificará en la actividad 4.
+- **Características:** público, de instancia; recibe uno de los seis atributos y retorna el entero correspondiente.
+- **Contrato:** exige un literal definido en TipoAtributo; un valor no definido produce `ArgumentOutOfRangeException`, sin retornar un valor por defecto. No modifica el personaje.
+- **Por qué existe:** permite comparar cualquier atributo mediante una consulta común sin hacer públicos seis campos modificables.
 
-Las cartas retiradas de las manos siguen referenciadas por los combates, permitiendo recuperarlas al cerrar la ronda. La interfaz solo revela ambas cartas y el atributo cuando se completaron las dos elecciones; no se exige secreto ante la lectura manual de los archivos.
+#### `Configurar(entidad: ConstructorEntidad<Personaje>): void`
+
+- **Características:** público y estático; recibe el constructor de configuración de DataBases, sin retorno. No necesita una instancia de Personaje.
+- **Contrato:** entidad no nula; de lo contrario, `ArgumentNullException`. Declara archivo mediante Datos.RUTA_PERSONAJES y columnas mediante expresiones sobre los campos privados, compatibles con los nombres y tipos del constructor. No lee CSV. Las columnas definitivas, formato y referencias del catálogo quedan para la actividad 5. Configuraciones incompatibles generan `CsvConfiguracionException` al configurar o construir el modelo, según la validación de DataBases.
+- **Por qué existe:** satisface IEntidad<Personaje> y describe la persistencia sin hacer públicos los campos ni duplicar un lector CSV.
+
+### Mazo
+
+Administra una colección privada de personajes disponibles, su orden y sus transferencias; no controla marcadores ni compara atributos.
+
+#### Constructor `Mazo(personajes: List<Personaje>)`
+
+- **Características:** público, de instancia, sin retorno declarado; recibe la lista inicial.
+- **Contrato:** conserva una copia de la colección. Lista nula produce `ArgumentNullException`; elementos nulos o una referencia repetida, `ArgumentException`. Puede estar vacía: el mínimo de seis se controla al iniciar Partida. No identifica duplicados de catálogo por nombre.
+- **Por qué existe:** recibe personajes ya cargados y evita que modificar la lista original altere el mazo.
+
+#### `Mezclar(): void`
+
+- **Características:** público, de instancia, sin parámetros ni retorno.
+- **Contrato:** reordena aleatoriamente las referencias disponibles sin cambiar su cantidad ni composición. Puede utilizar Fisher–Yates, intercambiando cada posición con una posición aleatoria del tramo restante. Cero o una carta no requieren cambios. No garantiza un orden diferente del anterior ni tiene errores de dominio sobre un mazo válido.
+- **Por qué existe:** prepara repartos variables sin asumir responsabilidades de ronda o persistencia.
+
+#### `Repartir(cantidad: int): Personaje[]`
+
+- **Características:** público, de instancia; recibe la cantidad y retorna exactamente esa cantidad de referencias en un arreglo.
+- **Contrato:** cantidad negativa produce `ArgumentOutOfRangeException`; superior a la disponible, `InvalidOperationException`, sin retirar cartas. Cero devuelve un arreglo vacío. Retira desde el comienzo de la colección, conserva ese orden en el resultado y reduce la cantidad disponible; no realiza entregas parciales.
+- **Por qué existe:** concentra la extracción para que las cartas repartidas dejen de estar disponibles.
+
+#### `Devolver(personajes: Personaje[]): void`
+
+- **Características:** público, de instancia; recibe las referencias que se reincorporarán, sin retorno.
+- **Contrato:** arreglo nulo produce `ArgumentNullException`; elementos nulos, referencias repetidas o ya disponibles en el mazo, `ArgumentException`. Valida todo antes de agregarlo al final de la colección. Un arreglo vacío no cambia nada; la mezcla posterior determina el orden para repartir.
+- **Por qué existe:** recupera cartas sin crear copias ni duplicar referencias disponibles.
+
+#### `GetCantidad(): int`
+
+- **Características:** público, de instancia, sin parámetros; retorna la cantidad disponible, incluido cero.
+- **Contrato:** no incluye cartas repartidas ni modifica la colección. Sin errores de dominio en un mazo válido.
+- **Por qué existe:** permite verificar la posibilidad de reparto sin exponer la colección privada.
+
+### Jugador
+
+Conserva nombre, mano privada de hasta tres cartas y rondas ganadas. El rol de jugador mano pertenece a Ronda, no a Jugador.
+
+#### Constructor `Jugador(nombre: string)`
+
+- **Características:** público, de instancia, sin retorno declarado; recibe el nombre.
+- **Contrato:** nulo produce `ArgumentNullException`; vacío o solo espacios, `ArgumentException`. Conserva el nombre, crea mano vacía e inicia el marcador en cero. Dos referencias no se consideran iguales por compartir nombre.
+- **Por qué existe:** prepara un participante sin cartas ni victorias de una partida anterior.
+
+#### `RecibirCartas(personajes: Personaje[]): void`
+
+- **Características:** público, de instancia; recibe un arreglo, sin retorno.
+- **Contrato:** arreglo nulo produce `ArgumentNullException`; elementos nulos, referencias repetidas o ya presentes, `ArgumentException`; superar tres cartas en la mano resultante, `InvalidOperationException`. Valida el conjunto antes de incorporar las referencias en su orden, sin conservar el arreglo externo como mano. Arreglo vacío no cambia nada.
+- **Por qué existe:** protege la mano y su capacidad. El reparto normal de tres lo coordina Partida, no Jugador.
+
+#### `QuitarCarta(personaje: Personaje): void`
+
+- **Características:** público, de instancia; recibe la carta que sale de la mano, sin retorno.
+- **Contrato:** nulo produce `ArgumentNullException`; referencia no disponible, `ArgumentException`. Retira exactamente esa referencia. En la secuencia acordada lo llama Combate.SetCarta tras validar la elección; el coordinador no debe retirarla otra vez.
+- **Por qué existe:** encapsula el consumo de una carta y evita reutilizar una elección de la ronda.
+
+#### `EntregarCartas(): Personaje[]`
+
+- **Características:** público, de instancia, sin parámetros; retorna las referencias restantes en su orden actual.
+- **Contrato:** vacía la mano y no modifica el marcador. Mano ya vacía devuelve arreglo vacío, sin error de dominio.
+- **Por qué existe:** permite recuperar las cartas no jugadas al cerrar la ronda.
+
+#### `GetCartas(): Personaje[]`
+
+- **Características:** público, de instancia, sin parámetros; retorna una copia de la colección disponible.
+- **Contrato:** puede retornar arreglo vacío. No retira cartas; cambiar el arreglo devuelto no altera la mano. Sin errores de dominio en un jugador válido.
+- **Por qué existe:** permite construir la selección de cartas sin exponer la colección privada para escritura.
+
+#### `SumarRondaGanada(): void`
+
+- **Características:** público, de instancia, sin parámetros ni retorno.
+- **Contrato:** incrementa el marcador en uno. Partida debe llamarlo una sola vez para el ganador de una ronda definida. No valida qué ronda se ganó, porque no la recibe; no es idempotente y cada llamada suma. La garantía de una llamada pertenece a JugarRonda.
+- **Por qué existe:** protege la escritura del contador sin decidir el ganador ni duplicar el umbral de finalización de Partida.
+
+#### `GetRondasGanadas(): int`
+
+- **Características:** público, de instancia y sin parámetros; retorna el marcador acumulado, inicialmente cero.
+- **Contrato:** no modifica datos ni tiene errores de dominio en un jugador válido.
+- **Por qué existe:** permite mostrar el marcador y comprobar la victoria sin permitir asignaciones externas.
+
+#### `GetNombre(): string`
+
+- **Características:** público, de instancia y sin parámetros; retorna el nombre conservado.
+- **Contrato:** no modifica datos ni tiene errores de dominio en un jugador válido.
+- **Por qué existe:** identifica al participante manteniendo privado su campo.
+
+### Combate
+
+Conserva participantes, elector, atributo, cartas y ganador. Las elecciones y el ganador empiezan ausentes. No suma rondas al marcador.
+
+#### Constructor `Combate(quienElige: Jugador, rival: Jugador)`
+
+- **Características:** público, de instancia, sin retorno declarado; recibe al elector y a su rival.
+- **Contrato:** nulos producen `ArgumentNullException`; misma referencia en ambos roles, `ArgumentException`. Registra los roles y deja las elecciones y el ganador pendientes. Ronda determina el elector correcto según la posición del combate.
+- **Por qué existe:** conserva quién elige y quién obtiene la victoria ante empate.
+
+#### `SetAtributo(tipo: TipoAtributo): void`
+
+- **Características:** público, de instancia; recibe el atributo, sin retorno.
+- **Contrato:** valor no definido produce `ArgumentOutOfRangeException`; atributo ya asignado o combate resuelto, `InvalidOperationException`, incluso si se repite el mismo valor. Registra una sola vez y no revela información en consola. La autorización del elector pertenece al flujo: esta firma no recibe jugador.
+- **Por qué existe:** impide cambiar la regla de comparación después de conocer las elecciones.
+
+#### `SetCarta(jugador: Jugador, personaje: Personaje): void`
+
+- **Características:** público, de instancia; recibe participante y carta, sin retorno.
+- **Contrato:** nulos producen `ArgumentNullException`; jugador ajeno o carta no disponible en su mano, `ArgumentException`; elección previa de ese jugador o combate resuelto, `InvalidOperationException`. Rechaza también la misma referencia de personaje para ambos participantes. Valida antes de modificar.
+- **Resultado:** llama a jugador.QuitarCarta y conserva la referencia en su rol. No se vuelve a retirar desde el coordinador. Las referencias permanecen en Combate para recuperarlas al cerrar la ronda.
+- **Por qué existe:** vincula el registro y consumo de la elección. La autorización de mensajes y su secuencia se completan en la actividad 6.
+
+#### `EstaCompleto(): bool`
+
+- **Características:** público, de instancia y sin parámetros; retorna si existen atributo y ambas cartas.
+- **Contrato:** no exige resolución, no modifica datos ni revela elecciones; devuelve false mientras falte alguna elección.
+- **Por qué existe:** permite distinguir un combate pendiente de uno listo para resolver.
+
+#### `Resolver(): Jugador`
+
+- **Características:** público, de instancia y sin parámetros; retorna el ganador.
+- **Contrato:** exige combate completo; de lo contrario, `InvalidOperationException`. Consulta el atributo de ambas cartas; gana el elector solo si su valor es estrictamente mayor, y en otro caso el rival, incluido el empate. Conserva el resultado. Si ya está resuelto retorna el mismo ganador sin repetir efectos ni modificar marcadores.
+- **Por qué existe:** centraliza comparación y desempate; Ronda cuenta combates y Partida registra la ronda ganada.
+
+Ejemplo ilustrativo del núcleo de comparación, después de comprobar y extraer las elecciones completas. No es código implementado en la aplicación:
+
+```csharp
+int valorElector = cartaQueElige.GetAtributo(atributoElegido);
+int valorRival = cartaRival.GetAtributo(atributoElegido);
+ganador = valorElector > valorRival ? jugadorQueElige : jugadorRival;
+```
+
+#### `GetGanador(): Jugador`
+
+- **Características:** público, de instancia y sin parámetros; retorna el ganador conservado.
+- **Contrato:** exige resolución previa; si no existe resultado produce `InvalidOperationException`, aunque el combate esté completo. No resuelve implícitamente.
+- **Por qué existe:** consulta un resultado real sin inventar un ganador ni repetir la resolución.
+
+#### `GetAtributo(): TipoAtributo`
+
+- **Características:** público, de instancia y sin parámetros; retorna el atributo elegido.
+- **Contrato:** exige combate completo; antes produce `InvalidOperationException`, aunque el atributo ya esté asignado. No modifica datos.
+- **Por qué existe:** ofrece la consulta para presentar el enfrentamiento una vez completadas ambas elecciones.
+
+#### `GetCarta(jugador: Jugador): Personaje`
+
+- **Características:** público, de instancia; recibe un participante y retorna su carta registrada.
+- **Contrato:** jugador nulo produce `ArgumentNullException`; ajeno, `ArgumentException`; combate incompleto, `InvalidOperationException`. Consultar no retira la carta del combate ni la devuelve al mazo.
+- **Por qué existe:** permite presentar y recuperar las cartas sin exponer sus campos privados.
+
+#### `GetParticipantes(): Jugador[]`
+
+- **Características:** público, de instancia y sin parámetros; retorna una copia con dos referencias en orden elector y rival.
+- **Contrato:** disponible desde la construcción, sin modificar estado ni revelar cartas o atributo.
+- **Por qué existe:** permite obtener nombres y consultar después las cartas sin depender de participantes implícitos de la interfaz.
+
+### Ronda
+
+Conserva jugador mano, rival y hasta tres combates registrados. Calcula victorias desde los resultados, sin contadores duplicados. El jugador mano permanece fijo durante la ronda.
+
+#### Constructor `Ronda(mano: Jugador, rival: Jugador)`
+
+- **Características:** público, de instancia, sin retorno declarado; recibe ambos participantes.
+- **Contrato:** nulos producen `ArgumentNullException`; misma referencia, `ArgumentException`. Registra los roles y crea una colección vacía de combates. Partida determina quién es mano según el número de ronda.
+- **Por qué existe:** separa la serie de enfrentamientos del marcador acumulado de partida.
+
+#### `AgregarCombate(combate: Combate): void`
+
+- **Características:** público, de instancia; recibe un combate, sin retorno.
+- **Precondiciones:** ronda abierta y combate resuelto de sus participantes. El elector debe ser mano, rival o mano para el primer, segundo o tercer combate. No admite cartas ya usadas en otro combate registrado.
+- **Errores y efecto:** nulo produce `ArgumentNullException`; combate repetido, participantes ajenos, elector incorrecto o carta reutilizada, `ArgumentException`; combate sin resolver o ronda ya definida, `InvalidOperationException`. Valida todo antes de incorporar una sola vez. Un cuarto combate nunca es válido: al tercero la ronda ya queda definida. No suma rondas al marcador.
+- **Por qué existe:** protege el historial para que las victorias no se cuenten por duplicado ni con enfrentamientos ajenos.
+
+#### `EstaDefinida(): bool`
+
+- **Características:** público, de instancia y sin parámetros; retorna si alguno alcanzó dos victorias.
+- **Contrato:** cuenta ganadores de los combates registrados, sin modificar marcadores. Con cero o uno devuelve false; con tres válidos necesariamente true.
+- **Por qué existe:** permite terminar con dos combates y evita jugar el tercero cuando ya hay ganador.
+
+#### `GetGanador(): Jugador`
+
+- **Características:** público, de instancia y sin parámetros; retorna al participante con dos victorias.
+- **Contrato:** exige ronda definida; antes produce `InvalidOperationException`. No suma el marcador.
+- **Por qué existe:** identifica al ganador desde los resultados sin duplicar su registro en Jugador.
+
+#### `GetQuienEligeProximo(): Jugador`
+
+- **Características:** público, de instancia y sin parámetros; retorna el próximo elector.
+- **Contrato:** exige ronda abierta; si está definida produce `InvalidOperationException`. Devuelve mano con cero o dos combates y rival con uno, independientemente de quién ganó. No cambia el jugador mano.
+- **Por qué existe:** concentra la alternancia por posición del combate.
+
+#### `GetCombates(): Combate[]`
+
+- **Características:** público, de instancia y sin parámetros; retorna una copia de los combates registrados en orden de juego.
+- **Contrato:** puede retornar arreglo vacío. No elimina combates ni devuelve automáticamente sus cartas al mazo.
+- **Por qué existe:** permite a Partida recuperar personajes sin permitir cambios externos en la colección privada.
+
+### Partida
+
+Coordina en el servidor a J1, J2, Mazo y la ronda actual. Conserva número de ronda y la constante privada estática de solo lectura RONDAS_PARA_GANAR = 15. Sus operaciones privadas protegen la secuencia interna frente a llamadas externas arbitrarias.
+
+#### Constructor `Partida(j1: Jugador, j2: Jugador, mazo: Mazo)`
+
+- **Características:** público, de instancia, sin retorno declarado; recibe participantes y mazo.
+- **Contrato:** nulos producen `ArgumentNullException`; misma referencia en ambos jugadores, `ArgumentException`. Exige manos vacías y marcadores cero; de lo contrario, `ArgumentException`. Conserva las referencias y deja rondaActual ausente. No lee archivos ni solicita elecciones en la consola del servidor.
+- **Por qué existe:** explicita las dependencias y evita heredar estado de otra partida.
+
+#### `Jugar(): Jugador`
+
+- **Características:** público, de instancia y sin parámetros; retorna exclusivamente al ganador normal.
+- **Precondición:** instancia aún no iniciada. Si rondaActual ya existe produce `InvalidOperationException`. Tras un fallo de inicio tampoco se reintenta: se finaliza la ejecución.
+- **Secuencia:** llama a Iniciar, juega la ronda y recoge todas sus cartas. Si EstaTerminada devuelve true, retorna DeterminarGanadorPartida. En otro caso incrementa numeroRonda, construye una Ronda con J1 como mano en impares y J2 en pares, llama a RepartirCartas y continúa.
+- **Errores:** propaga los fallos para finalizar; no devuelve un ganador ficticio. Recoge también la última ronda y no reparte otra después de alcanzar 15.
+- **Por qué existe:** ofrece una única operación pública para coordinar. El transporte y publicación de elecciones dependen de la actividad 6; no se sustituyen por consola local del servidor.
+
+#### `Iniciar(): void`
+
+- **Características:** privado, de instancia, sin parámetros ni retorno.
+- **Precondiciones:** no existe ronda actual; manos vacías y marcadores cero. Estado incompatible produce `InvalidOperationException`.
+- **Secuencia:** exige al menos seis cartas antes de repartir, fija numeroRonda en 1, crea Ronda con J1 como mano y llama a RepartirCartas. Con menos de seis produce `InvalidOperationException` con «No se puede jugar porque no hay suficientes cartas»; el punto de ejecución lo presenta y termina.
+- **Por qué existe:** concentra las comprobaciones iniciales y evita un reparto inicial incompleto.
+
+#### `RepartirCartas(): void`
+
+- **Características:** privado, de instancia, sin parámetros ni retorno.
+- **Precondiciones:** ronda actual nueva sin combates, manos vacías y seis cartas disponibles como mínimo. Incumplimientos producen `InvalidOperationException` antes de repartir.
+- **Secuencia y efecto:** llama a Mazo.Mezclar, retira tres cartas para J1 y tres para J2 con Repartir y las entrega con RecibirCartas. Quedan tres referencias distintas en cada mano y seis menos en el mazo.
+- **Por qué existe:** usa la misma preparación inicial y entre rondas, delegando extracción y almacenamiento en sus clases responsables.
+
+#### `JugarRonda(): void`
+
+- **Características:** privado, de instancia, sin parámetros ni retorno.
+- **Precondiciones:** ronda actual nueva y manos de tres cartas. No se vuelve a ejecutar sobre una ronda comenzada o definida; estado incompatible produce `InvalidOperationException`.
+- **Secuencia:** mientras no esté definida, obtiene el próximo elector, crea Combate con él y su rival, incorpora elecciones con SetAtributo y SetCarta, espera elecciones completas, resuelve y agrega el combate. Al terminar, obtiene GetGanador y llama exactamente una vez a SumarRondaGanada.
+- **Resultado y límites:** dos o tres combates y una ronda ganada añadida al marcador. SetCarta ya retira cada carta: no se llama otra vez a QuitarCarta. La espera, transporte y publicación se definirán en la actividad 6; no se inventan aquí sus firmas.
+- **Por qué existe:** coordina la ronda delegando alternancia, comparación y conteo sin jugar un tercer combate innecesario.
+
+#### `RecogerCartas(): void`
+
+- **Características:** privado, de instancia, sin parámetros ni retorno.
+- **Precondiciones:** ronda actual definida y todavía no recogida. Ausente o abierta produce `InvalidOperationException`; el coordinador garantiza una llamada por cierre. Mazo.Devolver rechaza una devolución duplicada.
+- **Secuencia:** reúne las dos cartas de cada combate registrado usando GetParticipantes y GetCarta y las restantes de ambos jugadores mediante EntregarCartas. Devuelve ese conjunto al mazo una sola vez.
+- **Resultado:** manos vacías y mazo completo: cuatro cartas jugadas más dos restantes en una ronda de dos combates, o seis jugadas en una de tres. Las no repartidas nunca salieron del mazo. El historial conserva referencias, sin convertirlas en cartas disponibles adicionales. Un fallo interrumpe el juego; no se promete una transacción ni recuperación.
+- **Por qué existe:** evita perder cartas no jugadas o devolver por duplicado las que ya salieron de la mano.
+
+#### `EstaTerminada(): bool`
+
+- **Características:** privado, de instancia y sin parámetros; retorna si alguno alcanzó o superó RONDAS_PARA_GANAR.
+- **Contrato:** consulta marcadores sin modificarlos ni avanzar la ronda. Sin errores de dominio sobre el estado válido.
+- **Por qué existe:** centraliza el umbral que decide si se permite preparar otra ronda.
+
+#### `DeterminarGanadorPartida(): Jugador`
+
+- **Características:** privado, de instancia y sin parámetros; retorna al único jugador que alcanzó el umbral.
+- **Contrato:** si ninguno o ambos lo alcanzaron produce `InvalidOperationException`; ambos sería una inconsistencia del flujo, no un empate permitido.
+- **Por qué existe:** impide presentar una finalización prematura o incoherente como una victoria normal.
+
+### Datos
+
+Clase estática, sin instancias. Conserva tipoProceso privado opcional y las rutas públicas constantes del UML. Modelo permite lectura pública y escritura privada y no está disponible hasta completar Iniciar. Las constantes son datos de configuración, no métodos; su valor real se fijará con SSI.
+
+#### `Configurar(tipo: TipoProceso): void`
+
+- **Características:** público y estático; recibe Servidor, ClienteJ1 o ClienteJ2, sin retorno.
+- **Contrato:** exige primera configuración. Valor no definido produce `ArgumentOutOfRangeException`; segunda configuración, incluso con el mismo rol, `InvalidOperationException`, sin cambiar el anterior. Conserva la identidad para toda la ejecución, sin leer consola ni acceder a disco.
+- **Por qué existe:** permite seleccionar responsabilidades y rutas de las entidades antes de construir el modelo, sin asumir un servidor por defecto ni reemplazar permisos del sistema operativo.
+
+#### `GetTipoProceso(): TipoProceso`
+
+- **Características:** público y estático, sin parámetros; retorna el rol conservado.
+- **Contrato:** exige Configurar completado; antes produce `InvalidOperationException`. No modifica la identidad.
+- **Por qué existe:** permite consultar el rol desde la configuración de entidades sin permitir su modificación.
+
+#### `Iniciar(): void`
+
+- **Características:** público y estático, sin parámetros ni retorno.
+- **Precondiciones:** identidad configurada y modelo aún no inicializado; de lo contrario, `InvalidOperationException`.
+- **Secuencia:** prepara una variable local con ConstructorModelo, registra entidades, construye el modelo y carga las tablas iniciales requeridas. Exige existencia del catálogo de personajes. Solo al completar todo asigna Modelo, sin publicar una carga parcial.
+- **Errores y límites:** propaga errores de configuración, formato, construcción de personajes y acceso a archivos. Ante un fallo finaliza la ejecución sin reintentar. La configuración y creación inicial de tablas de intercambio quedan para la actividad 6.
+- **Por qué existe:** establece el orden Configurar → Iniciar → uso de Modelo en un único punto de preparación.
+
+### InterfazConsola
+
+Presentación de los clientes, sin decidir ganadores ni modificar marcadores. Todos sus métodos son públicos y de instancia, como indica el UML. Usa Utilidades y MyConsole. El flujo del cliente controla qué información puede presentarse.
+
+#### `MostrarMano(jugador: Jugador): void`
+
+- **Características:** recibe al jugador cuya mano se mostrará; sin retorno.
+- **Contrato:** nulo produce `ArgumentNullException`. Consulta GetCartas y presenta nombre, ASCII y seis atributos mediante MyConsole y DecoracionConsola. Mano vacía se informa sin abrir un menú vacío; no modifica cartas.
+- **Por qué existe:** reúne la presentación de cartas disponibles, sin consultar por iniciativa propia la mano rival.
+
+#### `PedirCarta(jugador: Jugador): Personaje`
+
+- **Características:** recibe al jugador local; retorna una referencia de su mano disponible.
+- **Contrato:** nulo produce `ArgumentNullException`; mano vacía, `InvalidOperationException` antes de abrir un menú. Obtiene una copia estable de GetCartas y transforma el índice desde cero devuelto por PedirOpcionMenu en la carta correspondiente. Una opción incorrecta se vuelve a pedir mediante Utilidades.
+- **Resultado y errores:** no retira la carta, no llama a SetCarta ni publica archivos. El flujo registra después la elección. Fin de entrada propaga `EndOfStreamException`; otros fallos técnicos no se convierten en elecciones. Se supone una elección activa por cliente, sin cambios concurrentes de mano durante el menú.
+- **Por qué existe:** separa la interacción de la aplicación de reglas del dominio.
+
+#### `PedirAtributo(): TipoAtributo`
+
+- **Características:** sin parámetros; retorna uno de los seis valores mediante PedirEnum<TipoAtributo>.
+- **Contrato:** el flujo lo invoca solo cuando corresponde elegir; la firma no permite comprobar identidad o turno. Opciones incorrectas se vuelven a pedir; fin de entrada propaga `EndOfStreamException`. No registra el atributo en Combate ni comunica mensajes.
+- **Por qué existe:** concentra la entrada tipada y evita conversiones dispersas desde texto.
+
+#### `MostrarMarcador(j1: Jugador, j2: Jugador, ronda: int): void`
+
+- **Características:** recibe participantes y número de ronda actual desde 1, sin retorno.
+- **Contrato:** nulos producen `ArgumentNullException`; mismo jugador, `ArgumentException`; ronda menor que 1, `ArgumentOutOfRangeException`. Presenta nombres, rondas ganadas y número de ronda mediante MostrarTabla, sin cambiar contadores.
+- **Por qué existe:** concentra la visualización del progreso sin calcular victorias.
+
+#### `MostrarEsperando(mensaje: string): void`
+
+- **Características:** recibe el texto de espera, sin retorno.
+- **Contrato:** nulo produce `ArgumentNullException`; vacío o solo espacios, `ArgumentException`. Presenta mediante MyConsole; no pide teclado, consulta archivos ni ejecuta un bucle de espera.
+- **Por qué existe:** informa al jugador sin confundir presentación con sincronización.
+
+#### `MostrarCombate(combate: Combate): void`
+
+- **Características:** recibe el enfrentamiento a presentar, sin retorno.
+- **Contrato:** nulo produce `ArgumentNullException`; incompleto o sin resolver, `InvalidOperationException` antes de mostrar elecciones. Obtiene participantes, nombres, cartas, atributo, valores comparados y ganador existente. No llama a Resolver ni cambia puntuaciones.
+- **Por qué existe:** presenta un resultado coherente sin revelar elecciones parciales. El flujo del cliente espera la publicación completa; no se exige secreto ante lectura manual de archivos.
+
+#### `MostrarGanadorRonda(ganador: Jugador): void`
+
+- **Características:** recibe al ganador, sin retorno.
+- **Contrato:** nulo produce `ArgumentNullException`. El flujo debe haber determinado el ganador: la firma no recibe Ronda para comprobarlo. Presenta su nombre sin sumar victorias.
+- **Por qué existe:** separa el anuncio de la lógica que determina y registra la ronda ganada.
+
+#### `MostrarGanadorPartida(ganador: Jugador): void`
+
+- **Características:** recibe al ganador final, sin retorno.
+- **Contrato:** nulo produce `ArgumentNullException`. El flujo suministra el ganador normal devuelto por Partida o comunicado por el servidor. Presenta el anuncio sin recalcular el umbral ni cerrar por sí mismo los otros procesos.
+- **Por qué existe:** concentra la presentación final sin duplicar reglas ni acoplarla al protocolo.
+
+#### `MostrarError(mensaje: string): void`
+
+- **Características:** recibe el texto del error, sin retorno.
+- **Contrato:** nulo produce `ArgumentNullException`; vacío o solo espacios, `ArgumentException`. Delega en la función de error de Utilidades. No recupera la partida; el cierre corresponde al punto de ejecución. Si también falla la consola, el error técnico se propaga: no garantiza poder mostrarlo.
+- **Por qué existe:** unifica el formato de errores sin confundir informar con finalizar los procesos.
+
+### DataBases::Modelo — clase externa representada en el UML
+
+Pertenece a la biblioteca y no se reimplementa. Cada proceso tiene su instancia mediante Datos.Modelo después de Iniciar. Se especifican las tres operaciones que muestra el UML; el resto de su API se consulta en el README de DataBases.
+
+#### `Cargar<T>(exigirArchivo: bool = false): Tabla<T>`
+
+- **Características:** público, de instancia y genérico; T identifica la entidad registrada; el booleano indica si exige el archivo. Retorna la tabla cargada.
+- **Contrato:** exige modelo construido y entidad registrada; uso incompatible produce `InvalidOperationException`. Archivo ausente con false admite tabla vacía; con true produce `FileNotFoundException`. Una recarga conserva la instancia de Tabla pero reemplaza sus elementos; si falla la lectura conserva el contenido anterior. Propaga errores de formato (`CsvFormatException`), construcción de entidades y acceso o bloqueo (`IOException`, entre otros).
+- **Por qué existe:** actualiza explícitamente la vista local de los archivos; no hay actualización automática. El catálogo exige existencia y no se recarga durante la partida; la política de intercambio queda en la actividad 6.
+
+#### `Tabla<T>(): Tabla<T>`
+
+- **Características:** público, de instancia y genérico, sin parámetros de valor; retorna la tabla viva de T en memoria, no una copia.
+- **Contrato:** exige entidad registrada y tabla cargada; en otro caso produce `InvalidOperationException`. No lee disco. Las modificaciones en la tabla no se publican hasta Guardar.
+- **Por qué existe:** permite consultar o modificar datos cargados sin agregar métodos de Datos que solo reenvíen llamadas.
+
+#### `Guardar<T>(): void`
+
+- **Características:** público, de instancia y genérico, sin parámetros de valor ni retorno; T identifica la tabla a publicar.
+- **Contrato:** exige tabla cargada y que el proceso pueda escribir ese destino. Reemplaza todo el contenido del archivo con la tabla actual; no constituye una transacción entre archivos. Entidad desconocida o tabla sin cargar produce `InvalidOperationException`; cambios externos desde la carga, `CsvConcurrenciaException`; problemas de acceso o bloqueo propagan sus errores técnicos, incluidos `IOException`. El juego finaliza ante el fallo, aunque la biblioteca admita recargar y reintentar.
+- **Por qué existe:** publica elecciones o resultados mediante la protección de archivos de DataBases, sin duplicar CSV. La restricción de un escritor por archivo pertenece al diseño del juego, no se deduce automáticamente de TipoProceso.
+
+### DataBases::IEntidad<Personaje>
+
+Interfaz externa sin instancias ni estado de carta. Su contrato requiere la siguiente operación, cuya implementación concreta se especifica en Personaje.
+
+#### `Configurar(entidad: ConstructorEntidad<Personaje>): void`
+
+- **Características:** público, estático y abstracto en la interfaz; recibe el constructor de configuración, sin retorno.
+- **Contrato:** exige que Personaje proporcione archivo y mapeo de miembros compatibles. La interfaz no ejecuta una segunda configuración propia: comportamiento y validaciones corresponden a Personaje.Configurar.
+- **Por qué existe:** permite que ConstructorModelo configure la entidad de forma tipada sin necesitar una instancia de Personaje.
+
+### Enumeraciones y paquete externo
+
+TipoAtributo contiene Fuerza, Velocidad, Resistencia, Inteligencia, Energia y Habilidad; TipoProceso contiene Servidor, ClienteJ1 y ClienteJ2. No declaran métodos en el UML. Delimitan opciones válidas sin usar textos ambiguos; convertir un entero no definido no lo convierte en una opción admitida.
+
+Utilidades es un paquete externo que agrupa Funciones, DecoracionConsola, MyConsole, ColoresMenu y FormatoMenu. No se rediseñan esas clases ni se les inventan métodos: la delegación necesaria está descrita en InterfazConsola y el apartado de presentación.
 
 ## Datos y persistencia
 
@@ -105,7 +498,7 @@ El menú con FormatoMenu y flechas limpia la pantalla e historial. Para conserva
 
 ## Decisiones pendientes y límites de cierre
 
-- Actividad 4: completar por escrito precondiciones, excepciones, secuencias y algoritmos sobre estas firmas; el borrador anterior deja de ser fuente de firmas vigentes.
+- Actividad 4: especificaciones por clase y método redactadas a partir del UML, con características, contratos y justificación; pendientes de revisión del usuario. Los detalles de formatos e integración siguen en las actividades 5 y 6.
 - Actividad 5: especificar columnas, ASCII, descripción, rutas y ejemplos del catálogo, coherentes con el formato propio de DataBases y el sistema externo.
 - Actividad 6: definir registros de elecciones y publicaciones, identificación de partida/ronda/combate, referencias a personajes, permisos, secuencia, mensajes procesados y cierre coordinado ante fallos. Después completar sus entidades y relaciones en el UML y la integración de Partida y clientes. No se inventan aquí sus firmas.
 La representación unificada y el intercambio mediante varios archivos son las decisiones vigentes del usuario. La consigna original se conserva sin modificar como referencia; Taller continúa fuera de alcance y la verificación técnica en red se mantiene en la actividad 6.
