@@ -28,7 +28,7 @@ git config --global user.email "Tu correo de GitHub"
 | `git add .` | Prepara todos los cambios para guardarlos. |
 | `git commit -m "mensaje"` | Guarda los cambios preparados en un commit. |
 | `git push` | Sube los commits a GitHub. |
-| `git pull` | Descarga e integra los cambios de GitHub. |
+| `git pull --ff-only` | Descarga e integra los cambios de GitHub. |
 | `git branch` | Muestra las ramas locales. |
 | `git switch main` | Cambia a la rama principal. |
 | `git switch -c nombre-rama` | Crea una rama y cambia a ella. |
@@ -92,11 +92,12 @@ Reglas:
 
 ### 4. Trabajar en una tarea
 
-Antes de empezar, actualizá `main` y creá una rama propia:
+Antes de empezar, comprobá `git status` y conservá cualquier cambio local pendiente. Actualizá las referencias remotas, sincronizá `main` por avance rápido y creá una rama propia. Si hay divergencias, revisalas antes de continuar sin sobrescribir trabajo local:
 
 ```bash
+git fetch origin
 git switch main
-git pull
+git merge --ff-only origin/main
 git switch -c feature/registro-usuarios
 ```
 
@@ -239,7 +240,7 @@ Después de que el PR se integre, actualizá tu rama principal:
 
 ```bash
 git switch main
-git pull
+git pull --ff-only
 ```
 
 Ahora tu computadora tiene los cambios que se incorporaron al repositorio. Podés empezar una nueva tarea creando otra rama.
@@ -291,7 +292,7 @@ Guardá tu trabajo con un commit y traé los cambios de `main` a tu rama:
 
 ```bash
 git switch main
-git pull
+git pull --ff-only
 git switch feature/registro-usuarios
 git merge main
 ```
@@ -300,7 +301,7 @@ Si Git avisa que hay conflictos, no borres archivos ni elijas cambios al azar: a
 
 ### 7. Resumen rápido
 
-**Antes de empezar:** `git switch main` → `git pull` → crear tu rama.
+**Antes de empezar:** `git status` → `git fetch origin` → `git switch main` → `git merge --ff-only origin/main` → crear tu rama.
 
 **Para guardar y compartir:** `git add .` → `git commit` → `git push`.
 
@@ -317,7 +318,9 @@ Proyecto-Integrador-Final/
 │   ├── Consigna.md
 │   ├── Arquitectura.md
 │   ├── Plan.md
-│   └── Guia-Git.md
+│   ├── Reglas-del-juego.md
+│   └── diagramas/
+│       └── UML.uxf
 │
 ├── src/
 │   └── Proyecto-Integrador-Final/
@@ -328,7 +331,11 @@ Proyecto-Integrador-Final/
 │   └── Proyecto-Integrador-Final.Tests/
 │       └── ...
 │
+├── Mis-Librerias/             Submódulo independiente
+├── AGENTS.md
+├── CONTRIBUTING.md
 ├── .gitignore
+├── .gitmodules
 ├── Proyecto-Integrador-Final.sln
 └── README.md
 ```
@@ -340,6 +347,9 @@ Proyecto-Integrador-Final/
 | `src/` | Código fuente de la aplicación. |
 | `test/` | Proyectos de pruebas automatizadas. |
 | `docs/` | Documentación del proyecto, consignas, arquitectura, planificación y guías. |
+| `Mis-Librerias/` | Submódulo independiente; sus bibliotecas aún no están referenciadas por la aplicación. |
+| `CONTRIBUTING.md` | Guía de colaboración de este repositorio. |
+| `AGENTS.md` | Instrucciones de trabajo para agentes. |
 | `.gitignore` | Archivos y carpetas que Git debe ignorar. |
 | `.sln` | Solución de Visual Studio que agrupa los proyectos. |
 | `README.md` | Presentación del proyecto e índice de documentación. |
@@ -348,7 +358,7 @@ Proyecto-Integrador-Final/
 
 - Guardar el código de la aplicación dentro de `src/`, no directamente en la raíz del repositorio.
 - Guardar las pruebas dentro de `test/`.
-- Guardar los documentos Markdown (`.md`) dentro de `docs/`, excepto el `README.md` principal.
+- Guardar la documentación del proyecto en `docs/`. En la raíz se mantienen `README.md`, `CONTRIBUTING.md` y `AGENTS.md`; las bibliotecas del submódulo conservan sus propios README.
 - No subir carpetas generadas automáticamente, como `bin/` y `obj/`.
 - Si se agrega un nuevo proyecto de código, ubicarlo dentro de `src/` o `test/`, según corresponda.
 - Si se agrega documentación, incluir un enlace a ella en el `README.md`.

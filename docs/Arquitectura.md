@@ -2,6 +2,8 @@
 
 Modelo de análisis y diseño de TI, actualizado el 9 de noviembre de 2026 a partir de las decisiones del usuario. Las clases del [UML](diagramas/UML.uxf) todavía no están implementadas; la aplicación conserva `Hello, World!`. Los requisitos están en [Reglas del juego](Reglas-del-juego.md) y el seguimiento en [Plan](Plan.md).
 
+Las bibliotecas existen en el submódulo `Mis-Librerias/`, pero todavía no hay referencias a sus proyectos en la aplicación ni están incluidas en la solución principal. Las llamadas descritas a continuación son contratos del diseño, no integración ejecutable.
+
 ## Distribución y responsabilidades
 
 El servidor coordina la partida y analiza los enfrentamientos. Los dos clientes solicitan elecciones y presentan los resultados. Cada proceso dispone de su propio `Datos.Modelo` en memoria: compartir archivos no comparte objetos ni actualiza automáticamente las tablas.
@@ -369,7 +371,7 @@ El menú con FormatoMenu y flechas limpia la pantalla e historial. Para conserva
 - Actividad 5: especificar columnas, ASCII, descripción, rutas y ejemplos del catálogo, coherentes con el formato propio de DataBases y el sistema externo.
 - Actividad 6: definir registros de elecciones y publicaciones, identificación de partida/ronda/combate, referencias a personajes, permisos, secuencia, mensajes procesados y cierre coordinado ante fallos. Después completar sus entidades y relaciones en el UML y la integración de Partida y clientes. No se inventan aquí sus firmas.
 La representación unificada y el intercambio mediante varios archivos son las decisiones vigentes del usuario. La consigna original se conserva sin modificar como referencia; Taller continúa fuera de alcance y la verificación técnica en red se mantiene en la actividad 6.
-La actividad 3 está completada por confirmación del usuario: modelo de dominio y justificación revisados. Las entidades, relaciones, configuración en Datos y firmas de integración que resulten del protocolo son tareas de la actividad 6 y no condicionan este cierre. La integración del PR mantiene la revisión de un compañero exigida por CONTRIBUTING; no se confunde con una tarea de modelado.
+La actividad 3 está completada por confirmación del usuario: modelo de dominio y justificación revisados. Las entidades, relaciones, configuración en Datos y firmas de integración que resulten del protocolo son tareas de la actividad 6 y no condicionan este cierre. El modelo y las especificaciones quedaron integrados mediante los PR #9 y #10. Los nuevos PR mantienen la revisión de un compañero exigida por CONTRIBUTING; no se confunde con una tarea de modelado.
 
 Las cajas se ajustaron a las medidas del texto exportado por UMLet, con margen mínimo de lectura. Tras ampliar Datos y agregar TipoProceso se recalcularon las asociaciones y se verificó la ausencia de tramos dentro de cajas; la exportación SVG se comprobó para asegurar que los textos no excedan sus límites.
 
