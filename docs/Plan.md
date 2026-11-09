@@ -269,3 +269,5 @@ Los Analistas coordinan los entregables y comunican los cambios a Taller. Los ca
 ## Resultado de la revisión del modelo — 8 de noviembre de 2026
 
 Se actualizó el UML y se justificaron contratos y responsabilidades en Arquitectura, incluyendo consultas de combate y ronda necesarias para presentar resultados y recuperar cartas sin exponer colecciones privadas. Se comprobó el XML del diagrama y se revisaron firmas, tipos y dependencias contra las bibliotecas. `git diff --check` no encontró problemas y `dotnet build Proyecto-Integrador-Final.sln` terminó con cero errores y advertencias. Esta compilación solo verifica la base inicial existente; no acredita implementación ni funcionamiento del juego. No se agregaron pruebas de código para un cambio documental. La revisión visual en UMLet y la integración del protocolo siguen pendientes; el PR se prepara en borrador para revisión de un compañero.
+
+Corrección de notación solicitada por el usuario: referencias y colecciones se muestran solo como asociaciones, con roles separados, multiplicidad y visibilidad explícita. Datos.Modelo conserva lectura pública, escritura privada y carácter estático en la relación.

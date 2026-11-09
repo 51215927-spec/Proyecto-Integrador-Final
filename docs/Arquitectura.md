@@ -19,6 +19,12 @@ El servidor coordina la partida y analiza los enfrentamientos. Los dos clientes 
 
 Partida conserva el jugador mano; Ronda recibe ese rol al construirse y lo mantiene durante sus combates. Jugador no conserva otra copia mutable del mismo rol. Las entidades del juego se conservan porque representan conceptos propios del problema y permiten explicar sus reglas.
 
+## Notación de atributos y relaciones
+
+Las referencias a objetos y colecciones de entidades se representan exclusivamente mediante asociaciones, sin duplicarlas en el compartimento de atributos. Cada extremo navegable indica el nombre del rol, su multiplicidad y su visibilidad: `-` privado y `+` público. Por ejemplo, Ronda se relaciona con Jugador mediante los roles privados `- jugadorMano` y `- jugadorRival`, cada uno con multiplicidad 1.
+
+Los roles diferentes se dibujan como asociaciones distintas, incluso si apuntan a la misma clase. El ganador de Combate tiene multiplicidad 0..1 mientras no se resuelva; sus dos cartas también tienen 0..1 durante la elección. Datos tiene la asociación pública estática `+ Modelo`, con lectura pública y escritura privada. Las dependencias de uso y la realización de interfaces no representan atributos y no llevan visibilidad de miembro. Los valores simples y enumeraciones permanecen en el compartimento de atributos.
+
 ## Firmas y contratos del modelo
 
 El UML contiene los tipos de todos los parámetros y retornos. Estos contratos de diseño orientan la actividad 4; no sustituyen sus especificaciones detalladas ni los diagramas de algoritmos.
