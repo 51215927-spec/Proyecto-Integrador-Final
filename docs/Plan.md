@@ -13,7 +13,7 @@ Se revisaron el documento de avance aportado por el usuario y el [UML existente]
 | 1. Personajes | Completada por confirmación del usuario. Lysander y Reched tienen nombre, descripción, seis valores, total y atributos principal y menor; ambos cumplen las restricciones. | Sin pendientes para esta actividad. |
 | 2. Requerimientos | Documento completo y revisado en [Reglas del juego](Reglas-del-juego.md), listo para copiar a la entrega. Incluye reglas, participantes, datos de ejecución, comunicación, errores y separación de requisitos funcionales y técnicos. | Sin tareas de redacción pendientes. La aceptación del PR y la revisión del compañero siguen pendientes; el protocolo detallado corresponde a la actividad 6. |
 | 3. Modelo de clases | Completada por confirmación del usuario. UML y Arquitectura revisados, con firmas, relaciones, responsabilidades y justificación. | Sin pendientes propios. El modelado de comunicación y su integración se realizan en la actividad 6. |
-| 4. Métodos | Especificaciones redactadas en Arquitectura, con un párrafo por método del UML. Revisadas para simplificar la lectura y concentrar las validaciones en quien recibe cada dato, sin repetir controles internos. | Revisión del usuario; formatos e integración se completarán en las actividades 5 y 6. |
+| 4. Métodos | Completada por confirmación del usuario. Las 58 especificaciones están redactadas en Arquitectura, con un párrafo por método y sin validaciones repetidas. | Sin pendientes propios. Los formatos y la integración corresponden a las actividades 5 y 6. |
 | 5. Archivos de personajes | Solo se indica un límite de ASCII: «máximo 25 líneas y 120 caracteres». | Aclarar si 120 es por línea o en total; definir sintaxis, campos, descripción, ASCII, errores y ejemplos válidos e inválidos. |
 | 6. Archivo de partida | Dos clientes y servidor; intercambio mediante Datos y DataBases. | Definir registros, identificación, secuencia, permisos, publicación y cierre coordinado. Verificar funcionamiento en red local. |
 | 7. Pruebas | No se encontró un plan de casos desarrollado en el material revisado. | Diseñar condiciones iniciales, datos y resultados esperados para casos normales, límites y errores. |
@@ -61,11 +61,11 @@ Esta decisión y las reglas confirmadas están redactadas en [Reglas del juego](
 
 1. Actividades 1 y 2 completadas en su documentación. La actividad 2 está lista para copiar a la entrega y para revisión del PR.
 2. Actividad 3 completada: UML y justificación revisados. La ampliación del modelo para comunicación corresponde a la actividad 6.
-3. Revisar las especificaciones de métodos redactadas en Arquitectura según el modelo acordado (actividad 4).
+3. Actividad 4 completada: especificaciones de métodos revisadas y aceptadas por el usuario.
 4. Definir los formatos de personajes y partida compartida con sus errores y ejemplos (actividades 5 y 6).
 5. Completar el plan de pruebas y revisar que todos los entregables de TI sean coherentes (actividad 7).
 
-Las actividades 1, 2 y 3 tienen sus entregables documentados; el usuario dio por terminada la actividad 3. La actividad 4 tiene especificaciones redactadas en Arquitectura, pendientes de revisión del usuario. El modelado e integración de comunicación se completarán en la actividad 6. Los demás entregables de TI no se consideran cerrados solo por contar con documentación parcial.
+Las actividades 1, 2, 3 y 4 tienen sus entregables documentados; el usuario confirmó el cierre de las actividades 3 y 4. El modelado e integración de comunicación se completarán en la actividad 6. Los demás entregables de TI no se consideran cerrados solo por contar con documentación parcial.
 
 ## TI — Análisis de Sistemas
 
@@ -134,7 +134,7 @@ El PR de esta actividad permanecerá en borrador mientras existan tareas pendien
 
 ### Actividad 4 — Especificación de métodos
 
-Especificaciones redactadas en [Arquitectura](Arquitectura.md), directamente desde el modelo vigente. El usuario aclaró que no hay borrador previo. El código incluido es ilustrativo y no constituye implementación. No se utilizan diagramas NS, según la decisión registrada.
+Completada por confirmación del usuario el 9 de noviembre de 2026, después de revisar y simplificar las especificaciones de [Arquitectura](Arquitectura.md). El código incluido es ilustrativo y no constituye implementación. No se utilizan diagramas NS, según la decisión registrada.
 
 - [x] Identificar las clases y métodos vigentes del UML, incluidas las operaciones externas representadas.
 - [x] Organizar Arquitectura con una sección por clase y una subsección por método o constructor.
@@ -143,7 +143,7 @@ Especificaciones redactadas en [Arquitectura](Arquitectura.md), directamente des
 - [x] Especificar precondiciones, resultados, efectos, validaciones y errores, incluidas las dependencias de DataBases y Utilidades.
 - [x] Describir las secuencias de combate, ronda, partida y recuperación de cartas, con un ejemplo ilustrativo de comparación.
 - [x] Distinguir las especificaciones actuales de los formatos y protocolo pendientes de las actividades 5 y 6.
-- [ ] Revisar las especificaciones con el usuario y resolver observaciones antes de dar la actividad por cerrada.
+- [x] Revisar las especificaciones con el usuario y resolver observaciones antes de dar la actividad por cerrada.
 
 Verificación documental: las 58 operaciones del UML tienen una subsección de especificación, incluidos constructores y contratos externos. `git diff --check` no detectó errores y `dotnet build Proyecto-Integrador-Final.sln` terminó sin errores ni advertencias. La compilación verifica la base existente, no acredita implementación del diseño. Se precisó la retirada de cartas desde Combate.SetCarta y su recuperación única al cerrar la ronda. Formatos de archivos, protocolo e integración permanecen pendientes en las actividades 5 y 6.
 

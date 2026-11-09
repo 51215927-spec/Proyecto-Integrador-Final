@@ -365,7 +365,7 @@ El menú con FormatoMenu y flechas limpia la pantalla e historial. Para conserva
 
 ## Decisiones pendientes y límites de cierre
 
-- Actividad 4: especificaciones por clase y método redactadas a partir del UML, con características, contratos y justificación; pendientes de revisión del usuario. Los detalles de formatos e integración siguen en las actividades 5 y 6.
+- Actividad 4: completada por confirmación del usuario el 9 de noviembre de 2026. Las 58 especificaciones se revisaron para mejorar la lectura y evitar validaciones repetidas. Los detalles de formatos e integración siguen en las actividades 5 y 6.
 - Actividad 5: especificar columnas, ASCII, descripción, rutas y ejemplos del catálogo, coherentes con el formato propio de DataBases y el sistema externo.
 - Actividad 6: definir registros de elecciones y publicaciones, identificación de partida/ronda/combate, referencias a personajes, permisos, secuencia, mensajes procesados y cierre coordinado ante fallos. Después completar sus entidades y relaciones en el UML y la integración de Partida y clientes. No se inventan aquí sus firmas.
 La representación unificada y el intercambio mediante varios archivos son las decisiones vigentes del usuario. La consigna original se conserva sin modificar como referencia; Taller continúa fuera de alcance y la verificación técnica en red se mantiene en la actividad 6.
