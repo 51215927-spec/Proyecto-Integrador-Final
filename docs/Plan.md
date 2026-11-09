@@ -121,6 +121,7 @@ El PR de esta actividad permanecerá en borrador mientras existan tareas pendien
 - [x] Adaptar todas las referencias al concepto unificado de Personaje.
 - [x] Asignar coordinación del dominio al servidor y presentación a los clientes, sin comunicación directa entre rivales.
 - [x] Incorporar Datos estática y las dependencias de DataBases sin duplicar la lectura CSV.
+- [x] Definir en Datos constantes de rutas y Configurar(TipoProceso), con identidad fija de servidor, cliente J1 o cliente J2 antes de Iniciar.
 - [x] Describir InterfazConsola delegando entradas, menús y presentación en Utilidades.
 - [x] Justificar responsabilidades, encapsulamiento, delegación y decisiones en Arquitectura.
 - [x] Reflejar J1 como mano inicial, alternancia por ronda y combate, empate, dos victorias por ronda y 15 rondas por partida.
@@ -198,7 +199,8 @@ Etapas conservadas como referencia futura. No se implementarán en el alcance ac
 ### Etapa 2 — Carga de personajes con Datos y DataBases
 
 - [ ] Referenciar DataBases e implementar Personaje.Configurar con el formato definido en TI.
-- [ ] Crear Datos estática con su Modelo e Iniciar conforme al diseño.
+- [ ] Crear Datos estática con sus constantes de rutas, Configurar, GetTipoProceso, Modelo e Iniciar conforme al diseño.
+- [ ] Fijar las rutas absolutas reales del recurso de SSI y configurar el rol antes de inicializar el modelo.
 - [ ] Cargar el catálogo obligatorio mediante Modelo.Cargar<Personaje>(exigirArchivo: true).
 - [ ] Obtener los personajes de la tabla cargada para construir el mazo inicial.
 - [ ] Mantener la validación de puntajes en el constructor de Personaje y la interpretación del CSV en DataBases.
@@ -270,3 +272,7 @@ Se actualizó el UML y se justificaron contratos y responsabilidades en Arquitec
 Corrección de notación solicitada por el usuario: referencias y colecciones se muestran solo como asociaciones, con roles separados, multiplicidad y visibilidad explícita. Datos.Modelo conserva lectura pública, escritura privada y carácter estático en la relación.
 
 Por indicación del usuario, se retiraron las cuatro flechas de dependencia `.>`; el uso de las bibliotecas y entidades se explica en Arquitectura. Las asociaciones y la realización de la interfaz de DataBases se conservan.
+
+Datos se amplió con constantes de rutas y configuración explícita de TipoProceso. Los valores reales de red y las entidades de intercambio siguen pendientes; no se implementó código.
+
+Se ajustaron las dimensiones de las cajas al texto y se verificaron las exportaciones PNG y SVG de UMLet: sin textos recortados ni relaciones atravesando cajas.

@@ -15,7 +15,7 @@ El servidor coordina la partida y analiza los enfrentamientos. Los dos clientes 
 | Ronda | Jugador mano, rival y combates registrados. | Determinar el siguiente elector y el ganador de ronda. Calcula las victorias desde los combates, evitando contadores duplicados. |
 | Combate | Participantes, atributo, elecciones y ganador. | Registrar las elecciones y resolver la comparación. Los campos aún no elegidos y el ganador pendiente son anulables. |
 | InterfazConsola | Sin estado de dominio propio obligatorio. | Construir las pantallas del juego y solicitar opciones usando Utilidades. No determina ganadores. |
-| Datos (estática) | Modelo con escritura privada. | Inicializar el modelo de datos del proceso y ofrecer acceso a sus tablas. No aplica las reglas del juego. |
+| Datos (estática) | Constantes de rutas, tipo de proceso y Modelo con escritura privada. | Configurar la identidad del proceso, inicializar su modelo y ofrecer acceso a sus tablas. No aplica las reglas del juego. |
 
 Partida conserva el jugador mano; Ronda recibe ese rol al construirse y lo mantiene durante sus combates. Jugador no conserva otra copia mutable del mismo rol. Las entidades del juego se conservan porque representan conceptos propios del problema y permiten explicar sus reglas.
 
@@ -67,7 +67,15 @@ Las cartas retiradas de las manos siguen referenciadas por los combates, permiti
 
 ## Datos y persistencia
 
-Se usa la API pública de [DataBases](../Mis-Librerias/DataBases/README.md). `Datos` es estática y expone `Modelo: Modelo { get; private set; }` e `Iniciar(): void`. Iniciar registra las entidades mediante ConstructorModelo, construye el modelo y carga las tablas iniciales requeridas para el proceso. La configuración concreta de las tablas de intercambio se completará en la actividad 6.
+Se usa la API pública de [DataBases](../Mis-Librerias/DataBases/README.md). Todos los miembros de Datos son estáticos. Modelo mantiene lectura pública y escritura privada y se representa exclusivamente mediante una asociación en el UML.
+
+Datos declara las constantes públicas de tipo string `RUTA_PERSONAJES`, `RUTA_ELECCIONES_J1`, `RUTA_ELECCIONES_J2` y `RUTA_PUBLICACIONES_SERVIDOR`. Las clases persistidas pueden utilizarlas desde su Configurar para declarar Archivo. Son rutas absolutas al recurso compartido, iguales en todos los procesos que accedan al mismo archivo. Sus valores concretos se fijarán con la ubicación real de SSI; no se inventa aquí un servidor o una carpeta de red. Las cuatro constantes identifican destinos lógicos iniciales; el protocolo de la actividad 6 determinará si se necesitan más archivos o rutas.
+
+`Configurar(tipo: TipoProceso): void` identifica al proceso como Servidor, ClienteJ1 o ClienteJ2 y conserva ese valor en el miembro privado tipoProceso. `GetTipoProceso(): TipoProceso` permite consultar esa identidad al seleccionar archivos en la configuración de las entidades. Antes de configurarse, tipoProceso está ausente (`[0..1]`); no se asume un servidor por defecto. Se rechazan valores no definidos y la consulta o inicialización sin configuración. La identidad queda fija para toda la ejecución: una segunda configuración se considera un error de uso, sin cambiar el modelo ni los archivos.
+
+El punto de entrada determina el rol y llama primero a Configurar y después a `Iniciar(): void`. Configurar no solicita entradas de consola ni accede a disco. Iniciar registra las entidades mediante ConstructorModelo, construye el modelo y carga las tablas iniciales requeridas; publica Modelo después de que todas esas operaciones tengan éxito. Solo se inicializa una vez. Esto permite conocer la identidad antes de que Agregar<T> invoque el Configurar de cada entidad. El rol identifica permisos previstos, pero no reemplaza los permisos del recurso compartido.
+
+El servidor solo publicará sus resultados y cada cliente solo sus elecciones; todos usan RUTA_PERSONAJES como origen de lectura. La configuración concreta de las tablas, selección de rutas por entidad y sus relaciones se completará en la actividad 6. No se asignan dos entidades al mismo archivo en un Modelo, restricción de DataBases.
 
 Las llamadas `Datos.Modelo.Cargar<T>(exigirArchivo)`, `Tabla<T>()` y `Guardar<T>()` permiten recargar, consultar/modificar y publicar datos. No se agregan métodos que solo reenvíen estas operaciones. Los archivos obligatorios, como el catálogo inicial, se cargan exigiendo su existencia. Las tablas de intercambio necesitarán una política explícita de creación inicial en la actividad 6.
 
@@ -102,3 +110,5 @@ El menú con FormatoMenu y flechas limpia la pantalla e historial. Para conserva
 - Actividad 6: definir registros de elecciones y publicaciones, identificación de partida/ronda/combate, referencias a personajes, permisos, secuencia, mensajes procesados y cierre coordinado ante fallos. Después completar sus entidades y relaciones en el UML y la integración de Partida y clientes. No se inventan aquí sus firmas.
 - Revisar con el docente la representación unificada de carta y personaje frente a la separación exigida para Taller, y con SSI el esquema de varios archivos compartidos. La consigna se conserva intacta y Taller continúa fuera de alcance.
 - Obtener revisión de un compañero antes de integrar el PR. El modelo de dominio y las dependencias están actualizados; la actividad 3 no se considera cerrada integralmente mientras sus fronteras de comunicación y la revisión docente sigan pendientes.
+
+Las cajas se ajustaron a las medidas del texto exportado por UMLet, con margen mínimo de lectura. Tras ampliar Datos y agregar TipoProceso se recalcularon las asociaciones y se verificó la ausencia de tramos dentro de cajas; la exportación SVG se comprobó para asegurar que los textos no excedan sus límites.
