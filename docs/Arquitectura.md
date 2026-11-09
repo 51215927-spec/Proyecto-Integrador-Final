@@ -27,7 +27,7 @@ Los roles diferentes se dibujan como asociaciones distintas, incluso si apuntan 
 
 ## Firmas y contratos del modelo
 
-El UML contiene los tipos de todos los parámetros y retornos. Estos contratos de diseño orientan la actividad 4; no sustituyen sus especificaciones detalladas ni los diagramas de algoritmos.
+El UML contiene los tipos de todos los parámetros y retornos. Estos contratos de diseño orientan la actividad 4; no sustituyen sus especificaciones detalladas de comportamiento por escrito.
 
 ### Personaje
 
@@ -87,7 +87,7 @@ El menú con FormatoMenu y flechas limpia la pantalla e historial. Para conserva
 
 ## Decisiones pendientes y límites de cierre
 
-- Actividad 4: completar precondiciones, excepciones, secuencias y algoritmos sobre estas firmas; el borrador anterior deja de ser fuente de firmas vigentes.
+- Actividad 4: completar por escrito precondiciones, excepciones, secuencias y algoritmos sobre estas firmas; el borrador anterior deja de ser fuente de firmas vigentes.
 - Actividad 5: especificar columnas, ASCII, descripción, rutas y ejemplos del catálogo, coherentes con el formato propio de DataBases y el sistema externo.
 - Actividad 6: definir registros de elecciones y publicaciones, identificación de partida/ronda/combate, referencias a personajes, permisos, secuencia, mensajes procesados y cierre coordinado ante fallos. Después completar sus entidades y relaciones en el UML y la integración de Partida y clientes. No se inventan aquí sus firmas.
 - Revisar con el docente la representación unificada de carta y personaje frente a la separación exigida para Taller, y con SSI el esquema de varios archivos compartidos. La consigna se conserva intacta y Taller continúa fuera de alcance.
