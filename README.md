@@ -8,7 +8,9 @@ El juego consiste en enfrentar personajes comparando sus atributos. Cada jugador
 
 El trabajo actual se limita a **TI: análisis y diseño**. La implementación en Taller de Programación queda para una etapa posterior.
 
-La aplicación todavía muestra `Hello, World!` y las pruebas son iniciales. El juego aún no está implementado. Consultá el [plan de trabajo](docs/Plan.md) para conocer los avances y pendientes.
+Las actividades 1 a 4 de TI están completadas en su documentación. Quedan pendientes los formatos de personajes, el protocolo de partida y el plan de pruebas (actividades 5 a 7).
+
+La aplicación todavía muestra `Hello, World!` y existe una única prueba vacía, sin validaciones del juego. El juego aún no está implementado. Consultá el [plan de trabajo](docs/Plan.md) para conocer los avances y pendientes.
 
 ## Contenido del repositorio
 
@@ -41,7 +43,9 @@ dotnet build Proyecto-Integrador-Final.sln
 dotnet run --project src/Proyecto-Integrador-Final
 ```
 
-La ejecución muestra únicamente `Hello, World!`. Para ejecutar las pruebas iniciales:
+Si clonaste sin `--recurse-submodules`, recuperá la versión de las bibliotecas registrada por el proyecto con `git submodule update --init --recursive`. Las bibliotecas todavía no están referenciadas por los proyectos ni incluidas en la solución principal; compilar esta solución no las verifica.
+
+La ejecución muestra únicamente `Hello, World!`. Para ejecutar la prueba inicial vacía:
 
 ```bash
 dotnet test Proyecto-Integrador-Final.sln

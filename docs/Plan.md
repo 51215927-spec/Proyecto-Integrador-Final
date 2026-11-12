@@ -2,7 +2,7 @@
 
 Plan basado en [la consigna](Consigna.md). Marcar una tarea cuando su resultado esté disponible y revisado. Las actividades de TI definen los contratos que se usarán en Taller; las decisiones pendientes deben resolverse antes de implementar el componente correspondiente. Por decisión del usuario, no se utilizarán diagramas Nassi-Schneiderman (NS); el comportamiento de los métodos se documentará por escrito con sus entradas, resultados, precondiciones y validaciones. La consigna original se conserva como referencia sin modificar.
 
-## Estado revisado — 8 de noviembre de 2026
+## Estado revisado — 9 de noviembre de 2026
 
 Alcance actual: únicamente TI (análisis y diseño). Taller queda pendiente y fuera del trabajo actual. El código todavía contiene `Hello, World!` y una prueba vacía; el diseño documentado no está implementado.
 
@@ -11,7 +11,7 @@ Se revisaron el documento de avance aportado por el usuario y el [UML existente]
 | Actividad de TI | Estado y evidencia | Qué falta para cerrarla |
 |---|---|---|
 | 1. Personajes | Completada por confirmación del usuario. Lysander y Reched tienen nombre, descripción, seis valores, total y atributos principal y menor; ambos cumplen las restricciones. | Sin pendientes para esta actividad. |
-| 2. Requerimientos | Documento completo y revisado en [Reglas del juego](Reglas-del-juego.md), listo para copiar a la entrega. Incluye reglas, participantes, datos de ejecución, comunicación, errores y separación de requisitos funcionales y técnicos. | Sin tareas de redacción pendientes. La aceptación del PR y la revisión del compañero siguen pendientes; el protocolo detallado corresponde a la actividad 6. |
+| 2. Requerimientos | Documento completo y revisado en [Reglas del juego](Reglas-del-juego.md), listo para copiar a la entrega. Incluye reglas, participantes, datos de ejecución, comunicación, errores y separación de requisitos funcionales y técnicos. | Sin tareas de redacción pendientes. El [PR #7](https://github.com/51215927-spec/Proyecto-Integrador-Final/pull/7) está integrado; el protocolo detallado corresponde a la actividad 6. |
 | 3. Modelo de clases | Completada por confirmación del usuario. UML y Arquitectura revisados, con firmas, relaciones, responsabilidades y justificación. | Sin pendientes propios. El modelado de comunicación y su integración se realizan en la actividad 6. |
 | 4. Métodos | Completada por confirmación del usuario. Las 58 especificaciones están redactadas en Arquitectura, con un párrafo por método y sin validaciones repetidas. | Sin pendientes propios. Los formatos y la integración corresponden a las actividades 5 y 6. |
 | 5. Archivos de personajes | Solo se indica un límite de ASCII: «máximo 25 líneas y 120 caracteres». | Aclarar si 120 es por línea o en total; definir sintaxis, campos, descripción, ASCII, errores y ejemplos válidos e inválidos. |
@@ -59,7 +59,7 @@ Esta decisión y las reglas confirmadas están redactadas en [Reglas del juego](
 
 ### Orden de trabajo para TI
 
-1. Actividades 1 y 2 completadas en su documentación. La actividad 2 está lista para copiar a la entrega y para revisión del PR.
+1. Actividades 1 y 2 completadas en su documentación e integradas mediante los PR #6 y #7. La actividad 2 está lista para copiar a la entrega; esa copia externa no se ha comprobado.
 2. Actividad 3 completada: UML y justificación revisados. La ampliación del modelo para comunicación corresponde a la actividad 6.
 3. Actividad 4 completada: especificaciones de métodos revisadas y aceptadas por el usuario.
 4. Definir los formatos de personajes y partida compartida con sus errores y ejemplos (actividades 5 y 6).
@@ -111,7 +111,7 @@ Las actividades 1, 2, 3 y 4 tienen sus entregables documentados; el usuario conf
 - [x] Separar los requerimientos funcionales de las condiciones técnicas de ejecución en Reglas-del-juego.md.
 - [x] Revisar la cobertura de la consigna y preparar el documento de requerimientos y reglas, listo para que el usuario lo copie a su entrega. No se afirma que ya haya realizado la copia ni presentado la entrega.
 
-El PR de esta actividad permanecerá en borrador mientras existan tareas pendientes de la actividad 2. El usuario indicó que solo lo aceptará cuando todas estén realizadas; antes de solicitar su revisión final, comprobar cada casilla y la actualización del documento de entrega. La integración requiere además la revisión de un compañero prevista en CONTRIBUTING.md.
+El [PR #7](https://github.com/51215927-spec/Proyecto-Integrador-Final/pull/7) de esta actividad se integró el 8 de noviembre de 2026. Las tareas documentales están completas; no se da por realizada la copia externa al documento de entrega. Los nuevos PR mantienen la revisión de un compañero prevista en [CONTRIBUTING](../CONTRIBUTING.md).
 
 ### Actividad 3 — Modelo de clases
 
@@ -276,9 +276,15 @@ Etapas conservadas como referencia futura. No se implementarán en el alcance ac
 
 Los Analistas coordinan los entregables y comunican los cambios a Taller. Los cambios para GitHub siguen las ramas, los commits y la revisión por un compañero establecidos en [CONTRIBUTING](../CONTRIBUTING.md).
 
+## Revisión de documentación — 9 de noviembre de 2026
+
+Se contrastaron los diez documentos Markdown del repositorio y del submódulo con el código, los proyectos, el UML y el estado de los PR #6, #7, #9 y #10 en GitHub. Se actualizaron las referencias a PR ya integrados, la estructura publicada y el flujo de sincronización de ramas. README y Arquitectura aclaran que las bibliotecas todavía no están referenciadas por la aplicación ni incluidas en la solución principal. La consigna original y las decisiones de diseño se conservan; las actividades 5 a 7 siguen pendientes. No se detectaron correcciones necesarias en los README del submódulo para esta revisión y se conservó su versión registrada.
+
+Verificación: los 33 enlaces locales apuntan a archivos o directorios existentes; el XML del UML es válido y sus 58 operaciones tienen 58 subsecciones de especificación en Arquitectura. `git diff --check` no encontró problemas. La solución compiló sin advertencias ni errores y `dotnet test Proyecto-Integrador-Final.sln --no-build` ejecutó correctamente la única prueba existente, que está vacía. La ejecución de la aplicación mostró `Hello, World!`. Estos resultados verifican la base inicial; no acreditan funcionamiento del juego, pruebas de las bibliotecas ni comunicación en red.
+
 ## Resultado de la revisión del modelo — 8 de noviembre de 2026
 
-Se actualizó el UML y se justificaron contratos y responsabilidades en Arquitectura, incluyendo consultas de combate y ronda necesarias para presentar resultados y recuperar cartas sin exponer colecciones privadas. Se comprobó el XML del diagrama y se revisaron firmas, tipos y dependencias contra las bibliotecas. `git diff --check` no encontró problemas y `dotnet build Proyecto-Integrador-Final.sln` terminó con cero errores y advertencias. Esta compilación solo verifica la base inicial existente; no acredita implementación ni funcionamiento del juego. No se agregaron pruebas de código para un cambio documental. La revisión visual se completó mediante exportación con UMLet 15.1 y se verificaron geométricamente las 16 relaciones, sin tramos que atraviesen cajas y con extremos conectados a bordes. Se consultó UML 2.5.1 y se corrigió la notación de enumeraciones, miembros estáticos y realización de interfaz. La integración del protocolo sigue pendiente; el PR permanece en borrador para revisión de un compañero.
+Se actualizó el UML y se justificaron contratos y responsabilidades en Arquitectura, incluyendo consultas de combate y ronda necesarias para presentar resultados y recuperar cartas sin exponer colecciones privadas. Se comprobó el XML del diagrama y se revisaron firmas, tipos y dependencias contra las bibliotecas. `git diff --check` no encontró problemas y `dotnet build Proyecto-Integrador-Final.sln` terminó con cero errores y advertencias. Esta compilación solo verifica la base inicial existente; no acredita implementación ni funcionamiento del juego. No se agregaron pruebas de código para un cambio documental. La revisión visual se completó mediante exportación con UMLet 15.1 y se verificaron geométricamente las 16 relaciones, sin tramos que atraviesen cajas y con extremos conectados a bordes. Se consultó UML 2.5.1 y se corrigió la notación de enumeraciones, miembros estáticos y realización de interfaz. La integración del protocolo sigue pendiente; el PR #9 del modelo ya está integrado desde el 8 de noviembre de 2026 (hora de Argentina).
 
 Corrección de notación solicitada por el usuario: referencias y colecciones se muestran solo como asociaciones, con roles separados, multiplicidad y visibilidad explícita. Datos.Modelo conserva lectura pública, escritura privada y carácter estático en la relación.
 
@@ -292,4 +298,4 @@ Se compactó la distribución de clases y se recalcularon los recorridos de las 
 
 Revisión final del dominio: jugador mano pertenece solo a Ronda; Combate ofrece GetParticipantes para presentar sus elecciones y Datos.Modelo tiene multiplicidad 0..1 hasta inicializarse. Se revisaron firmas, encapsulamiento y coherencia de reglas. Por decisión posterior del usuario, la actividad 3 se da por terminada y el modelado de entidades, relaciones y firmas de intercambio queda asignado exclusivamente a la actividad 6. Los detalles de métodos, formato del catálogo y pruebas permanecen en sus actividades respectivas; la revisión de un compañero sigue siendo requisito para integrar el PR.
 
-Cierre de la actividad 3 por confirmación del usuario: sin tareas propias pendientes. El modelado de elecciones y publicaciones, su configuración en Datos y los métodos de integración de clientes y Partida quedan en la actividad 6. Este cierre documental no integra el PR ni implica implementación.
+Cierre de la actividad 3 por confirmación del usuario: sin tareas propias pendientes. El modelado de elecciones y publicaciones, su configuración en Datos y los métodos de integración de clientes y Partida quedan en la actividad 6. El cierre documental quedó incorporado mediante el PR #9; no implica implementación.
