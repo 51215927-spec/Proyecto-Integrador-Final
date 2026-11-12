@@ -14,7 +14,7 @@ Se revisaron el documento de avance aportado por el usuario y el [UML existente]
 | 2. Requerimientos | Documento completo y revisado en [Reglas del juego](Reglas-del-juego.md), listo para copiar a la entrega. Incluye reglas, participantes, datos de ejecución, comunicación, errores y separación de requisitos funcionales y técnicos. | Sin tareas de redacción pendientes. El [PR #7](https://github.com/51215927-spec/Proyecto-Integrador-Final/pull/7) está integrado; el protocolo detallado corresponde a la actividad 6. |
 | 3. Modelo de clases | Completada por confirmación del usuario. UML y Arquitectura revisados, con firmas, relaciones, responsabilidades y justificación. | Sin pendientes propios. El modelado de comunicación y su integración se realizan en la actividad 6. |
 | 4. Métodos | Completada por confirmación del usuario. Las 58 especificaciones están redactadas en Arquitectura, con un párrafo por método y sin validaciones repetidas. | Sin pendientes propios. Los formatos y la integración corresponden a las actividades 5 y 6. |
-| 5. Archivos de personajes | Solo se indica un límite de ASCII: «máximo 25 líneas y 120 caracteres». | Aclarar si 120 es por línea o en total; definir sintaxis, campos, descripción, ASCII, errores y ejemplos válidos e inválidos. |
+| 5. Archivos de personajes | Completada por confirmación del usuario. Formato de DataBases, columnas, descripción, ASCII y errores documentados en Arquitectura; UML y contratos de Personaje actualizados. | Sin condiciones pendientes para el cierre aceptado. Conversión al CSV postergada; ejemplos propios no elaborados. |
 | 6. Archivo de partida | Dos clientes y servidor; intercambio mediante Datos y DataBases. | Definir registros, identificación, secuencia, permisos, publicación y cierre coordinado. Verificar funcionamiento en red local. |
 | 7. Pruebas | No se encontró un plan de casos desarrollado en el material revisado. | Diseñar condiciones iniciales, datos y resultados esperados para casos normales, límites y errores. |
 
@@ -52,7 +52,7 @@ Esta decisión y las reglas confirmadas están redactadas en [Reglas del juego](
 
 - Contratos de dominio revisados frente a las reglas; falta completar su integración con el protocolo de la actividad 6.
 - Restauración completa del mazo especificada en UML y Arquitectura, incluidas las cartas no jugadas y la devolución única al cerrar la ronda.
-- El mazo inicial se forma a partir del CSV compartido que genera un sistema externo al cliente. Los repetidos están prohibidos y menos de seis cartas válidas impiden iniciar la partida con un mensaje de error. El sistema externo de carga impide duplicados. Falta definir el formato en la actividad 5.
+- El mazo inicial se forma a partir del CSV compartido que genera un sistema externo al cliente. Los repetidos están prohibidos y menos de seis cartas válidas impiden iniciar la partida con un mensaje de error. El usuario garantiza que el catálogo preparado no tendrá duplicados. El formato está documentado en Arquitectura, actividad 5; la conversión se definirá después.
 - Especificar cómo se mantienen ocultas carta y atributo hasta registrar ambas elecciones; el orden de elección ya está definido en Reglas-del-juego.md.
 - Las especificaciones de la actividad 4 se redactan directamente desde el UML y Arquitectura. Se corrige la referencia anterior a un borrador: el usuario confirmó que no existe.
 - Separar los archivos iniciales de s del intercambio de acciones de la partida; definir identidad de partida, turno, ronda y combate, acciones duplicadas o fuera de turno y escrituras incompletas.
@@ -62,7 +62,7 @@ Esta decisión y las reglas confirmadas están redactadas en [Reglas del juego](
 1. Actividades 1 y 2 completadas en su documentación e integradas mediante los PR #6 y #7. La actividad 2 está lista para copiar a la entrega; esa copia externa no se ha comprobado.
 2. Actividad 3 completada: UML y justificación revisados. La ampliación del modelo para comunicación corresponde a la actividad 6.
 3. Actividad 4 completada: especificaciones de métodos revisadas y aceptadas por el usuario.
-4. Definir los formatos de s y partida compartida con sus errores y ejemplos (actividades 5 y 6).
+4. Actividad 5 completada por confirmación del usuario. Continuar con el protocolo de partida compartida (actividad 6).
 5. Completar el plan de pruebas y revisar que todos los entregables de TI sean coherentes (actividad 7).
 
 Las actividades 1, 2, 3 y 4 tienen sus entregables documentados; el usuario confirmó el cierre de las actividades 3 y 4. El modelado e integración de comunicación se completarán en la actividad 6. Los demás entregables de TI no se consideran cerrados solo por contar con documentación parcial.
@@ -147,18 +147,19 @@ Completada por confirmación del usuario el 9 de noviembre de 2026, después de 
 
 Verificación documental: las 58 operaciones del UML tienen una subsección de especificación, incluidos constructores y contratos externos. `git diff --check` no detectó errores y `dotnet build Proyecto-Integrador-Final.sln` terminó sin errores ni advertencias. La compilación verifica la base existente, no acredita implementación del diseño. Se precisó la retirada de cartas desde Combate.SetCarta y su recuperación única al cerrar la ronda. Formatos de archivos, protocolo e integración permanecen pendientes en las actividades 5 y 6.
 
-### Actividad 5 — Formato de los archivos de s
+### Actividad 5 — Formato de los archivos de personajes
 
-- [ ] Especificar el CSV compartido generado por el sistema externo y su relación con los archivos individuales de s exigidos por la consigna, incluyendo campos, ASCII Art, duplicados y errores de lectura.
-- [ ] Definir la estructura del archivo de texto y cómo se reconoce cada dato.
-- [ ] Especificar el formato del nombre y de los seis atributos obligatorios.
-- [ ] **En curso:** definir cómo se incorpora o referencia la descripción y el ASCII Art; solo está escrito el límite de 25 líneas y 120 caracteres, cuya interpretación falta precisar.
-- [x] Documentar las restricciones numéricas: seis atributos entre 250 y 750, total 3000, uno de al menos 650 y otro de como máximo 350, sin seis valores de 500 (documento revisado y consigna).
-- [ ] Especificar cómo se aplican esas restricciones al leer el archivo y cómo se informa cada incumplimiento.
-- [ ] Definir la respuesta ante campos faltantes, duplicados o incorrectos.
-- [ ] Definir la respuesta ante un archivo inexistente o que no se puede leer.
-- [ ] Preparar un archivo válido y ejemplos inválidos para cada error previsto.
-- [ ] Revisar y entregar la especificación del formato común.
+**Completada por confirmación del usuario.** El cierre corresponde a la especificación acordada en Arquitectura y a la actualización del modelo; no implica implementación.
+
+- [x] Definir estructura y reconocimiento de datos mediante el formato propio de DataBases y columnas correspondientes a los campos de Personaje.
+- [x] Especificar nombre y seis atributos, con las restricciones numéricas y su validación al construir Personaje.
+- [x] Incorporar descripcion al campo privado, constructor, GetDescripcion y columna del archivo: opcional, sin límite y ausente como texto vacío ("").
+- [x] Definir ASCII: máximo 25 líneas de 120 caracteres por línea y sin tabulaciones. Se entrega con contenido, sin validar texto vacío; se mantiene el rechazo de null.
+- [x] Documentar errores de formato, campos faltantes o incorrectos, archivos inexistentes e ilegibles y finalización sin recuperación.
+- [x] Registrar que el usuario garantiza el catálogo sin duplicados y que la conversión al CSV se definirá después.
+- [x] Registrar el cierre por confirmación del usuario.
+
+No se elaboraron ejemplos propios válidos e inválidos; el cierre confirmado no los presenta como realizados ni los conserva como condición para reabrir esta actividad. La presentación de la descripción en consola sigue sin definir y no condiciona este cierre. La conversión al CSV queda postergada por indicación del usuario.
 
 ### Actividad 6 — Archivo de partida compartida
 
@@ -299,3 +300,7 @@ Se compactó la distribución de clases y se recalcularon los recorridos de las 
 Revisión final del dominio: jugador mano pertenece solo a Ronda; Combate ofrece GetParticipantes para presentar sus elecciones y Datos.Modelo tiene multiplicidad 0..1 hasta inicializarse. Se revisaron firmas, encapsulamiento y coherencia de reglas. Por decisión posterior del usuario, la actividad 3 se da por terminada y el modelado de entidades, relaciones y firmas de intercambio queda asignado exclusivamente a la actividad 6. Los detalles de métodos, formato del catálogo y pruebas permanecen en sus actividades respectivas; la revisión de un compañero sigue siendo requisito para integrar el PR.
 
 Cierre de la actividad 3 por confirmación del usuario: sin tareas propias pendientes. El modelado de elecciones y publicaciones, su configuración en Datos y los métodos de integración de clientes y Partida quedan en la actividad 6. El cierre documental quedó incorporado mediante el PR #9; no implica implementación.
+
+## Ampliación documental de Personaje — actividad 5
+
+Por indicación del usuario se agregó descripcion: string al modelo de Personaje y a sus columnas, se amplió el constructor y se especificó GetDescripcion. La descripción es opcional y no tiene límite de longitud por confirmación del usuario; su ausencia se representa con texto vacío ("") y su presentación sigue pendiente de decisión. La conversión al CSV se resolverá posteriormente y el usuario garantiza un catálogo preparado sin duplicados. No se implementó código. Posteriormente el usuario confirmó el cierre de la actividad 5 con esta especificación. Los registros anteriores de 58 operaciones corresponden a la revisión previa a esta ampliación.

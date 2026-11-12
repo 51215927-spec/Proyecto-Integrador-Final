@@ -8,7 +8,7 @@ El juego consiste en enfrentar personajes comparando sus atributos. Cada jugador
 
 El trabajo actual se limita a **TI: análisis y diseño**. La implementación en Taller de Programación queda para una etapa posterior.
 
-Las actividades 1 a 4 de TI están completadas en su documentación. Quedan pendientes los formatos de personajes, el protocolo de partida y el plan de pruebas (actividades 5 a 7).
+Las actividades 1 a 5 de TI están completadas en su documentación por confirmación del usuario. Quedan pendientes el protocolo de partida y el plan de pruebas (actividades 6 y 7).
 
 La aplicación todavía muestra `Hello, World!` y existe una única prueba vacía, sin validaciones del juego. El juego aún no está implementado. Consultá el [plan de trabajo](docs/Plan.md) para conocer los avances y pendientes.
 
