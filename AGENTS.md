@@ -1,20 +1,259 @@
 # Instrucciones para agentes
 
+## 1. Idioma y alcance del proyecto
+
 - Responder siempre al usuario en español.
-- El alcance actual se limita a TI (análisis y diseño). Mantener Taller de Programación como trabajo futuro hasta que el usuario indique avanzar con la implementación.
-- No agregar a Git ni subir a GitHub los PDF aportados como referencia. Revisarlos localmente y trasladar los avances y pendientes pertinentes al plan; eliminarlos cuando el usuario lo solicite y se haya completado la actualización.
-- Antes de comenzar una nueva tarea de GitHub, actualizar las referencias remotas y sincronizar `main` mediante avance rápido, conservando los cambios locales. Crear la rama de la tarea desde el `main` actualizado; si hay divergencias, revisarlas sin sobrescribir trabajo ni integrar cambios sin la revisión requerida.
-- Leer `README.md`, `docs/Consigna.md`, `docs/Plan.md`, `docs/Arquitectura.md` y `CONTRIBUTING.md` antes de cambiar el alcance o la estructura del proyecto. La consigna es la fuente de requisitos; no dar por implementado algo que solo está documentado.
-- El proyecto principal es un juego de cartas «Guerra» de consola en C# y .NET 8. La consigna requiere personajes con seis atributos, cartas y mazos, reglas de partida y coordinación entre dos computadoras mediante un archivo compartido en red local.
-- Para cada personaje, validar que los seis atributos sumen exactamente 3000, que cada uno esté entre 250 y 750, que alguno sea al menos 650 y que alguno sea como máximo 350.
-- Guardar código de la aplicación en `src/`, pruebas en `test/` y documentación del proyecto en `docs/`. Al agregar documentación, enlazarla desde `README.md`. Mantener cambios de código y documentación coherentes.
-- `Mis-Librerias/` contiene bibliotecas auxiliares independientes con su propia documentación. Consultar sus README antes de usarlas; `Mis-Librerias/DataBases viejo/` es código anterior y no forma parte de la solución actual.
-- El programa principal todavía contiene el ejemplo inicial `Hello, World!`; las pruebas también son iniciales. Verificar el trabajo con `dotnet build Proyecto-Integrador-Final.sln` y, cuando corresponda, `dotnet test Proyecto-Integrador-Final.sln`.
-- Seguir las convenciones de ramas, commits y revisión descritas en `CONTRIBUTING.md` si se trabaja con GitHub. No publicar ni integrar cambios sin la revisión prevista allí.
-- Para cada tarea de GitHub, usar una rama nueva con formato `tipo/descripcion-corta`: `feature/`, `fix/`, `docs/`, `refactor/` o `test/`; escribir la descripción en minúsculas, sin tildes y con guiones. Usar commits con formato `tipo: descripcion breve`: `feat`, `fix`, `docs`, `refactor` o `test`, con un mensaje concreto, en minúsculas y sin punto final. No trabajar directamente en `main` ni integrar un PR sin revisión de un compañero.
-- Aplicar el skill `desarrollo-documentado` al trabajar en este proyecto: consultar el contexto y el estado real antes de planificar, mantener `docs/Plan.md` y `docs/Arquitectura.md` acordes con las decisiones vigentes, implementar cambios acotados y revisables, verificar el comportamiento afectado y registrar decisiones o resultados relevantes cuando aporten trazabilidad. Respetar la estructura existente del repositorio y evitar documentación duplicada.
-- Para el desarrollo, se utilisara la metodologia TDD (Test-Driven Development). Los pasos seran los siguentes:
-  1. Generar las firmas de los metodos pero no sus firmas (metodo() => throw new notimplementedexception()).
-  2. Generar los test en `test/` con xUnit.
-  3. Hacer y rehacer los metodos hasta que pasen las pruebas.
-  4. Cada modificacion posterios debe pasar todos los test y los nuevos que requiera.
+- El alcance actual del proyecto se limita a **TI (análisis y diseño)**. Mantener Taller de Programación (implementación) como trabajo futuro hasta que el usuario autorice explícitamente avanzar con esa etapa.
+- No implementar funcionalidades, crear código de producción ni adelantar trabajo de Taller de Programación mientras el alcance esté limitado a TI.
+- Diferenciar claramente entre requisitos definidos, decisiones de diseño, trabajo pendiente y funcionalidades efectivamente implementadas.
+- No considerar implementado algo por el simple hecho de que esté documentado.
+
+## 2. Contexto y documentación
+
+Antes de modificar el alcance, la arquitectura o la estructura del proyecto, leer:
+
+- `README.md`
+- `docs/Consigna.md`
+- `docs/Plan.md`
+- `docs/Arquitectura.md`
+- `CONTRIBUTING.md`
+
+La fuente principal de requisitos es `docs/Consigna.md`. En caso de contradicción, no asumir qué interpretación es correcta: identificar el conflicto y solicitar una definición cuando sea necesario.
+
+Aplicar el skill `desarrollo-documentado` durante el trabajo en este proyecto:
+
+- Consultar el contexto y el estado real del repositorio antes de planificar.
+- Mantener `docs/Plan.md` y `docs/Arquitectura.md` actualizados según las decisiones vigentes.
+- Realizar cambios acotados, coherentes y revisables.
+- Verificar los aspectos afectados por cada modificación.
+- Registrar decisiones y resultados relevantes cuando aporten trazabilidad.
+- Respetar la estructura documental existente y evitar duplicaciones innecesarias.
+
+## 3. Descripción del proyecto
+
+El proyecto consiste en desarrollar un juego de cartas «Guerra» de consola, utilizando C# y .NET 8.
+
+La consigna contempla:
+
+- Personajes con seis atributos.
+- Cartas y mazos.
+- Reglas y desarrollo de las partidas.
+- Coordinación entre dos computadoras mediante un archivo compartido en una red local.
+
+### Validaciones de personajes
+
+Cada personaje deberá cumplir las siguientes restricciones:
+
+- La suma de sus seis atributos debe ser exactamente 3000.
+- Cada atributo debe estar comprendido entre 250 y 750, inclusive.
+- Al menos un atributo debe ser igual o superior a 650.
+- Al menos un atributo debe ser igual o inferior a 350.
+
+Estas restricciones forman parte de los requisitos y deben mantenerse presentes durante el análisis, diseño e implementación.
+
+## 4. Estructura del repositorio
+
+Respetar la siguiente organización:
+
+- `src/`: código fuente de la aplicación.
+- `test/`: proyectos y código de pruebas automatizadas.
+- `docs/`: documentación del proyecto.
+
+Al agregar documentación, enlazarla desde `README.md` cuando corresponda.
+
+Mantener la documentación y el código coherentes. Una modificación arquitectónica relevante debe reflejarse en la documentación correspondiente.
+
+### Bibliotecas auxiliares
+
+- `Mis-Librerias/` contiene bibliotecas auxiliares independientes, con sus propios proyectos y documentación.
+- Consultar los README de las bibliotecas antes de utilizarlas.
+- `Mis-Librerias/DataBases viejo/` contiene código anterior y no forma parte de la solución actual.
+- No asumir que el comportamiento de una biblioteca es conocido sin consultar su implementación o documentación pertinente.
+
+### Estado inicial
+
+El programa principal todavía contiene el ejemplo inicial `Hello, World!` y las pruebas también son iniciales.
+
+No asumir que existe funcionalidad implementada previamente sin comprobarlo en el repositorio.
+
+## 5. Gestión de Git y GitHub
+
+### 5.1. Sincronización previa
+
+Antes de comenzar una nueva tarea de GitHub:
+
+1. Comprobar el estado del repositorio y los cambios locales.
+2. Actualizar las referencias remotas mediante `git fetch`.
+3. Revisar el estado de `main` respecto de `origin/main`.
+4. Sincronizar `main` mediante avance rápido (`fast-forward`) cuando sea posible.
+5. Crear la rama de trabajo desde el `main` actualizado.
+
+Si existen divergencias, conflictos o cambios locales pendientes:
+
+- Analizar su origen y contenido.
+- Conservar los cambios locales y remotos.
+- No utilizar operaciones destructivas para forzar la sincronización.
+- No descartar, sobrescribir ni integrar cambios sin la revisión correspondiente.
+- Informar al usuario si es necesaria una intervención antes de continuar.
+
+Nunca asumir que una sincronización se realizó correctamente sin verificar el resultado.
+
+### 5.2. Ramas
+
+Cada tarea de GitHub debe desarrollarse en una rama nueva.
+
+Utilizar el siguiente formato:
+
+`tipo/descripcion-corta`
+
+Tipos permitidos:
+
+- `feature/`: nuevas funcionalidades.
+- `fix/`: correcciones.
+- `docs/`: documentación.
+- `refactor/`: refactorizaciones.
+- `test/`: pruebas automatizadas.
+
+La descripción debe estar en minúsculas, sin tildes y con palabras separadas por guiones.
+
+Ejemplos:
+
+- `feature/sistema-de-combate`
+- `fix/validacion-de-atributos`
+- `docs/actualizar-arquitectura`
+- `refactor/organizacion-de-clases`
+- `test/pruebas-de-personajes`
+
+No trabajar directamente sobre `main`.
+
+### 5.3. Commits
+
+Utilizar el siguiente formato:
+
+`tipo: descripcion breve`
+
+Tipos permitidos:
+
+- `feat`
+- `fix`
+- `docs`
+- `refactor`
+- `test`
+
+Los mensajes deben ser concretos, estar en minúsculas, no llevar tildes y no terminar en punto.
+
+Ejemplos:
+
+- `feat: agregar validacion de personajes`
+- `fix: corregir calculo de atributos`
+- `docs: actualizar arquitectura`
+- `refactor: simplificar gestion de mazos`
+- `test: agregar pruebas de personajes`
+
+### 5.4. Pull Requests y colaboración
+
+- Seguir las convenciones de colaboración descritas en `CONTRIBUTING.md`.
+- No publicar ni integrar cambios sin la revisión prevista en ese documento.
+- No aprobar ni integrar un PR propio cuando se requiera la revisión de un compañero.
+- Mantener los PR acotados y describir claramente los cambios realizados.
+- No considerar finalizada una tarea que requiere revisión hasta que esta se haya completado.
+
+### 5.5. Archivos PDF de referencia
+
+- Los PDF aportados como referencia son exclusivamente para consulta local.
+- No agregarlos al repositorio ni subirlos a GitHub.
+- Revisarlos y trasladar al plan los avances, requisitos y pendientes pertinentes.
+- Una vez completada la actualización documental, eliminarlos únicamente cuando el usuario lo solicite.
+
+## 6. Verificación del proyecto
+
+Utilizar los siguientes comandos para comprobar el estado de la solución:
+
+Compilación:
+
+`dotnet build Proyecto-Integrador-Final.sln`
+
+Pruebas automatizadas:
+
+`dotnet test Proyecto-Integrador-Final.sln`
+
+La compilación y las pruebas deben ejecutarse según corresponda al alcance y al tipo de modificación.
+
+- Durante TI, no implementar código únicamente para conseguir que compile o pasen las pruebas.
+- Durante Taller de Programación, verificar la compilación y ejecutar las pruebas pertinentes.
+- No afirmar que una verificación fue exitosa sin haber ejecutado el comando correspondiente.
+- Informar los errores encontrados y distinguir entre errores preexistentes y errores introducidos por los cambios realizados.
+
+---
+
+## 7. Metodología de desarrollo: TDD
+
+Esta metodología se aplicará exclusivamente cuando el usuario autorice avanzar con Taller de Programación.
+
+Todo el desarrollo de código deberá seguir **TDD (Test-Driven Development)**, utilizando xUnit para las pruebas automatizadas.
+
+El proceso seguirá el ciclo RED-GREEN-REFACTOR.
+
+### 7.1. Definición de la estructura
+
+Antes de implementar la lógica:
+
+- Crear las clases, atributos, constructores y firmas de los métodos necesarios, respetando la arquitectura definida.
+- Los métodos que todavía no tengan implementación deberán lanzar `NotImplementedException`.
+- No agregar lógica de producción en esta etapa.
+
+Esta etapa establece la estructura inicial del código, pero no reemplaza la escritura previa de pruebas para cada comportamiento.
+
+### 7.2. Escritura de pruebas (RED)
+
+- Desarrollar los tests en los proyectos ubicados en `test/`, utilizando xUnit.
+- Escribir las pruebas antes de implementar la lógica correspondiente.
+- Contemplar los casos esperados, casos límite, valores inválidos y excepciones.
+- Utilizar `[Fact]` para escenarios individuales y `[Theory]` con `[InlineData]` cuando resulte conveniente probar múltiples conjuntos de datos.
+- Ejecutar los tests y comprobar que fallen por la ausencia de la implementación o por el comportamiento todavía no satisfecho.
+
+### 7.3. Implementación (GREEN)
+
+- Implementar únicamente la lógica necesaria para satisfacer los tests existentes.
+- Ejecutar las pruebas después de cada modificación relevante.
+- Modificar el código hasta conseguir que todas las pruebas correspondientes pasen.
+- Evitar agregar funcionalidades que no estén respaldadas por requisitos o comportamientos definidos.
+
+### 7.4. Refactorización (REFACTOR)
+
+- Mejorar la estructura, legibilidad, mantenibilidad y calidad del código.
+- No modificar el comportamiento esperado durante la refactorización.
+- Ejecutar nuevamente los tests después de cada refactorización.
+- No considerar terminada una refactorización mientras existan pruebas fallidas.
+
+### 7.5. Mantenimiento
+
+Toda modificación posterior deberá conservar el comportamiento previamente validado.
+
+- Los cambios en funcionalidades existentes deben mantener los tests anteriores, salvo que los requisitos hayan cambiado.
+- Las nuevas funcionalidades deben incorporar sus correspondientes pruebas.
+- Las modificaciones de comportamiento deben reflejarse en los tests afectados.
+- Ejecutar la suite completa antes de finalizar una tarea de desarrollo.
+
+### 7.6. Reglas de TDD
+
+- No implementar lógica de producción antes de escribir los tests correspondientes.
+- No eliminar, desactivar ni modificar pruebas simplemente para conseguir que pasen.
+- Si un test parece incorrecto, analizarlo y justificar cualquier modificación según los requisitos.
+- No considerar terminado un desarrollo mientras existan pruebas fallidas.
+- No reemplazar pruebas automatizadas por comprobaciones manuales.
+- No utilizar mocks innecesariamente: emplearlos cuando sea necesario aislar dependencias externas o colaboradoras.
+- Mantener los tests independientes entre sí y evitar que dependan del orden de ejecución.
+- No confundir cobertura de código con calidad de las pruebas.
+
+---
+
+## 8. Criterios generales de trabajo
+
+- Priorizar la corrección y la coherencia con la consigna por encima de la velocidad.
+- No inventar requisitos ni tomar decisiones arquitectónicas importantes sin fundamento.
+- No realizar modificaciones ajenas a la tarea solicitada.
+- Evitar cambios innecesarios en archivos que no estén relacionados con el objetivo.
+- Ante una ambigüedad que pueda afectar significativamente el diseño o la implementación, consultar antes de asumir.
+- Mantener informado al usuario sobre decisiones relevantes, problemas encontrados y verificaciones realizadas.
+- Diferenciar siempre entre trabajo propuesto, trabajo realizado y trabajo pendiente.
