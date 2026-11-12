@@ -240,7 +240,7 @@ Después de que el PR se integre, actualizá tu rama principal:
 
 ```bash
 git switch main
-git pull --ff-only
+git pull
 ```
 
 Ahora tu computadora tiene los cambios que se incorporaron al repositorio. Podés empezar una nueva tarea creando otra rama.
@@ -292,7 +292,7 @@ Guardá tu trabajo con un commit y traé los cambios de `main` a tu rama:
 
 ```bash
 git switch main
-git pull --ff-only
+git pull
 git switch feature/registro-usuarios
 git merge main
 ```
