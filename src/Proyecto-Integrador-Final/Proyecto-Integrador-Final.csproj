@@ -8,4 +8,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Mis-Librerias\DataBases\DataBases.csproj" />
+    <ProjectReference Include="..\..\Mis-Librerias\Utilidades\Utilidades.csproj" />
+  </ItemGroup>
+
 </Project>
