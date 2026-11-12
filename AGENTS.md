@@ -13,3 +13,8 @@
 - Seguir las convenciones de ramas, commits y revisión descritas en `CONTRIBUTING.md` si se trabaja con GitHub. No publicar ni integrar cambios sin la revisión prevista allí.
 - Para cada tarea de GitHub, usar una rama nueva con formato `tipo/descripcion-corta`: `feature/`, `fix/`, `docs/`, `refactor/` o `test/`; escribir la descripción en minúsculas, sin tildes y con guiones. Usar commits con formato `tipo: descripcion breve`: `feat`, `fix`, `docs`, `refactor` o `test`, con un mensaje concreto, en minúsculas y sin punto final. No trabajar directamente en `main` ni integrar un PR sin revisión de un compañero.
 - Aplicar el skill `desarrollo-documentado` al trabajar en este proyecto: consultar el contexto y el estado real antes de planificar, mantener `docs/Plan.md` y `docs/Arquitectura.md` acordes con las decisiones vigentes, implementar cambios acotados y revisables, verificar el comportamiento afectado y registrar decisiones o resultados relevantes cuando aporten trazabilidad. Respetar la estructura existente del repositorio y evitar documentación duplicada.
+- Para el desarrollo, se utilisara la metodologia TDD (Test-Driven Development). Los pasos seran los siguentes:
+  1. Generar las firmas de los metodos pero no sus firmas (metodo() => throw new notimplementedexception()).
+  2. Generar los test en `test/` con xUnit.
+  3. Hacer y rehacer los metodos hasta que pasen las pruebas.
+  4. Cada modificacion posterios debe pasar todos los test y los nuevos que requiera.
