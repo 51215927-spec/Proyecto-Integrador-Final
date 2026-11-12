@@ -18,11 +18,11 @@ Se revisaron el documento de avance aportado por el usuario y el [UML existente]
 | 6. Archivo de partida | Dos clientes y servidor; intercambio mediante Datos y DataBases. | Definir registros, identificación, secuencia, permisos, publicación y cierre coordinado. Verificar funcionamiento en red local. |
 | 7. Pruebas | No se encontró un plan de casos desarrollado en el material revisado. | Diseñar condiciones iniciales, datos y resultados esperados para casos normales, límites y errores. |
 
-### Verificación de personajes
+### Verificación de s
 
 Valores en orden: Fuerza, Velocidad, Resistencia, Inteligencia, Energía y Habilidad.
 
-| Personaje | Valores | Total | Principal / menor | Resultado |
+|  | Valores | Total | Principal / menor | Resultado |
 |---|---|---|---|---|
 | Lysander | 750, 550, 500, 250, 500, 550 | 3000 | Fuerza / Inteligencia | Cumple rango 250–750 y umbrales 650 y 350. |
 | Reched | 250, 700, 350, 750, 450, 500 | 3000 | Inteligencia / Fuerza | Cumple rango 250–750 y umbrales 650 y 350. |
@@ -55,29 +55,29 @@ Esta decisión y las reglas confirmadas están redactadas en [Reglas del juego](
 - El mazo inicial se forma a partir del CSV compartido que genera un sistema externo al cliente. Los repetidos están prohibidos y menos de seis cartas válidas impiden iniciar la partida con un mensaje de error. El sistema externo de carga impide duplicados. Falta definir el formato en la actividad 5.
 - Especificar cómo se mantienen ocultas carta y atributo hasta registrar ambas elecciones; el orden de elección ya está definido en Reglas-del-juego.md.
 - Las especificaciones de la actividad 4 se redactan directamente desde el UML y Arquitectura. Se corrige la referencia anterior a un borrador: el usuario confirmó que no existe.
-- Separar los archivos iniciales de personajes del intercambio de acciones de la partida; definir identidad de partida, turno, ronda y combate, acciones duplicadas o fuera de turno y escrituras incompletas.
+- Separar los archivos iniciales de s del intercambio de acciones de la partida; definir identidad de partida, turno, ronda y combate, acciones duplicadas o fuera de turno y escrituras incompletas.
 
 ### Orden de trabajo para TI
 
 1. Actividades 1 y 2 completadas en su documentación e integradas mediante los PR #6 y #7. La actividad 2 está lista para copiar a la entrega; esa copia externa no se ha comprobado.
 2. Actividad 3 completada: UML y justificación revisados. La ampliación del modelo para comunicación corresponde a la actividad 6.
 3. Actividad 4 completada: especificaciones de métodos revisadas y aceptadas por el usuario.
-4. Definir los formatos de personajes y partida compartida con sus errores y ejemplos (actividades 5 y 6).
+4. Definir los formatos de s y partida compartida con sus errores y ejemplos (actividades 5 y 6).
 5. Completar el plan de pruebas y revisar que todos los entregables de TI sean coherentes (actividad 7).
 
 Las actividades 1, 2, 3 y 4 tienen sus entregables documentados; el usuario confirmó el cierre de las actividades 3 y 4. El modelado e integración de comunicación se completarán en la actividad 6. Los demás entregables de TI no se consideran cerrados solo por contar con documentación parcial.
 
 ## TI — Análisis de Sistemas
 
-### Actividad 1 — Análisis y diseño de los personajes
+### Actividad 1 — Análisis y diseño de los s
 
 **Completada por confirmación del usuario.** Se conserva el registro de los datos y las validaciones revisadas, sin tareas adicionales pendientes para esta actividad.
 
 - [x] Escribir el nombre y la descripción de Lysander y Reched (fichas del documento revisado).
 - [x] Elegir una distribución para Lysander y Reched (valores registrados en la tabla de verificación).
-- [x] Comprobar que los seis valores de ambos personajes estén entre 250 y 750 y sumen exactamente 3000.
-- [x] Comprobar en ambos personajes que al menos un atributo sea mayor o igual a 650 y otro menor o igual a 350; ninguno tiene seis valores de 500.
-- [x] Identificar el atributo principal y el de menor valor de ambos personajes.
+- [x] Comprobar que los seis valores de ambos s estén entre 250 y 750 y sumen exactamente 3000.
+- [x] Comprobar en ambos s que al menos un atributo sea mayor o igual a 650 y otro menor o igual a 350; ninguno tiene seis valores de 500.
+- [x] Identificar el atributo principal y el de menor valor de ambos s.
 - [x] Dar por completada la actividad 1 según la confirmación del usuario.
 
 ### Actividad 2 — Relevamiento de requerimientos
@@ -85,11 +85,11 @@ Las actividades 1, 2, 3 y 4 tienen sus entregables documentados; el usuario conf
 - [x] Escribir el objetivo del juego: alcanzar 15 rondas ganadas.
 - [x] Identificar a los dos participantes y sus acciones: elegir atributo cuando corresponde y elegir una carta de su mano.
 - [x] Definir el reparto de tres cartas a cada jugador desde un mazo común y la mezcla entre rondas.
-- [x] Definir el origen del mazo inicial: personajes cargados en un CSV compartido por un sistema externo al cliente de los jugadores.
-- [x] Registrar que carta y personaje son el mismo elemento y que no se utilizará una clase Carta adicional.
+- [x] Definir el origen del mazo inicial: s cargados en un CSV compartido por un sistema externo al cliente de los jugadores.
+- [x] Registrar que carta y  son el mismo elemento y que no se utilizará una clase Carta adicional.
 - [x] Definir que menos de seis cartas válidas impiden iniciar la partida y muestran el error «No se puede jugar porque no hay suficientes cartas».
-- [x] Prohibir personajes repetidos en el mazo.
-- [x] Asignar la prevención de personajes duplicados al sistema externo de carga, fuera del cliente y del servidor de partida.
+- [x] Prohibir s repetidos en el mazo.
+- [x] Asignar la prevención de s duplicados al sistema externo de carga, fuera del cliente y del servidor de partida.
 - [x] Definir quién es jugador mano al iniciar la partida: J1, según confirmación del usuario.
 - [x] Reunir las reglas confirmadas en [Reglas del juego](Reglas-del-juego.md), diferenciando partida, ronda, combate, jugador mano y mano de cartas y señalando las decisiones pendientes.
 - [x] Preparar Reglas-del-juego.md como contenido de entrega que copiará el usuario, con J1 como jugador mano inicial y alternancia J1/J2 al terminar cada ronda.
@@ -103,7 +103,7 @@ Las actividades 1, 2, 3 y 4 tienen sus entregables documentados; el usuario conf
 - [x] Definir la secuencia: quien comienza el combate elige carta y atributo; el rival elige sin conocer esas elecciones; luego se revelan ambas cartas y el atributo.
 - [x] Limitar la ocultación de elecciones a la interfaz: se revelan cuando ambos han elegido; se acepta que los archivos puedan consultarse manualmente. No se exige una garantía de secreto frente a ese acceso.
 - [x] Establecer la victoria y finalización normal de la partida al alcanzar 15 rondas ganadas.
-- [x] Completar los datos de ejecución: personajes y mazo, cartas disponibles y jugadas, jugadores, ronda, combate, jugador mano, elección de atributo, elecciones realizadas, marcadores, resultados y estado de partida.
+- [x] Completar los datos de ejecución: s y mazo, cartas disponibles y jugadas, jugadores, ronda, combate, jugador mano, elección de atributo, elecciones realizadas, marcadores, resultados y estado de partida.
 - [x] Definir la comunicación general: dos clientes publican sus elecciones; el servidor las lee, analiza y publica mensajes de resultados. Cada proceso solo escribe sus archivos y lee los de los demás.
 - [x] Asignar al cliente la validación de sus datos antes del envío y al servidor el tratamiento de errores al iniciar la partida.
 - [x] Definir responsabilidades y política general de errores: el cliente garantiza envíos válidos; cualquier error termina el juego completo, incluido el fallo del servidor. Los tipos de acciones, secuencias y formatos se difieren a la actividad 6.
@@ -117,8 +117,8 @@ El [PR #7](https://github.com/51215927-spec/Proyecto-Integrador-Final/pull/7) de
 
 **Completada por confirmación del usuario.** El UML y su justificación están revisados. No hay implementación. El detalle vigente está en [Arquitectura](Arquitectura.md). Las tareas de modelado e integración de comunicación se trasladan a la actividad 6.
 
-- [x] Representar Personaje, Mazo, Jugador, Partida, Ronda y Combate con atributos privados, firmas tipadas y relaciones.
-- [x] Adaptar todas las referencias al concepto unificado de Personaje.
+- [x] Representar , Mazo, Jugador, Partida, Ronda y Combate con atributos privados, firmas tipadas y relaciones.
+- [x] Adaptar todas las referencias al concepto unificado de .
 - [x] Asignar coordinación del dominio al servidor y presentación a los clientes, sin comunicación directa entre rivales.
 - [x] Incorporar Datos estática y las dependencias de DataBases sin duplicar la lectura CSV.
 - [x] Definir en Datos constantes de rutas y Configurar(TipoProceso), con identidad fija de servidor, cliente J1 o cliente J2 antes de Iniciar.
@@ -147,9 +147,9 @@ Completada por confirmación del usuario el 9 de noviembre de 2026, después de 
 
 Verificación documental: las 58 operaciones del UML tienen una subsección de especificación, incluidos constructores y contratos externos. `git diff --check` no detectó errores y `dotnet build Proyecto-Integrador-Final.sln` terminó sin errores ni advertencias. La compilación verifica la base existente, no acredita implementación del diseño. Se precisó la retirada de cartas desde Combate.SetCarta y su recuperación única al cerrar la ronda. Formatos de archivos, protocolo e integración permanecen pendientes en las actividades 5 y 6.
 
-### Actividad 5 — Formato de los archivos de personajes
+### Actividad 5 — Formato de los archivos de s
 
-- [ ] Especificar el CSV compartido generado por el sistema externo y su relación con los archivos individuales de personajes exigidos por la consigna, incluyendo campos, ASCII Art, duplicados y errores de lectura.
+- [ ] Especificar el CSV compartido generado por el sistema externo y su relación con los archivos individuales de s exigidos por la consigna, incluyendo campos, ASCII Art, duplicados y errores de lectura.
 - [ ] Definir la estructura del archivo de texto y cómo se reconoce cada dato.
 - [ ] Especificar el formato del nombre y de los seis atributos obligatorios.
 - [ ] **En curso:** definir cómo se incorpora o referencia la descripción y el ASCII Art; solo está escrito el límite de 25 líneas y 120 caracteres, cuya interpretación falta precisar.
@@ -167,7 +167,7 @@ Los registros de elecciones y publicaciones se definirán en esta actividad. El 
 - [x] Definir un escritor exclusivo por archivo: cada cliente escribe sus elecciones y el servidor sus publicaciones; los demás procesos leen.
 - [ ] Definir las entidades de intercambio y sus campos, cantidad de archivos, rutas, permisos y configuración en DataBases.
 - [ ] Especificar la identificación de partida, jugadores, estado, ronda, combate y jugador autorizado a elegir.
-- [ ] Definir cómo se relacionan los registros de intercambio con los personajes del catálogo.
+- [ ] Definir cómo se relacionan los registros de intercambio con los s del catálogo.
 - [ ] Determinar cuándo cada proceso ejecuta Cargar<T> y Guardar<T> y qué tablas puede guardar.
 - [ ] Especificar la secuencia de elecciones y la publicación de resultados sin revelar elecciones anticipadamente en la interfaz.
 - [ ] Definir cómo se reconocen registros ya procesados, repetidos o correspondientes a otra partida, ronda o combate.
@@ -178,7 +178,7 @@ Los registros de elecciones y publicaciones se definirán en esta actividad. El 
 - [ ] Incorporar al UML y Arquitectura las entidades de elecciones de los clientes y publicaciones del servidor, con atributos, relaciones y configuración en Datos.
 - [ ] Definir los métodos que conectan los registros de intercambio con Partida y los clientes, conforme al protocolo acordado.
 - [ ] Revisar la coherencia de esas ampliaciones con las reglas y el modelo de dominio ya cerrado en la actividad 3.
-- [ ] Entregar la especificación de intercambio, diferenciándola del catálogo inicial de personajes.
+- [ ] Entregar la especificación de intercambio, diferenciándola del catálogo inicial de s.
 
 ### Actividad 7 — Casos de prueba
 
@@ -201,9 +201,9 @@ Etapas conservadas como referencia futura. No se implementarán en el alcance ac
 
 ### Etapa 1 — Implementación de Personaje
 
-- [ ] Crear la clase Personaje en `src/` conforme al modelo acordado.
-- [ ] Implementar el constructor con nombre, seis atributos y ASCII Art.
-- [ ] Implementar las validaciones de los atributos según los contratos de TI.
+- [x] Crear la clase Personaje en `src/` conforme al modelo acordado.
+- [x] Implementar el constructor con nombre, seis atributos y ASCII Art.
+- [x] Implementar las validaciones de los atributos según los contratos de TI.
 - [ ] Implementar las operaciones de consulta conservando el encapsulamiento.
 - [ ] Agregar en `test/` pruebas de personajes válidos y de cada restricción de puntajes.
 
@@ -229,8 +229,8 @@ Etapas conservadas como referencia futura. No se implementarán en el alcance ac
 
 ### Etapa 4 — Administración del mazo
 
-- [ ] Crear Mazo con su colección privada de Personaje.
-- [ ] Implementar Mezclar, Repartir, Devolver y GetCantidad conforme a las firmas del UML.
+- [x] Crear Mazo con su colección privada de Personaje.
+- [x] Implementar Mezclar, Repartir, Devolver y GetCantidad conforme a las firmas del UML.
 - [ ] Comprobar que el reparto retire los elementos entregados y respete su disponibilidad.
 - [ ] Restaurar el mazo completo al cerrar cada ronda, incluyendo personajes jugados y no jugados, sin pérdidas ni repeticiones.
 - [ ] Impedir iniciar una partida con menos de seis personajes válidos y mostrar el mensaje acordado.
