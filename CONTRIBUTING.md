@@ -28,7 +28,7 @@ git config --global user.email "Tu correo de GitHub"
 | `git add .` | Prepara todos los cambios para guardarlos. |
 | `git commit -m "mensaje"` | Guarda los cambios preparados en un commit. |
 | `git push` | Sube los commits a GitHub. |
-| `git pull --ff-only` | Descarga e integra los cambios de GitHub. |
+| `git pull` | Descarga e integra los cambios de GitHub. |
 | `git branch` | Muestra las ramas locales. |
 | `git switch main` | Cambia a la rama principal. |
 | `git switch -c nombre-rama` | Crea una rama y cambia a ella. |
