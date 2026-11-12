@@ -307,6 +307,45 @@ Si Git avisa que hay conflictos, no borres archivos ni elijas cambios al azar: a
 
 **Para integrar a `main`:** abrir un Pull Request en GitHub y esperar la revisión.
 
+## Desarrollo guiado por pruebas (TDD)
+
+TDD (*Test-Driven Development*) consiste en escribir una prueba antes de implementar el comportamiento que verifica. Se aplicará con xUnit cuando se autorice avanzar con Taller de Programación. Durante TI se diseñan los casos y sus resultados esperados; esta guía no adelanta la implementación ni da por completado el plan de pruebas de la actividad 7.
+
+### Preparar la estructura
+
+Respetá los contratos de [Arquitectura](docs/Arquitectura.md). Creá las clases, atributos, constructores y firmas necesarios antes de implementar la lógica. Los métodos pendientes deben lanzar `NotImplementedException`, sin lógica de producción. Esta estructura no reemplaza la escritura previa de pruebas para cada comportamiento.
+
+### Ciclo rojo–verde–refactorización
+
+Trabajá con un comportamiento pequeño por vez:
+
+1. **Rojo (RED):** escribí una prueba en `test/` con los datos iniciales, la acción y el resultado esperado. Ejecutala y comprobá que falle por el comportamiento todavía no satisfecho. Corregí antes cualquier problema de configuración que impida comprobarlo.
+2. **Verde (GREEN):** implementá en `src/` únicamente la lógica necesaria para satisfacer la prueba. Ejecutá las pruebas y comprobá que también sigan pasando las anteriores.
+3. **Refactorización (REFACTOR):** mejorá los nombres, la organización y las duplicaciones sin cambiar el comportamiento. Volvé a ejecutar las pruebas después de cada cambio.
+
+Repetí el ciclo para el siguiente caso. Usá `[Fact]` para un escenario individual y `[Theory]` con `[InlineData]` cuando varios conjuntos de datos comprueben la misma regla.
+
+### Ejemplo: validación de personajes
+
+Una distribución válida es `750, 550, 500, 250, 500, 550`: suma 3000, todos sus valores están entre 250 y 750, alguno alcanza 650 y alguno no supera 350.
+
+Agregá pruebas para aceptar esa distribución y rechazar, por separado, un total distinto de 3000, valores fuera del rango y distribuciones que incumplan cada umbral de especialización. Incluí los límites 250, 750, 650 y 350. Para cada caso, repetí el ciclo antes de avanzar al siguiente y verificá el resultado o la excepción especificados en el diseño.
+
+### Mantener y verificar las pruebas
+
+- Escribí pruebas independientes, con nombres que expliquen el escenario y el resultado esperado, sin depender del orden de ejecución.
+- Ante un error, agregá primero una prueba que lo reproduzca y después corregí la implementación.
+- Conservá las pruebas anteriores. No las elimines, desactives ni cambies solo para conseguir que pasen; si cambió un requisito o la prueba era incorrecta, justificá el ajuste.
+- Usá mocks solo cuando haga falta aislar dependencias externas o colaboradoras. La cobertura por sí sola no demuestra la calidad de las pruebas.
+- Antes de finalizar una tarea de desarrollo, compilá y ejecutá la suite completa:
+
+```bash
+dotnet build Proyecto-Integrador-Final.sln
+dotnet test Proyecto-Integrador-Final.sln
+```
+
+No des por terminado el desarrollo con pruebas fallidas ni reemplaces las pruebas automatizadas por comprobaciones manuales. En el Pull Request, indicá los comportamientos verificados y los resultados de los comandos para que un compañero pueda revisarlos.
+
 ## Estructura del proyecto
 
 El repositorio está organizado en carpetas para separar el código fuente, las pruebas y la documentación.
