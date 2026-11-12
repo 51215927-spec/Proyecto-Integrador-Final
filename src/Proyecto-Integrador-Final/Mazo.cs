@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Proyecto_Integrador_Final
 {
-    internal class mazo
+    internal class Mazo
     {
         private List<Personaje> personajes;
 
