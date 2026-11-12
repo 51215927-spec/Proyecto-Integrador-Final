@@ -10,7 +10,7 @@ namespace Proyecto_Integrador_Final
 {
     internal class mazo
     {
-        List<Personaje> personajes;
+        private List<Personaje> personajes;
 
         public mazo(List<Personaje> personajes) 
         { 
