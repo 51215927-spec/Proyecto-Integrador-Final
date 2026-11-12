@@ -30,5 +30,13 @@ namespace Proyecto_Integrador_Final
                 (this.personajes[k], this.personajes[n]) = (this.personajes[n], this.personajes[k]);
             }
         }
+
+        public Personaje[] Repartir() { }
+        public void Devolver(Personaje[] personajes)
+        {
+            this.personajes.AddRange(personajes);
+        }
+
+        public int GetCantidad() => personajes.Count;
     }
 }
