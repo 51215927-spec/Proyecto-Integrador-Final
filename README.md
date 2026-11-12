@@ -38,7 +38,7 @@ Para compilar y ejecutar la base actual del proyecto, necesitás el **SDK de .NE
 
 ```bash
 git clone --recurse-submodules https://github.com/51215927-spec/Proyecto-Integrador-Final.git
-cd Proyecto-Integrador-Final
+cd proyecto-integrador-final
 dotnet build Proyecto-Integrador-Final.sln
 dotnet run --project src/Proyecto-Integrador-Final
 ```
