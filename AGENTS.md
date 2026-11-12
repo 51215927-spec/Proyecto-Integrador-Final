@@ -23,11 +23,19 @@ La fuente principal de requisitos es `docs/Consigna.md`. En caso de contradicci�
 Aplicar el skill `desarrollo-documentado` durante el trabajo en este proyecto:
 
 - Consultar el contexto y el estado real del repositorio antes de planificar.
-- Mantener `docs/Plan.md` y `docs/Arquitectura.md` actualizados según las decisiones vigentes.
+- Mantener `docs/Plan.md` y `docs/Arquitectura.md` actualizados según las decisiones vigentes, exclusivamente mediante tareas documentales en ramas `docs/`.
 - Realizar cambios acotados, coherentes y revisables.
 - Verificar los aspectos afectados por cada modificación.
 - Registrar decisiones y resultados relevantes cuando aporten trazabilidad.
 - Respetar la estructura documental existente y evitar duplicaciones innecesarias.
+
+### Separación de cambios documentales
+
+- Modificar documentación únicamente desde ramas cuyo nombre comience con `docs/`. Esta regla incluye `AGENTS.md`, `README.md`, `CONTRIBUTING.md` y los documentos de `docs/`.
+- No modificar `docs/Plan.md` ni marcar o tachar tareas completadas desde ramas de código o pruebas.
+- Realizar las actualizaciones documentales derivadas de una tarea en una rama `docs/` independiente, con commits exclusivamente documentales. No mezclar código y documentación en un mismo commit o PR.
+- Si una tarea de código requiere actualizar el plan, la arquitectura u otro documento, informar el pendiente al usuario y realizar la actualización en la tarea documental separada.
+- Esta separación prevalece sobre las indicaciones generales de actualizar documentación al completar una tarea y busca evitar conflictos entre ramas.
 
 ## 3. Descripción del proyecto
 
