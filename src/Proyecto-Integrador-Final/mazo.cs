@@ -13,8 +13,8 @@ namespace Proyecto_Integrador_Final
         private List<Personaje> personajes;
 
         public mazo(List<Personaje> personajes) 
-        { 
-            this.personajes = personajes;
+        {
+            this.personajes = new List<Personaje>(personajes);
         }
 
         public void Mezclar()
