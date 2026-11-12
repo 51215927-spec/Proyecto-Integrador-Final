@@ -31,7 +31,13 @@ namespace Proyecto_Integrador_Final
             }
         }
 
-        public Personaje[] Repartir() { }
+        public Personaje[] Repartir(int cantidad) 
+        { 
+            return this.personajes
+                .Take(cantidad)
+                .ToArray();
+        }
+
         public void Devolver(Personaje[] personajes)
         {
             this.personajes.AddRange(personajes);
