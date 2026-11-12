@@ -10,7 +10,7 @@ El servidor coordina la partida y analiza los enfrentamientos. Los dos clientes 
 
 | Clase | Datos encapsulados | Responsabilidad y delegación |
 |---|---|---|
-| Personaje | Nombre, ASCII y seis atributos. | Representar una carta válida; ofrecer consultas y configurar su persistencia. No lee archivos directamente. |
+| Personaje | Nombre, descripción, ASCII y seis atributos. | Representar una carta válida; ofrecer consultas y configurar su persistencia. No lee archivos directamente. |
 | Mazo | Colección de personajes disponibles. | Mezclar, retirar elementos al repartir y reincorporarlos. Recibe objetos ya cargados. |
 | Jugador | Nombre, mano disponible y rondas ganadas. | Administrar sus cartas y marcador. Las consultas devuelven una copia de la colección. |
 | Partida | Dos jugadores, mazo, ronda actual y número de ronda. | Coordinar inicio, reparto, rondas, recuperación y victoria. Delega la comparación a Combate y el seguimiento de ronda a Ronda. |
@@ -43,11 +43,11 @@ Las firmas indican parámetros y retornos. Salvo donde se indica estático, los 
 
 ### Personaje
 
-Representa una carta válida con nombre, ASCII y seis atributos privados. No ofrece modificación pública de esos valores. Implementa `IEntidad<Personaje>` sin encargarse de leer archivos.
+Representa una carta válida con nombre, descripción, ASCII y seis atributos privados. No ofrece modificación pública de esos valores. Implementa `IEntidad<Personaje>` sin encargarse de leer archivos.
 
-#### Constructor `Personaje(nombre: string, ascii: string, fuerza: int, velocidad: int, resistencia: int, inteligencia: int, energia: int, habilidad: int)`
+#### Constructor `Personaje(nombre: string, descripcion: string, ascii: string, fuerza: int, velocidad: int, resistencia: int, inteligencia: int, energia: int, habilidad: int)`
 
-Es público y recibe el nombre, el ASCII y los seis atributos. Comprueba que el nombre no sea nulo, vacío ni solo espacios y que el ASCII no sea nulo; si falta alguno, rechaza la construcción con ArgumentException. Guarda los datos y llama a Validar para comprobar las reglas numéricas. El formato del ASCII se definirá en la actividad 5. Así, las demás clases pueden usar el personaje sin volver a validar sus datos.
+Es público y recibe el nombre, la descripción, el ASCII y los seis atributos. La descripción contiene el texto sobre la historia o las características del personaje y se conserva en el campo privado descripcion; es opcional, admite texto vacío y no tiene límite de longitud definido por el juego. La ausencia de descripción se representa mediante texto vacío (""), según la definición del usuario; se conserva el tipo string. No se utiliza null para representar esa ausencia. Comprueba que el nombre no sea nulo, vacío ni solo espacios y que el ASCII no sea nulo; si falta alguno, rechaza la construcción con ArgumentException. Guarda los datos y llama a Validar para comprobar las reglas numéricas. El ASCII se prepara con contenido, con un máximo de 25 líneas de 120 caracteres cada una y sin tabulaciones, conforme al formato de la actividad 5. Por indicación del usuario, no se agrega una validación de texto vacío; se conserva el rechazo de null ya especificado. Así, las demás clases pueden usar el personaje sin volver a validar sus datos.
 
 #### `Validar(): void`
 
@@ -56,6 +56,10 @@ Es privado y comprueba que cada atributo esté entre 250 y 750, que los seis sum
 #### `GetNombre(): string`
 
 Es público y devuelve el nombre del personaje para identificarlo, sin modificarlo.
+
+#### `GetDescripcion(): string`
+
+Es público y devuelve la descripción almacenada del personaje, sin modificarla ni exponer una operación de escritura. No define cuándo debe presentarse en consola; esa decisión sigue pendiente.
 
 #### `GetAscii(): string`
 
@@ -67,7 +71,7 @@ Es público y recibe un TipoAtributo elegido entre las seis opciones del juego. 
 
 #### `Configurar(entidad: ConstructorEntidad<Personaje>): void`
 
-Es público y estático. Recibe el ConstructorEntidad que proporciona DataBases y configura el archivo Datos.RUTA_PERSONAJES y las columnas asociadas a los campos privados. DataBases comprueba la configuración. El formato definitivo del catálogo se completará en la actividad 5.
+Es público y estático. Recibe el ConstructorEntidad que proporciona DataBases y configura el archivo Datos.RUTA_PERSONAJES y las columnas asociadas a los campos privados, incluida descripcion de tipo string. El constructor compatible recibe también descripcion para reconstruir el objeto sin utilizar setters. DataBases comprueba la configuración. El formato del catálogo está especificado en el apartado de la actividad 5 de este documento.
 
 ### Mazo
 
@@ -347,6 +351,52 @@ Cada proceso guarda únicamente sus propias tablas y carga las publicadas por ot
 
 DataBases ya proporciona bloqueo por archivo, archivo temporal y reemplazo, además de detección de cambios. No ofrece transacciones entre archivos ni decide qué mensaje ya fue procesado. Su documentación no acredita pruebas en carpetas de red: la verificación en el recurso compartido de SSI sigue pendiente.
 
+## Formato de archivos de personajes — actividad 5
+
+**Completada por confirmación del usuario.** Se documentan las definiciones acordadas y las condiciones de DataBases. El cierre corresponde al análisis y diseño; no implica implementación.
+
+### Entidades persistentes y columnas
+
+El usuario indicó que las clases persistentes serán Personaje y Accion y que las columnas corresponderán a sus atributos. Cada miembro persistente debe declararse mediante Columna en la configuración de su entidad; DataBases no descubre ni guarda automáticamente todos los miembros. El contrato de Accion y su integración con las elecciones de los clientes y las publicaciones del servidor quedan pendientes de definición en la actividad 6.
+
+Personaje tiene actualmente los siguientes campos en el modelo, sin agregar otros por inferencia:
+
+| Campo / columna | Tipo | Condición ya definida |
+|---|---|---|
+| nombre | string | No nulo, vacío ni compuesto solo por espacios. |
+| descripcion | string | Opcional y sin límite de longitud. La ausencia se representa con texto vacío (""), no con null. |
+| ascii | string | No nulo; máximo 25 líneas y 120 caracteres por línea; sin tabulaciones. Se entrega con contenido, pero no se valida si está vacío. |
+| fuerza | int | Entre 250 y 750, inclusive. |
+| velocidad | int | Entre 250 y 750, inclusive. |
+| resistencia | int | Entre 250 y 750, inclusive. |
+| inteligencia | int | Entre 250 y 750, inclusive. |
+| energia | int | Entre 250 y 750, inclusive. |
+| habilidad | int | Entre 250 y 750, inclusive. |
+
+Los seis atributos numéricos deben sumar exactamente 3000, incluir al menos uno mayor o igual a 650 y al menos uno menor o igual a 350. La validación pertenece al constructor de Personaje mediante Validar, según el contrato de la actividad 4.
+
+### Reglas del formato proporcionadas por DataBases
+
+El archivo usa el formato propio descrito en el [README de DataBases](../Mis-Librerias/DataBases/README.md#3-el-formato-del-archivo-csv): encabezado con los nombres de columnas, separador coma y un objeto por línea física. La biblioteca asocia las columnas por nombre al leer, por lo que admite reordenarlas. Al guardar utiliza UTF-8 sin BOM y escribe los textos entre comillas.
+
+Dentro de los textos, las barras, comillas, saltos de línea, retornos de carro y tabulaciones se representan mediante los escapes de DataBases. Un ASCII con varios renglones puede almacenarse como texto en una sola línea física usando saltos escapados. El límite confirmado es de 25 líneas de contenido y 120 caracteres por línea; los saltos escapados permiten representar esas líneas dentro del registro. No se permiten caracteres de tabulación en el ASCII, aunque DataBases pueda representarlos mediante su escape. El usuario garantiza que el ASCII tendrá contenido y pidió no validar si está vacío; esta decisión no elimina el rechazo de null ya establecido en el constructor. La descripción se incorpora como texto en la columna descripcion y utiliza los mismos escapes de DataBases. Cuando no hay descripción, la celda se escribe como ""; la columna permanece en el encabezado y en cada registro.
+
+La palabra null sin comillas representa ausencia de valor; las comillas vacías representan texto vacío y la palabra null entre comillas representa texto literal. DataBases distingue esos valores; las restricciones de Personaje determinan cuáles son admisibles.
+
+### Lectura y errores ya especificados
+
+El catálogo se carga al iniciar mediante Cargar<Personaje>(exigirArchivo: true). Si falta, se produce FileNotFoundException. DataBases informa encabezados inválidos, cantidad incorrecta de celdas, conversiones imposibles y datos rechazados por el constructor mediante CsvFormatException. Los errores de entrada y salida o de permisos se propagan sin envolver. Conforme a la política vigente, el punto de ejecución informa el error y finaliza el juego completo, sin recuperación.
+
+DataBases no impone unicidad de personajes. Por confirmación del usuario, el catálogo estará preparado antes de la ejecución y él garantizará que no contenga duplicados. La carga no queda a cargo del usuario final del juego; no se incorpora un mecanismo de detección de duplicados ni un identificador adicional por este motivo.
+
+La conversión de la información de los personajes al catálogo CSV se definirá posteriormente. El usuario considera como posibilidades un script o solicitar la generación del CSV a partir de los datos, sin haber elegido todavía una alternativa. No se exige por ahora que cada alumno entregue un CSV individual ni se define un formato de conversión.
+
+### Aspectos posteriores que no condicionan el cierre
+
+- Descripción: presentación en consola. Su contenido es opcional, no tiene límite de longitud y su ausencia se representa con texto vacío ("").
+
+El usuario confirmó el cierre de la actividad 5 con la especificación actual. No se agregaron ejemplos propios de personajes válidos e inválidos; no se presentan como realizados ni se mantienen como condición para reabrir la actividad. La conversión al CSV permanece postergada por indicación del usuario. Las rutas reales del recurso compartido y el protocolo de Accion siguen pendientes de la actividad 6.
+
 ## Presentación con Utilidades
 
 [Utilidades](../Mis-Librerias/Utilidades/README.md) aporta Funciones, DecoracionConsola y MyConsole; ColoresMenu y FormatoMenu configuran los menús. Utilidades se muestra como paquete externo en el UML; su uso se describe en esta sección, sin flechas de dependencia ni reproducción de sus implementaciones.
@@ -368,7 +418,7 @@ El menú con FormatoMenu y flechas limpia la pantalla e historial. Para conserva
 ## Decisiones pendientes y límites de cierre
 
 - Actividad 4: completada por confirmación del usuario el 9 de noviembre de 2026. Las 58 especificaciones se revisaron para mejorar la lectura y evitar validaciones repetidas. Los detalles de formatos e integración siguen en las actividades 5 y 6.
-- Actividad 5: especificar columnas, ASCII, descripción, rutas y ejemplos del catálogo, coherentes con el formato propio de DataBases y el sistema externo.
+- Actividad 5: completada por confirmación del usuario. Columnas, descripción, ASCII y lectura especificados; conversión al CSV postergada. Las rutas reales corresponden a la actividad 6.
 - Actividad 6: definir registros de elecciones y publicaciones, identificación de partida/ronda/combate, referencias a personajes, permisos, secuencia, mensajes procesados y cierre coordinado ante fallos. Después completar sus entidades y relaciones en el UML y la integración de Partida y clientes. No se inventan aquí sus firmas.
 La representación unificada y el intercambio mediante varios archivos son las decisiones vigentes del usuario. La consigna original se conserva sin modificar como referencia; Taller continúa fuera de alcance y la verificación técnica en red se mantiene en la actividad 6.
 La actividad 3 está completada por confirmación del usuario: modelo de dominio y justificación revisados. Las entidades, relaciones, configuración en Datos y firmas de integración que resulten del protocolo son tareas de la actividad 6 y no condicionan este cierre. El modelo y las especificaciones quedaron integrados mediante los PR #9 y #10. Los nuevos PR mantienen la revisión de un compañero exigida por CONTRIBUTING; no se confunde con una tarea de modelado.
@@ -377,4 +427,4 @@ Las cajas se ajustaron a las medidas del texto exportado por UMLet, con margen m
 
 ## Resultado de la revisión final del dominio
 
-Se corrigió la pertenencia del jugador mano a Ronda, se explicitó la consulta de participantes de Combate para la presentación y se ajustó la multiplicidad de Modelo a su ciclo de inicialización. Se precisaron los contratos de incorporación de combates, resolución y recuperación completa de personajes. No se agregaron clases ni implementación. La descripción del personaje y los identificadores del catálogo siguen siendo definiciones de la actividad 5; las entidades de intercambio y el estado compartido corresponden a la actividad 6 y deberán reflejarse después en este modelo.
+Se corrigió la pertenencia del jugador mano a Ronda, se explicitó la consulta de participantes de Combate para la presentación y se ajustó la multiplicidad de Modelo a su ciclo de inicialización. Se precisaron los contratos de incorporación de combates, resolución y recuperación completa de personajes. No se agregaron clases ni implementación. La incorporación posterior de la descripción a Personaje, su constructor, GetDescripcion y la columna descripcion se documenta en la actividad 5 por indicación del usuario. La descripción es opcional y no tiene límite de longitud; su ausencia se representa con texto vacío ("") y su presentación sigue pendiente. No se ha agregado un identificador al catálogo; las entidades de intercambio y el estado compartido corresponden a la actividad 6 y deberán reflejarse después en este modelo.

@@ -118,6 +118,7 @@ _- RONDAS_PARA_GANAR: int = 15 {readOnly}_
     <panel_attributes>Personaje
 --
 - nombre: string
+- descripcion: string {sin limite; ausente = ""}
 - ascii: string
 - fuerza: int
 - velocidad: int
@@ -126,10 +127,12 @@ _- RONDAS_PARA_GANAR: int = 15 {readOnly}_
 - energia: int
 - habilidad: int
 --
-+ Personaje(nombre: string, ascii: string, fuerza: int,
-    velocidad: int, resistencia: int, inteligencia: int,
-    energia: int, habilidad: int)
++ Personaje(nombre: string, descripcion: string,
+    ascii: string, fuerza: int, velocidad: int,
+    resistencia: int, inteligencia: int, energia: int,
+    habilidad: int)
 + GetNombre(): string
++ GetDescripcion(): string
 + GetAscii(): string
 + GetAtributo(tipo: TipoAtributo): int
 - Validar(): void
