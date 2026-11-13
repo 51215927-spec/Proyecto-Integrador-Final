@@ -1,0 +1,249 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<diagram program="umletino" version="15.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>40</x>
+      <y>40</y>
+      <w>330</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>CoordinadorServidor
+--
+--
++ Ejecutar(): void</panel_attributes>
+    <additional_attributes />
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>600</x>
+      <y>40</y>
+      <w>500</w>
+      <h>280</h>
+    </coordinates>
+    <panel_attributes>Estado &lt;&lt;DTO&gt;&gt;
+--
++ versionFormato: int
++ idSesion: Guid
++ idPartida: Guid
++ revision: long
++ fase: FasePartida
++ numeroRonda: int
++ ganadorPartida: TipoProceso?
++ siguienteIdServidor: long
+--
+Fotografia completa, sin E/S ni logica.
+Catalogo, mazo, jugadores, ronda y coordinacion:
+ver asociaciones y Protocolo-partida.md.</panel_attributes>
+    <additional_attributes />
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>40</x>
+      <y>220</y>
+      <w>420</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>AlmacenEstado
+--
+--
++ Cargar(): Estado
++ Guardar(estado: Estado): void
+Solo servidor; temporal y reemplazo de estado.json.</panel_attributes>
+    <additional_attributes />
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1320</x>
+      <y>40</y>
+      <w>570</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>DTO de dominio
+PersonajeDto: ID, nombre, descripcion, ASCII y atributos.
+MazoDto: IDs disponibles en orden.
+JugadorDto: rol, nombre, mano, rondas ganadas.
+RondaDto: numero, mano y combates.
+CombateDto: elector, rival, atributo, cartas y ganador.
+Estructura anidada sin referencias ciclicas.</panel_attributes>
+    <additional_attributes />
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1320</x>
+      <y>340</y>
+      <w>570</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>DTO de coordinacion
+SolicitudDto: referencia, destinatario y opciones.
+ReferenciaAccionDto: partida, origen e id.
+PresentacionDto: pantalla, revision y solicitud activa.
+Acciones procesadas y publicaciones pendientes.
+Presentacion preparada por servidor; sin secreto
+frente a lectura manual de archivos.</panel_attributes>
+    <additional_attributes />
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>40</x>
+      <y>500</y>
+      <w>340</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>CoordinadorCliente
+--
+--
++ Ejecutar(): void
+Muestra presentacion y envia respuesta.</panel_attributes>
+    <additional_attributes />
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>600</x>
+      <y>650</y>
+      <w>500</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>Accion &lt;&lt;DTO&gt;&gt;
+--
++ versionFormato: int
++ id: long
++ idPartida: Guid
++ tipo: TipoAccion
++ destinatario: TipoProceso
+--
+Asociaciones: solicitud opcional, presentacion
+opcional y respuesta opcional.
+Contrato JSON; no IEntidad ni Configurar.
+Origen identificado por archivo del historial.</panel_attributes>
+    <additional_attributes />
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>40</x>
+      <y>760</y>
+      <w>430</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>RegistroAcciones
+--
+--
++ LeerNuevas(): Accion[]
++ Anexar(accion: Accion): void
++ Reiniciar(idPartida: Guid): void
+Una accion JSON por linea completa; titular unico.</panel_attributes>
+    <additional_attributes />
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>40</x>
+      <y>1020</y>
+      <w>300</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+TipoAccion (propuesta)
+--
++ Presentar
++ Responder
++ SolicitarEstado</panel_attributes>
+    <additional_attributes />
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>600</x>
+      <y>1060</y>
+      <w>670</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>Partida (ampliacion)
+--
+--
++ CapturarEstado(): Estado
+_+ Restaurar(estado: Estado): Partida_
++ AplicarEleccion(jugador: TipoProceso, personaje: Personaje,
+    atributo: TipoAtributo?): void
+Dominio completo: UML.uxf y Arquitectura.md</panel_attributes>
+    <additional_attributes />
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>70</y>
+      <w>250</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m2=1
+r2=- confirmado</panel_attributes>
+    <additional_attributes>10;10;240;10</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>100</x>
+      <y>110</y>
+      <w>20</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m2=1
+r2=- almacen</panel_attributes>
+    <additional_attributes>10;10;10;110</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1090</x>
+      <y>80</y>
+      <w>240</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m2=1 catalogo, 1 mazo
+2 jugadores, 0..1 ronda</panel_attributes>
+    <additional_attributes>10;10;230;10</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1090</x>
+      <y>260</y>
+      <w>240</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m2=0..* solicitudes, procesadas y publicaciones
+2 presentaciones</panel_attributes>
+    <additional_attributes>10;10;130;10;130;140;230;140</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>40</x>
+      <y>1300</y>
+      <w>1700</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>Notas de integracion
+Coordinadores usan SesionCompartida para roles, continuidad y espera de cinco segundos.
+Servidor: una Partida, un Estado confirmado, un AlmacenEstado y tres RegistroAcciones.
+Cliente: InterfazConsola, SesionCompartida y registros propio/servidor; no Partida.
+Accion usa ReferenciaAccionDto, PresentacionDto y RespuestaDto; no conserva objetos tecnicos.
+Las referencias de uso no son atributos duplicados. Revision visual y ensayos Windows/SMB pendientes.
+Diseno de TI, sin implementacion. Los tres tipos de mensaje son propuesta para revision.</panel_attributes>
+    <additional_attributes />
+  </element>
+</diagram>
