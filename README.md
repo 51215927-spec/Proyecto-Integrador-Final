@@ -8,7 +8,7 @@ El juego consiste en enfrentar personajes comparando sus atributos. Cada jugador
 
 El trabajo actual se limita a **TI: análisis y diseño**. La implementación en Taller de Programación queda para una etapa posterior.
 
-Las actividades 1 a 5 de TI están completadas en su documentación por confirmación del usuario. Quedan pendientes el protocolo de partida y el plan de pruebas (actividades 6 y 7).
+Las actividades 1 a 5 de TI están completadas en su documentación por confirmación del usuario. La actividad 6 conserva la propuesta por archivos y agrega un borrador alternativo REST, ambos pendientes de revisión; la actividad 7 sigue pendiente.
 
 La aplicación todavía muestra `Hello, World!`. Existen implementaciones parciales de Personaje y Mazo y una única prueba vacía, sin comprobaciones de comportamiento. El juego aún no está integrado. El plan registra también los diseños de comunicación disponibles en ramas pendientes de revisión e integración. Consultá el [plan de trabajo](docs/Plan.md) para conocer los avances y pendientes.
 
@@ -26,7 +26,11 @@ La aplicación todavía muestra `Hello, World!`. Existen implementaciones parcia
 - [Consigna](docs/Consigna.md): requisitos y entregables del proyecto.
 - [Reglas del juego](docs/Reglas-del-juego.md): funcionamiento esperado del sistema.
 - [Plan de trabajo](docs/Plan.md): estado de las actividades y próximos pasos.
+- [Protocolo de partida por archivos](docs/Protocolo-partida-archivos.md): acciones JSON, DTO Estado completo, recuperación y verificaciones pendientes.
+- [Protocolo de partida web](docs/Protocolo-partidad-web.md): borrador REST, operaciones HTTP, concurrencia y decisiones pendientes.
+- [UML de comunicación](docs/diagramas/Comunicacion.uxf): ampliación propuesta para la actividad 6.
 - [Arquitectura](docs/Arquitectura.md): decisiones de diseño y especificaciones por clase y método, con características, contratos y justificación.
+- [Tecnologías REST](docs/Tecnologias-rest.md): selección acordada para la alternativa web, alcance de persistencia y decisiones pendientes.
 - [Diagrama UML](docs/diagramas/UML.uxf): modelo de dominio actualizado para abrir con UMLet; integración del protocolo pendiente de la actividad 6.
 - [Guía de colaboración](CONTRIBUTING.md): organización del trabajo, ramas, commits, revisión de cambios y [metodología TDD](CONTRIBUTING.md#desarrollo-guiado-por-pruebas-tdd).
 

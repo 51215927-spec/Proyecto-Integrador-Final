@@ -59,7 +59,7 @@ Cuando un jugador alcanza 15 rondas ganadas, se comunica el ganador y finaliza l
 
 Cada cliente publica sus elecciones en sus propios archivos. El servidor lee esas elecciones, analiza el combate y escribe mensajes con los resultados. Los clientes leen los mensajes del servidor y muestran las cartas y el atributo cuando ambos jugadores han elegido.
 
-Los clientes son responsables de que los datos enviados al servidor sean válidos. El servidor realiza las comprobaciones al iniciar la partida. El CSV de personajes proporciona los datos iniciales y cumple una función distinta de los archivos que intercambian elecciones y resultados durante el juego.
+Los clientes validan sus entradas y el servidor comprueba las respuestas contra la solicitud y el estado vigentes antes de aceptarlas. El protocolo detallado y sus mecanismos técnicos propuestos están en [Protocolo de partida compartida](Protocolo-partida-archivos.md). El CSV de personajes proporciona los datos iniciales y cumple una función distinta de los archivos que intercambian elecciones y resultados durante el juego.
 
 ### Situaciones de error
 
@@ -67,14 +67,21 @@ Los clientes son responsables de que los datos enviados al servidor sean válido
 |---|---|
 | Menos de seis cartas válidas para repartir | Mostrar «No se puede jugar porque no hay suficientes cartas» y terminar la ejecución sin iniciar la partida. |
 | CSV inexistente, ilegible o con datos inválidos | Terminar la ejecución del juego. |
-| Fallo de acceso, lectura o escritura de los archivos de comunicación | Terminar la ejecución del juego. |
-| El servidor no puede continuar | Finalizar la partida y la ejecución de los clientes y del servidor. |
-| Cualquier otro error al iniciar o durante la partida | Terminar la ejecución del juego completo, sin recuperación ni continuación de la partida. |
+| Fallo de acceso o pérdida de reserva de rol | El proceso afectado deja de publicar; los demás suspenden el avance. No se interpreta un error de acceso como rol libre. |
+| Falta el servidor o un cliente | Esperar 5 segundos y preguntar si abandonar o continuar; repetir hasta que vuelva o se abandone localmente. |
+| Cierre voluntario o por error de un proceso | Puede volver con su rol si sobrevive otro proceso. Si todos se cierran, la partida finaliza y no se recupera. |
+| Historial o estado de coordinación corrupto | Informar e impedir aplicar datos incoherentes; no se garantiza recuperación ante corrupción del soporte. |
 
 ## Condiciones técnicas de ejecución
 
-- Aplicación de consola desarrollada en C# y .NET 8.
+- Aplicación de consola prevista en C# y .NET 8, ejecutada en Windows.
 - Dos clientes, uno por jugador en cada una de las dos computadoras, y un proceso servidor.
-- Conexión mediante una red local y acceso a los archivos compartidos necesarios.
+- Carpeta de red preparada antes de ejecutar; roles elegidos al abrir y reservados mediante locks activos.
+- Solo el servidor inicia explícitamente una partida nueva, con los tres procesos presentes. Únicamente entonces se limpian los historiales.
+- server.log, jugador1.log y jugador2.log conservan las acciones por anexado; un proceso solo escribe su historial.
 - CSV de personajes preparado por el sistema externo de carga.
 - Cada proceso escribe exclusivamente sus propios archivos y solo lee los archivos de los demás. Esta separación evita que distintos procesos sobrescriban un mismo archivo.
+
+## Persistencia de partida — decisión del 13 de noviembre de 2026
+
+Personajes en CSV mediante DataBases; acciones en historiales JSON propios y Estado completo en estado.json, guardado únicamente por el servidor. Los clientes muestran datos y envían respuestas sin reconstruir el dominio. El servidor restaura el último estado completo mientras sobreviva algún proceso de la sesión. Los locks y el ciclo de espera de cinco segundos se conservan. Contratos y propuesta de guardado en [Protocolo](Protocolo-partida-archivos.md).
