@@ -143,6 +143,13 @@ Ejemplos:
 
 No trabajar directamente sobre `main`.
 
+### Rama de trabajo vigente por indicación del usuario
+
+- A partir de la consolidación de ramas solicitada el 13 de noviembre de 2026, continuar el trabajo únicamente en `docs/protocolo-partida-web` y su worktree existente.
+- Esta indicación específica sustituye para el trabajo actual la regla general de crear otra rama por tarea. Mantener commits exclusivamente documentales y el alcance en TI.
+- Las ramas de PR ya preparados se conservan para revisión e integración; no iniciar nuevas tareas en ellas. La sincronización y limpieza necesarias tras integrar siguen aplicándose.
+- Conservar la numeración permanente de los pasos REST 1 a 14, sin reiniciarla al cerrar tareas.
+
 ### Trabajo en paralelo con worktrees
 
 - Utilizar `git worktree` para trabajar en tareas simultáneas: cada tarea debe tener su propia rama y directorio de trabajo.
