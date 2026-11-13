@@ -180,6 +180,8 @@ El protocolo por archivos registra decisiones del usuario del 12 de noviembre qu
 
 **Criterio de cierre:** revisar los contratos y diagramas de la alternativa que corresponda a la entrega, verificar las condiciones reales de SSI y completar la revisión de compañero. La actividad 7 sigue pendiente; describir escenarios del protocolo no equivale a entregar el plan de pruebas.
 
+#### Archivos
+
 **En curso — diseño JSON actualizado el 13 de noviembre de 2026.** Ver [Protocolo](Protocolo-partida-archivos.md). Los registros anteriores de Accion CSV y diecisiete tipos son antecedentes sustituidos, no tareas pendientes vigentes.
 
 - [x] Registrar roles elegibles, locks, Windows, historiales propios y limpieza explícita con los tres presentes.
@@ -193,7 +195,7 @@ El protocolo por archivos registra decisiones del usuario del 12 de noviembre qu
 - [ ] Revisar visualmente el UML y verificar Windows/SMB con carpeta y permisos reales.
 - [ ] Completar revisión de compañero antes de integrar; cerrar actividad tras revisión y verificaciones.
 
-#### Protocolo por archivos
+##### Seguimiento adicional de archivos
 
 Las tareas anteriores se conservan con sus estados y corresponden al diseño por archivos. Esta subsección agrega su seguimiento específico sin reemplazarlas.
 
@@ -201,55 +203,39 @@ Las tareas anteriores se conservan con sus estados y corresponden al diseño por
 - [ ] Revisar adquisición de roles, limpieza coordinada, publicación y recuperación con el equipo.
 - [ ] Diseñar los escenarios de verificación Windows/SMB y registrar las condiciones de ejecución pendientes.
 
-#### Protocolo web — REST
+#### REST
 
-REST fue elegido por el usuario como alternativa web. El borrador no sustituye el requisito académico de archivo compartido ni da por aprobados todos sus contratos.
+REST fue elegido como alternativa web y su borrador está en [Protocolo web](Protocolo-partidad-web.md). No sustituye automáticamente el requisito académico de archivo compartido.
 
-- [x] Registrar la elección de REST frente a WebSockets y GraphQL.
-- [x] Iniciar [Protocolo web](Protocolo-partidad-web.md) con responsabilidades, recursos, secuencia de combate y propuestas de consistencia.
-- [ ] Resolver con el docente la compatibilidad de REST con el requisito de archivo compartido para la entrega.
-- [ ] Confirmar ASP.NET Core, EF Core y SQLite, versiones y organización de procesos.
-- [ ] Definir administración, incorporación, asignación de J1/J2, credenciales y reincorporación.
-- [ ] Especificar rutas, DTO, estados HTTP y transiciones de inicio, combate, ronda y fin de partida.
-- [ ] Definir sondeo, presencia, pausa, abandono y recuperación tras reinicios.
-- [ ] Diseñar idempotencia, revisiones y concurrencia para todas las operaciones que modifican datos.
-- [ ] Diseñar modelo persistente, transacciones e importación del catálogo sin duplicar las reglas del dominio.
-- [ ] Adaptar documentalmente componentes, contratos y UML para REST.
-- [ ] Diseñar casos de errores, desconexión, reintentos, simultaneidad y privacidad de elecciones; vincularlos con la actividad 7.
-- [ ] Planificar la verificación en dos computadoras; ejecución técnica pendiente de autorización y entorno.
-- [ ] Revisar el borrador con el usuario y completar revisión de compañero antes de integrar.
+- [x] Registrar la elección de REST e iniciar el borrador de responsabilidades, recursos y secuencia de combate.
 
-#### Seguimiento REST con numeración permanente
+Las tareas se presentan con casillas, sin numeración. Las decisiones y futuras actualizaciones se redactan en `docs/protocolo-partida-web`.
 
-Los números 1 a 14 corresponden a los pasos acordados con el usuario y se conservan aunque cambie su estado. Este seguimiento actualiza las decisiones posteriores al resumen de ramas anterior, sin integrar sus documentos. Las decisiones y futuras actualizaciones se redactan en `docs/protocolo-partida-web`, única rama de trabajo autorizada a partir de esta consolidación. `docs/actualizar-plan` conserva su PR documental independiente, ya incorporado también aquí para evitar perder su seguimiento.
-
-| Paso | Tarea | Estado |
-|---|---|---|
-| 1 | Acordar con el docente si REST sustituye el archivo compartido. | Pendiente. |
-| 2 | Definir versiones y distribución de ejecución. | Terminado por confirmación del usuario: net8.0; ASP.NET Core y EF Core estables de la línea 8.0 (referencia 8.0.34); ambas computadoras Windows; servidor y cliente J1 en la primera y cliente J2 en la segunda. Primero se abre el servidor y después los clientes. La comprobación de instalaciones queda pendiente en las verificaciones, sin reabrir este paso. |
-| 3 | Definir conexión y disponibilidad del servidor. | Decisiones redactadas: HTTP en red local, TCP 5000 y dirección configurable. Ante indisponibilidad se informa y se permite reintentar o salir, conservando una elección pendiente sin tratarla como una jugada nueva. Pruebas entre equipos pendientes. |
-| 4 | Definir administración, incorporación, J1/J2, credenciales y reincorporación. | Pendiente. |
-| 5 | Completar rutas, DTO, respuestas HTTP y transiciones del juego. | Pendiente. |
-| 6 | Definir consultas, presencia, pausa, abandono y recuperación. | Pendiente. |
-| 7 | Diseñar idempotencia, revisiones y concurrencia. | Pendiente. |
-| 8 | Diseñar tablas, relaciones y transacciones de personajes y partidas. | Pendiente. SQLite conserva permanentemente el catálogo, además del estado de partidas. |
-| 9 | Definir incorporación y mantenimiento de personajes. | Pendiente. |
-| 10 | Preservar datos de personajes en partidas iniciadas ante cambios del catálogo. | Pendiente. |
-| 11 | Adaptar Arquitectura y UML a REST y conciliar la persistencia anterior. | Pendiente. |
-| 12 | Diseñar casos de prueba y vincularlos con la actividad 7. | Pendiente. |
-| 13 | Planificar y registrar la verificación en dos computadoras. | Pendiente; las verificaciones concretas se mantienen debajo. |
-| 14 | Conciliar documentos y completar revisión antes de integrar. | Pendiente. |
+- [ ] **Acordar con el docente si REST sustituye el archivo compartido.** Pendiente.
+- [x] **Definir versiones y distribución de ejecución.** Terminado por confirmación del usuario: net8.0; ASP.NET Core y EF Core estables de la línea 8.0 (referencia 8.0.34); ambas computadoras Windows; servidor y cliente J1 en la primera y cliente J2 en la segunda. Primero se abre el servidor y después los clientes. La comprobación de instalaciones queda pendiente en las verificaciones, sin reabrir esta tarea.
+- [ ] **Definir conexión y disponibilidad del servidor.** Decisiones redactadas: HTTP en red local, TCP 5000 y dirección configurable. Ante indisponibilidad se informa y se permite reintentar o salir, conservando una elección pendiente sin tratarla como una jugada nueva. Pruebas entre equipos pendientes.
+- [ ] **Definir administración, incorporación, J1/J2, credenciales y reincorporación.** Pendiente.
+- [ ] **Completar rutas, DTO, respuestas HTTP y transiciones del juego.** Pendiente.
+- [ ] **Definir consultas, presencia, pausa, abandono y recuperación.** Pendiente.
+- [ ] **Diseñar idempotencia, revisiones y concurrencia.** Pendiente.
+- [ ] **Diseñar tablas, relaciones y transacciones de personajes y partidas.** Pendiente. SQLite conserva permanentemente el catálogo, además del estado de partidas.
+- [ ] **Definir incorporación y mantenimiento de personajes.** Pendiente.
+- [ ] **Preservar datos de personajes en partidas iniciadas ante cambios del catálogo.** Pendiente.
+- [ ] **Adaptar Arquitectura y UML a REST y conciliar la persistencia anterior.** Pendiente.
+- [ ] **Diseñar casos de prueba y vincularlos con la actividad 7.** Pendiente.
+- [ ] **Planificar y registrar la verificación en dos computadoras.** Pendiente; las verificaciones concretas se mantienen debajo.
+- [ ] **Conciliar documentos y completar revisión antes de integrar.** Pendiente.
 
 **Evidencia disponible:** el usuario informó comunicación correcta entre dos procesos mediante localhost. No aportó una ejecución reproducible del proyecto ni una prueba entre computadoras; no se presenta como implementación del juego o validación de la red escolar. No tiene los equipos disponibles para ejecutar las comprobaciones ahora.
 
-**Verificaciones pendientes de los pasos 2, 3 y 13** (no se renumeran los pasos):
+**Verificaciones pendientes de instalaciones y comunicación entre computadoras:**
 
 - [ ] Comprobar SDK y runtimes .NET/ASP.NET Core 8 en ambas computadoras y registrar resultados.
 - [ ] Comprobar dirección real del servidor y disponibilidad del puerto TCP 5000.
 - [ ] Verificar que el servidor acepte conexiones por su dirección de red y no solamente por localhost.
 - [ ] Probar los dos clientes distribuidos en las dos computadoras con HTTP y dirección configurable.
 - [ ] Comprobar si el firewall o la red escolar bloquean la comunicación; si hace falta una excepción, coordinarla con el responsable y limitarla al servicio y equipos participantes, sin desactivar el firewall ni abrir el router a Internet.
-- [ ] Verificar servidor no iniciado, pérdida de conexión, reintento y salida sin duplicar elecciones; vincular estos escenarios con el diseño del paso 7.
+- [ ] Verificar servidor no iniciado, pérdida de conexión, reintento y salida sin duplicar elecciones; vincular estos escenarios con el diseño de idempotencia y concurrencia.
 - [ ] Registrar condiciones de la red, configuración utilizada y resultados; no marcar exitosas pruebas todavía no ejecutadas.
 
 ### Actividad 7 — Casos de prueba
