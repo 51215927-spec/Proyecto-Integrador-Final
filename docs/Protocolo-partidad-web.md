@@ -2,7 +2,7 @@
 
 ## Estado y alcance
 
-Borrador de TI iniciado el 13 de noviembre de 2026. El usuario eligió REST para explorar la comunicación web. No hay implementación ni verificaciones de red. ASP.NET Core, Entity Framework Core y SQLite son tecnologías consideradas; su integración y los contratos siguientes son propuestas pendientes de revisión.
+Borrador de TI iniciado el 13 de noviembre de 2026. El usuario eligió REST para explorar la comunicación web. No hay implementación REST del juego ni verificaciones entre computadoras. El usuario confirmó net8.0, ASP.NET Core con Minimal APIs, HttpClient, System.Text.Json, SQLite, EF Core y xUnit; la referencia estable acordada para ASP.NET Core y EF Core es 8.0.34. La selección no implica dependencias instaladas ni contratos completos.
 
 Se conserva el [protocolo por archivos](Protocolo-partida-archivos.md) como alternativa independiente. Sus locks, historiales y reglas de continuidad no se trasladan automáticamente al diseño web. La [consigna](Consigna.md) exige un archivo compartido: adoptar REST como sustituto para la entrega requiere resolver esa diferencia con el docente. Este borrador no modifica la consigna ni autoriza Taller.
 
@@ -10,9 +10,27 @@ Se conserva el [protocolo por archivos](Protocolo-partida-archivos.md) como alte
 
 Dos clientes de consola se comunican con una API ASP.NET Core mediante HTTP y JSON. El servidor dirige el juego y es la única autoridad sobre cartas, turnos, resultados y marcadores. Cada cliente recibe exclusivamente la información que puede ver y devuelve las elecciones solicitadas.
 
-EF Core administraría la persistencia en una base SQLite local al servidor. Los clientes no abren esa base ni necesitan una carpeta compartida para intercambiar jugadas. La ubicación del servidor, puerto, configuración HTTP/HTTPS y despliegue en dos computadoras quedan pendientes. El servidor puede compartir equipo con una consola; no se ha decidido su organización en procesos o proyectos.
+EF Core administrará la persistencia en una base SQLite local al servidor, tanto del catálogo permanente de personajes (nombre, descripción, ASCII y seis atributos) como de los datos de partidas. Los clientes acceden exclusivamente a la API. La selección está acordada; el esquema, las transacciones y el mantenimiento del catálogo siguen pendientes.
+
+El usuario dio por terminado el paso 2: dos computadoras Windows; la primera ejecuta servidor y cliente J1 como procesos separados, y la segunda cliente J2. Primero se abre el servidor y, cuando está disponible, los clientes. La comprobación de las instalaciones se posterga hasta disponer de los equipos; no se presenta como realizada.
 
 La API y el dominio tienen responsabilidades distintas: la API identifica al jugador y valida el contrato recibido; el dominio decide si la elección es válida y resuelve el juego; la persistencia confirma los cambios. Los DTO de red no son entidades EF ni objetos vivos de Partida.
+
+## Conexión acordada — paso 3
+
+Para las pruebas en la red local se utiliza HTTP, puerto TCP 5000 y dirección del servidor configurable en cada cliente. Ejemplo ilustrativo: `http://192.168.1.20:5000`; la IP no está asignada ni comprobada. La ubicación concreta de esa configuración y su carga se completarán al especificar los contratos.
+
+Localhost identifica la computadora del propio proceso: sirve para probar clientes y servidor en el mismo equipo. El cliente de otra computadora debe usar la dirección de red del servidor. Este debe aceptar conexiones en una interfaz accesible desde esa red, no limitarse a localhost; no hay configuración implementada que lo acredite.
+
+Si el servidor no está disponible, el cliente informa y ofrece reintentar o salir. Conserva una elección pendiente y no la transforma en una operación nueva al reintentar. La confirmación de una elección cuya respuesta se perdió se resolverá mediante los contratos de operaciones e idempotencia de los pasos 5 y 7; no se asume que falló por un error de conexión.
+
+HTTP no cifra el intercambio. Su elección se limita al entorno local de prueba acordado; no se define publicación en Internet. Primero se probará la comunicación para determinar si existe un bloqueo, sin asumir que sea necesario abrir el firewall. De requerirse una excepción en un equipo escolar, se coordinará con el responsable y se limitará al servicio, puerto y equipos participantes. No se requiere desactivar el firewall ni abrir puertos del router hacia Internet.
+
+### Evidencia y pruebas postergadas
+
+El usuario informó que dos procesos se comunican correctamente mediante localhost. Es una observación aportada por el usuario, sin comprobación reproducida por el agente; no acredita REST implementado en este repositorio ni conectividad entre equipos.
+
+Por falta de acceso a las computadoras, quedan pendientes: verificar SDK y runtimes, IP real, disponibilidad de TCP 5000, escucha en red, conexión entre equipos, permisos y posibles bloqueos del firewall/red escolar. También se deben probar servidor ausente, pérdida de conexión y reintentos sin duplicación. Se conservan como tareas de verificación del plan, sin reabrir el cierre confirmado del paso 2. Los pasos REST mantienen su numeración 1 a 14.
 
 ## Identidad y sesiones
 
@@ -100,7 +118,7 @@ Se propone un cuerpo uniforme con `codigo`, `mensaje` e identificador de seguimi
 
 ## Pendientes de diseño y verificación
 
-- Resolver la compatibilidad con la entrega y confirmar la pila tecnológica y versiones compatibles con el proyecto.
+- Resolver la compatibilidad con la entrega; la pila tecnológica y net8.0 ya están confirmados. Verificar las instalaciones y las condiciones reales de ejecución cuando estén disponibles los equipos.
 - Definir administración, identidad, incorporación, presencia, abandono y recuperación.
 - Precisar DTO, rutas, respuestas, estados y transiciones, incluyendo inicio y fin de ronda/partida.
 - Diseñar persistencia, transacciones e idempotencia de todas las operaciones que modifican datos.
