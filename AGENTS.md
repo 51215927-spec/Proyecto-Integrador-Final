@@ -144,6 +144,9 @@ No trabajar directamente sobre `main`.
 - Coordinar los cambios sobre archivos comunes y revisar los resultados antes de integrarlos; los worktrees no evitan conflictos al integrar ramas.
 - Mantener commits, verificaciones y revisión de PR independientes por tarea. El uso de worktrees no autoriza implementar fuera de alcance ni omitir la revisión requerida.
 - Al terminar, retirar un worktree únicamente si está limpio y su trabajo está conservado. No usar eliminación forzada ni descartar cambios pendientes.
+- Cuando una integración sea final y la tarea quede cerrada, eliminar su rama local, su rama remota y su worktree. No aplicar esta limpieza a una sincronización parcial ni a una rama con trabajo en curso.
+- Antes de limpiar, verificar que la integración esté completa en la rama de destino y publicada en el remoto, que el worktree esté limpio y que no queden commits o cambios pendientes de conservar. Si hubo squash o rebase, comprobar la equivalencia de los cambios antes de borrar.
+- Retirar primero el worktree limpio y después eliminar las ramas local y remota; comprobar el resultado con `git worktree list` y las referencias de Git. No usar borrado forzado como sustituto de verificar la integración. Si alguna comprobación falla, conservar el trabajo e informar el pendiente.
 
 ### 5.3. Commits
 
