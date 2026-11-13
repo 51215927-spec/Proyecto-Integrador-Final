@@ -2,9 +2,9 @@
 
 Plan basado en [la consigna](Consigna.md). Marcar una tarea cuando su resultado esté disponible y revisado. Las actividades de TI definen los contratos que se usarán en Taller; las decisiones pendientes deben resolverse antes de implementar el componente correspondiente. Por decisión del usuario, no se utilizarán diagramas Nassi-Schneiderman (NS); el comportamiento de los métodos se documentará por escrito con sus entradas, resultados, precondiciones y validaciones. La consigna original se conserva como referencia sin modificar.
 
-## Estado revisado — 9 de noviembre de 2026
+## Estado revisado — 13 de noviembre de 2026
 
-Alcance actual: únicamente TI (análisis y diseño). Taller queda pendiente y fuera del trabajo actual. El código todavía contiene `Hello, World!` y una prueba vacía; el diseño documentado no está implementado.
+Alcance actual: únicamente TI (análisis y diseño). Taller queda pendiente y fuera del trabajo actual. El punto de entrada todavía muestra `Hello, World!` y la única prueba está vacía. Existen implementaciones parciales de Personaje y Mazo, sin pruebas de comportamiento; el juego y la comunicación no están implementados. Este registro de código existente no autoriza avanzar con Taller.
 
 Se revisaron el documento de avance aportado por el usuario y el [UML existente](diagramas/UML.uxf). El documento se utilizó como referencia local y no forma parte de la entrega del repositorio. Cada casilla de TI refleja esa revisión y las confirmaciones posteriores del usuario: `[x]` indica un resultado comprobado o confirmado, `[ ]` indica trabajo pendiente y **En curso** señala un avance parcial con el cierre que falta. Los valores verificados de personajes corresponden a Lysander y Reched. El usuario confirmó que la actividad 1 está completada; se retiran los pendientes de alternativas, comparación, justificación y verificación de otras fichas como condiciones para reabrirla. La imagen se trabaja en Arte. Las demás actividades conservan su estado de revisión. Completar una tarea de diseño no implica implementar código.
 
@@ -15,10 +15,10 @@ Se revisaron el documento de avance aportado por el usuario y el [UML existente]
 | 3. Modelo de clases | Completada por confirmación del usuario. UML y Arquitectura revisados, con firmas, relaciones, responsabilidades y justificación. | Sin pendientes propios. El modelado de comunicación y su integración se realizan en la actividad 6. |
 | 4. Métodos | Completada por confirmación del usuario. Las 58 especificaciones están redactadas en Arquitectura, con un párrafo por método y sin validaciones repetidas. | Sin pendientes propios. Los formatos y la integración corresponden a las actividades 5 y 6. |
 | 5. Archivos de personajes | Completada por confirmación del usuario. Formato de DataBases, columnas, descripción, ASCII y errores documentados en Arquitectura; UML y contratos de Personaje actualizados. | Sin condiciones pendientes para el cierre aceptado. Conversión al CSV postergada; ejemplos propios no elaborados. |
-| 6. Archivo de partida | Propuesta documental y UML de comunicación redactados; acciones JSON, Estado completo y recuperación mientras sobreviva un proceso. | Revisar propuesta, verificar Windows/SMB y revisión de compañero. |
+| 6. Archivo de partida | En curso en ramas no integradas: protocolo por archivos JSON, fotografía de estado y UML de comunicación; además, borrador alternativo REST. El detalle se registra debajo. | Revisar contratos, UML y viabilidad en red; resolver compatibilidad académica de REST si se adopta. Revisión de compañero e integración pendientes. |
 | 7. Pruebas | No se encontró un plan de casos desarrollado en el material revisado. | Diseñar condiciones iniciales, datos y resultados esperados para casos normales, límites y errores. |
 
-### Verificación de s
+### Verificación de personajes
 
 Valores en orden: Fuerza, Velocidad, Resistencia, Inteligencia, Energía y Habilidad.
 
@@ -73,7 +73,7 @@ El [protocolo de actividad 6](Protocolo-partida.md) sustituye las referencias hi
 
 ## TI — Análisis de Sistemas
 
-### Actividad 1 — Análisis y diseño de los s
+### Actividad 1 — Análisis y diseño de los personajes
 
 **Completada por confirmación del usuario.** Se conserva el registro de los datos y las validaciones revisadas, sin tareas adicionales pendientes para esta actividad.
 
@@ -167,6 +167,19 @@ No se elaboraron ejemplos propios válidos e inválidos; el cierre confirmado no
 
 ### Actividad 6 — Archivo de partida compartida
 
+**En curso, con avances fuera de main.** El resumen registra los avances de las ramas; la lista posterior detalla el estado del protocolo en esta rama. Revisión del 13 de noviembre de 2026:
+
+| Rama revisada | Evidencia disponible | Pendientes declarados |
+|---|---|---|
+| `docs/protocolo-partida-compartida` (`70302da`) | `docs/Protocolo-partida.md` y `docs/diagramas/Comunicacion.uxf`: roles, historiales JSON con un escritor por historial, Estado completo, catálogo estable, propuesta de publicación y recuperación; contratos y UML ampliados. | Revisar propuesta de tres mensajes y captura/restauración; revisión visual del UML; verificar Windows/SMB con rutas y permisos reales; revisión de compañero antes de integrar. |
+| `docs/protocolo-partida-web` (`c807a42`) | Conserva la alternativa por archivos en `docs/Protocolo-partida-archivos.md` y agrega el borrador REST `docs/Protocolo-partidad-web.md`. | Resolver con el docente la compatibilidad con la consigna; confirmar tecnologías, sesiones, rutas/DTO/estados HTTP, persistencia, concurrencia, presencia y recuperación; adaptar UML y diseñar verificaciones. |
+
+Los documentos se encuentran en los worktrees hermanos de cada rama; aún no existen en main. Ambas ramas contienen el main revisado (`dcfc9eb`) y coinciden con sus referencias remotas. No se integran alternativas ni se da por aprobada una propuesta técnica por estar redactada.
+
+El protocolo por archivos registra decisiones del usuario del 12 de noviembre que sustituyen el cierre inmediato: suspensión ante ausencia, espera de cinco segundos y recuperación mientras sobreviva un proceso. También separa Personaje CSV/DataBases de Accion y Estado JSON. Estas decisiones están documentadas en la rama; la política anterior de main queda sustituida en esta rama por el protocolo documentado y deberá conciliarse al revisar e integrar. El borrador REST no reemplaza automáticamente el requisito académico de archivo compartido.
+
+**Criterio de cierre:** revisar los contratos y diagramas de la alternativa que corresponda a la entrega, verificar las condiciones reales de SSI y completar la revisión de compañero. La actividad 7 sigue pendiente; describir escenarios del protocolo no equivale a entregar el plan de pruebas.
+
 **En curso — diseño JSON actualizado el 13 de noviembre de 2026.** Ver [Protocolo](Protocolo-partida.md). Los registros anteriores de Accion CSV y diecisiete tipos son antecedentes sustituidos, no tareas pendientes vigentes.
 
 - [x] Registrar roles elegibles, locks, Windows, historiales propios y limpieza explícita con los tres presentes.
@@ -197,19 +210,20 @@ No se elaboraron ejemplos propios válidos e inválidos; el cierre confirmado no
 
 ## Taller de Programación — C#
 
-Etapas conservadas como referencia futura. No se implementarán en el alcance actual, limitado a TI.
+Etapas conservadas como referencia futura. No se implementarán en el alcance actual, limitado a TI. Las casillas marcadas registran código ya presente, no etapas terminadas ni cumplimiento de TDD: no hay pruebas de comportamiento que lo acrediten.
 
 ### Etapa 1 — Implementación de Personaje
 
-- [x] Crear la clase Personaje en `src/` conforme al modelo acordado.
+- [ ] Completar Personaje conforme al modelo acordado: la clase existe, pero faltan descripcion y GetDescripcion.
 - [x] Implementar el constructor con nombre, seis atributos y ASCII Art.
 - [x] Implementar las validaciones de los atributos según los contratos de TI.
-- [ ] Implementar las operaciones de consulta conservando el encapsulamiento.
+- [x] Implementar GetNombre, GetAscii y GetAtributo conservando el encapsulamiento. GetDescripcion permanece pendiente en la tarea de completar Personaje.
 - [ ] Agregar en `test/` pruebas de personajes válidos y de cada restricción de puntajes.
 
 ### Etapa 2 — Carga de personajes con Datos y DataBases
 
-- [ ] Referenciar DataBases e implementar Personaje.Configurar con el formato definido en TI.
+- [x] Referenciar DataBases y Utilidades desde la aplicación e incluir sus proyectos en la solución.
+- [ ] Implementar Personaje.Configurar con el formato definido en TI: el método existe, pero su cuerpo está vacío.
 - [ ] Crear Datos estática con sus constantes de rutas, Configurar, GetTipoProceso, Modelo e Iniciar conforme al diseño.
 - [ ] Fijar las rutas absolutas reales del recurso de SSI y configurar el rol antes de inicializar el modelo.
 - [ ] Cargar el catálogo obligatorio mediante Modelo.Cargar<Personaje>(exigirArchivo: true).
@@ -275,6 +289,16 @@ Etapas conservadas como referencia futura. No se implementarán en el alcance ac
 - [ ] Preparar la defensa de las decisiones de diseño, estrategias de personajes, clases y métodos de cada integrante.
 
 Los Analistas coordinan los entregables y comunican los cambios a Taller. Los cambios para GitHub siguen las ramas, los commits y la revisión por un compañero establecidos en [CONTRIBUTING](../CONTRIBUTING.md).
+
+## Revisión del estado real — 13 de noviembre de 2026
+
+Se revisaron main (`dcfc9eb`), las dos ramas de protocolos, los worktrees limpios, las referencias remotas tras `git fetch`, el código, los proyectos y el submódulo. Main ya estaba sincronizado con origin/main y no requirió actualización. Los avances de las ramas se registran sin integrarlos ni alterar sus directorios.
+
+Personaje contiene constructor, las cuatro restricciones numéricas y consultas de nombre, ASCII y atributo. No contiene descripción ni configuración de persistencia efectiva. Mazo contiene constructor, mezcla Fisher–Yates, reparto, devolución y consulta de cantidad. Program conserva el ejemplo inicial; UnitTest1.Test1 no tiene aserciones. No existen todavía Jugador, Partida, Ronda, Combate, Datos ni InterfazConsola en src. DataBases y Utilidades sí están referenciadas e incluidas en la solución, aunque no hay flujo de carga ni juego conectado a ellas.
+
+Verificación: `dotnet build Proyecto-Integrador-Final.sln` terminó sin errores; se observó CA1416 en Utilidades/MyConsole.cs por una API de consola exclusiva de Windows. La primera ejecución simultánea de compilación y pruebas produjo reintentos MSB3026 de copia; se repitieron secuencialmente para eliminar esa interferencia. `dotnet test Proyecto-Integrador-Final.sln` pasó una única prueba vacía, lo que no valida reglas ni comunicación. `git diff --check` verificó los cambios documentales.
+
+Se mantienen los cierres confirmados de las actividades 1 a 5 y los pendientes de la actividad 7. Los registros históricos de compilación y diseño que siguen describen sus revisiones originales; no sustituyen esta comprobación ni acreditan el comportamiento del juego.
 
 ## Revisión de documentación — 9 de noviembre de 2026
 

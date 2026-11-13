@@ -10,7 +10,7 @@ El trabajo actual se limita a **TI: análisis y diseño**. La implementación en
 
 Las actividades 1 a 5 de TI están completadas en su documentación por confirmación del usuario. La actividad 6 tiene una propuesta de protocolo pendiente de revisión y verificación en red; la actividad 7 sigue pendiente.
 
-La aplicación todavía muestra `Hello, World!` y existe una única prueba vacía, sin validaciones del juego. El juego aún no está implementado. Consultá el [plan de trabajo](docs/Plan.md) para conocer los avances y pendientes.
+La aplicación todavía muestra `Hello, World!`. Existen implementaciones parciales de Personaje y Mazo y una única prueba vacía, sin comprobaciones de comportamiento. El juego aún no está integrado. El plan registra también los diseños de comunicación disponibles en ramas pendientes de revisión e integración. Consultá el [plan de trabajo](docs/Plan.md) para conocer los avances y pendientes.
 
 ## Contenido del repositorio
 
@@ -45,7 +45,7 @@ dotnet build Proyecto-Integrador-Final.sln
 dotnet run --project src/Proyecto-Integrador-Final
 ```
 
-Si clonaste sin `--recurse-submodules`, recuperá la versión de las bibliotecas registrada por el proyecto con `git submodule update --init --recursive`. Las bibliotecas todavía no están referenciadas por los proyectos ni incluidas en la solución principal; compilar esta solución no las verifica.
+Si clonaste sin `--recurse-submodules`, recuperá la versión de las bibliotecas registrada por el proyecto con `git submodule update --init --recursive`. DataBases y Utilidades están referenciadas por la aplicación e incluidas en la solución principal; la carga de personajes y la comunicación todavía no están conectadas al programa.
 
 La ejecución muestra únicamente `Hello, World!`. Para ejecutar la prueba inicial vacía:
 
