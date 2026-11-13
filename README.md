@@ -34,45 +34,51 @@ La aplicación todavía muestra `Hello, World!`. Existen implementaciones parcia
 
 Esta guía prepara una computadora para compilar y ejecutar la base actual. Está orientada a Windows, el entorno previsto para jugar. Para consultar solamente la documentación no hace falta instalar estas herramientas.
 
-### 1. Instalar Git
+### 1. Instalar Git y el SDK de .NET 8 desde PowerShell
 
-Descargá [Git para Windows](https://git-scm.com/downloads/win) y ejecutá el instalador. Git permite descargar el repositorio y sus bibliotecas auxiliares. Después abrí una terminal nueva (PowerShell o Git Bash) y comprobá:
+Abrí **PowerShell** y ejecutá estos comandos uno por uno. WinGet es la herramienta de Windows que descarga e instala programas; aceptá la solicitud de permisos si aparece.
 
-```bash
-git --version
+```powershell
+winget --version
+winget install --id Git.Git --exact --source winget --accept-source-agreements --accept-package-agreements
+winget install --id Microsoft.DotNet.SDK.8 --exact --source winget --accept-source-agreements --accept-package-agreements
 ```
 
-El comando debe mostrar una versión de Git. Si no se reconoce, cerrá y volvé a abrir la terminal después de instalarlo.
+Si `winget` no se reconoce, abrí la página de **Instalador de aplicación** en Microsoft Store con este comando, instalalo o actualizalo y volvé a abrir PowerShell antes de repetir los comandos:
 
-### 2. Instalar el SDK de .NET 8
+```powershell
+Start-Process "ms-windows-store://pdp/?ProductId=9NBLGGH4NNS1"
+```
 
-Entrá a la [descarga oficial de .NET 8](https://dotnet.microsoft.com/en-us/download/dotnet/8.0). En la sección **SDK**, elegí el instalador para Windows y la arquitectura de tu equipo: normalmente x64; usá Arm64 si tu equipo utiliza esa arquitectura. Ejecutá el instalador y abrí una terminal nueva.
+Los identificadores de instalación corresponden a las guías oficiales de [Git para Windows](https://git-scm.com/install/windows) y [.NET en Windows](https://learn.microsoft.com/en-us/dotnet/core/install/windows). El SDK incluye las herramientas para compilar y los componentes para ejecutar .NET y ASP.NET Core. No hace falta instalar los runtimes por separado para desarrollar.
 
-El **SDK** contiene las herramientas para compilar el código y los componentes para ejecutarlo, incluido ASP.NET Core. Para trabajar con este repositorio elegí el SDK, no solamente la descarga llamada Runtime. El proyecto mantiene `net8.0` por decisión del equipo. Referencia consultada: SDK 8.0.428, que incluye los runtimes 8.0.34; el número del SDK es distinto del número del runtime.
+### 2. Abrir una nueva ventana de PowerShell y verificar
 
-Comprobá la instalación:
+Cerrá PowerShell y abrilo otra vez para que reconozca los programas instalados. Ejecutá:
 
-```bash
+```powershell
+git --version
 dotnet --list-sdks
 dotnet --list-runtimes
 ```
 
-La primera lista debe incluir un SDK `8.0.xxx`. La segunda debe incluir `Microsoft.NETCore.App 8.0.x` y `Microsoft.AspNetCore.App 8.0.x`. Podés tener otras versiones instaladas al mismo tiempo. Si `dotnet` no se reconoce, abrí otra terminal; si sigue sin aparecer, revisá la instalación según la [guía oficial para Windows](https://learn.microsoft.com/en-us/dotnet/core/install/windows).
-
-Para Linux o macOS, seleccioná el instalador o las instrucciones correspondientes en la misma página de descarga de .NET 8.
+Debe aparecer una versión de Git, un SDK `8.0.xxx` y los runtimes `Microsoft.NETCore.App 8.0.x` y `Microsoft.AspNetCore.App 8.0.x`. El proyecto mantiene `net8.0` por decisión del equipo. Los números de versión del SDK y del runtime son distintos; pueden coexistir con otras versiones.
 
 ### 3. Descargar el proyecto con sus bibliotecas
 
-En la terminal, ubicáte en la carpeta donde querés guardar el proyecto y ejecutá:
+En la nueva ventana de PowerShell, estos comandos crean una carpeta `proyectos` dentro de tu carpeta personal y descargan el repositorio allí. Si ya lo descargaste, usá la alternativa de abajo:
 
-```bash
+```powershell
+New-Item -ItemType Directory -Path "$env:USERPROFILE\proyectos" -Force | Out-Null
+Set-Location "$env:USERPROFILE\proyectos"
 git clone --recurse-submodules https://github.com/51215927-spec/proyecto-integrador-final.git
-cd proyecto-integrador-final
+Set-Location .\proyecto-integrador-final
 ```
 
-Si ya habías descargado el repositorio, entrá a su carpeta y ejecutá solamente:
+Si ya habías descargado el repositorio, ejecutá lo siguiente reemplazando la ruta del ejemplo por la ubicación real de tu copia:
 
-```bash
+```powershell
+Set-Location "C:\ruta\a\proyecto-integrador-final"
 git submodule update --init --recursive
 ```
 
@@ -82,7 +88,7 @@ Esto recupera DataBases y Utilidades en `Mis-Librerias/`, usando la versión reg
 
 Desde la carpeta que contiene `Proyecto-Integrador-Final.sln`, ejecutá:
 
-```bash
+```powershell
 dotnet restore Proyecto-Integrador-Final.sln
 ```
 
@@ -92,7 +98,7 @@ Este comando descarga las versiones de los paquetes declaradas en los archivos d
 
 Ejecutá estos comandos uno después del otro:
 
-```bash
+```powershell
 dotnet build Proyecto-Integrador-Final.sln
 dotnet test Proyecto-Integrador-Final.sln
 dotnet run --project src/Proyecto-Integrador-Final
