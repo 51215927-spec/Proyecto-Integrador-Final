@@ -161,9 +161,7 @@ Verificación documental: las 58 operaciones del UML tienen una subsección de e
 
 No se elaboraron ejemplos propios válidos e inválidos; el cierre confirmado no los presenta como realizados ni los conserva como condición para reabrir esta actividad. La presentación de la descripción en consola sigue sin definir y no condiciona este cierre. La conversión al CSV queda postergada por indicación del usuario.
 
-<a id="actividad-6--archivo-de-partida-compartida"></a>
-
-# Actividad 6
+### Actividad 6 — Archivo de partida compartida
 
 **En curso, con avances fuera de main.** La lista que sigue describe la base integrada anterior; no debe interpretarse como ausencia de trabajo en las ramas de protocolos. Revisión del 13 de noviembre de 2026:
 
@@ -178,7 +176,7 @@ El protocolo por archivos registra decisiones del usuario del 12 de noviembre qu
 
 **Criterio de cierre:** revisar los contratos y diagramas de la alternativa que corresponda a la entrega, verificar las condiciones reales de SSI y completar la revisión de compañero. La actividad 7 sigue pendiente; describir escenarios del protocolo no equivale a entregar el plan de pruebas.
 
-## Archivos
+#### Archivos
 
 Lista de la base integrada, pendiente de conciliación con el protocolo por archivos.
 
@@ -200,7 +198,7 @@ Los registros de elecciones y publicaciones se definirán en esta actividad. El 
 - [ ] Revisar la coherencia de esas ampliaciones con las reglas y el modelo de dominio ya cerrado en la actividad 3.
 - [ ] Entregar la especificación de intercambio, diferenciándola del catálogo inicial de s.
 
-## REST
+#### REST
 
 Las tareas se presentan con casillas, sin numeración. Las decisiones del protocolo se redactan en `docs/protocolo-partida-web`; esta reorganización en `docs/actualizar-tareas` modifica únicamente el plan y conserva el seguimiento anterior.
 
@@ -231,7 +229,7 @@ Las tareas se presentan con casillas, sin numeración. Las decisiones del protoc
 - [ ] Verificar servidor no iniciado, pérdida de conexión, reintento y salida sin duplicar elecciones; vincular estos escenarios con el diseño de idempotencia y concurrencia.
 - [ ] Registrar condiciones de la red, configuración utilizada y resultados; no marcar exitosas pruebas todavía no ejecutadas.
 
-# Actividad 7 — Casos de prueba
+### Actividad 7 — Casos de prueba
 
 - [ ] Definir condiciones iniciales, datos y resultado esperado para cada caso de prueba.
 - [ ] Diseñar casos para un personaje válido y para un total distinto de 3000.
