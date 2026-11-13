@@ -134,6 +134,16 @@ Ejemplos:
 
 No trabajar directamente sobre `main`.
 
+### Trabajo en paralelo con worktrees
+
+- Utilizar `git worktree` para trabajar en tareas simultáneas: cada tarea debe tener su propia rama y directorio de trabajo.
+- Crear cada rama nueva desde `main` actualizado, respetando los tipos de rama y la separación de documentación, código y pruebas.
+- Antes de crear o reutilizar un worktree, consultar `git worktree list`, el estado de los directorios implicados y las referencias remotas.
+- No cambiar la rama de un directorio utilizado por otra tarea ni compartir un mismo worktree entre agentes o tareas que escriban simultáneamente.
+- Coordinar los cambios sobre archivos comunes y revisar los resultados antes de integrarlos; los worktrees no evitan conflictos al integrar ramas.
+- Mantener commits, verificaciones y revisión de PR independientes por tarea. El uso de worktrees no autoriza implementar fuera de alcance ni omitir la revisión requerida.
+- Al terminar, retirar un worktree únicamente si está limpio y su trabajo está conservado. No usar eliminación forzada ni descartar cambios pendientes.
+
 ### 5.3. Commits
 
 Utilizar el siguiente formato:
