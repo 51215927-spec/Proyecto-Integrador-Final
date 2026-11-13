@@ -6,6 +6,10 @@ Las bibliotecas DataBases y Utilidades existen en el submódulo `Mis-Librerias/`
 
 El [Plan](Plan.md#actividad-6--archivo-de-partida-compartida) registra los avances posteriores de las ramas de protocolos por archivos y web, aún no integrados. Las secciones de comunicación de este documento describen la base de main: su política de cierre y el uso de DataBases para intercambio deberán conciliarse con el diseño JSON y la recuperación documentados en esas ramas, antes de integrar. No se adopta REST como sustituto del requisito académico por registrar su borrador.
 
+## Selección tecnológica REST
+
+El usuario confirmó la pila de la alternativa REST y la persistencia permanente del catálogo en SQLite, además de las partidas. [Tecnologías REST](Tecnologias-rest.md) registra responsabilidades, alcance y pendientes. La adaptación de componentes y UML sigue pendiente; las secciones posteriores describen la arquitectura anterior por archivos y no acreditan integración con EF Core. La versión del repositorio continúa en .NET 8 hasta una decisión expresa de migración.
+
 ## Distribución y responsabilidades
 
 El servidor coordina la partida y analiza los enfrentamientos. Los dos clientes solicitan elecciones y presentan los resultados. Cada proceso dispone de su propio `Datos.Modelo` en memoria: compartir archivos no comparte objetos ni actualiza automáticamente las tablas.

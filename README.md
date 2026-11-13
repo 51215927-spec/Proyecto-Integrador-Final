@@ -27,6 +27,7 @@ La aplicación todavía muestra `Hello, World!`. Existen implementaciones parcia
 - [Reglas del juego](docs/Reglas-del-juego.md): funcionamiento esperado del sistema.
 - [Plan de trabajo](docs/Plan.md): estado de las actividades y próximos pasos.
 - [Arquitectura](docs/Arquitectura.md): decisiones de diseño y especificaciones por clase y método, con características, contratos y justificación.
+- [Tecnologías REST](docs/Tecnologias-rest.md): selección acordada para la alternativa web, alcance de persistencia y decisiones pendientes.
 - [Diagrama UML](docs/diagramas/UML.uxf): modelo de dominio actualizado para abrir con UMLet; integración del protocolo pendiente de la actividad 6.
 - [Guía de colaboración](CONTRIBUTING.md): organización del trabajo, ramas, commits, revisión de cambios y [metodología TDD](CONTRIBUTING.md#desarrollo-guiado-por-pruebas-tdd).
 
