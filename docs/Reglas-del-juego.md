@@ -59,7 +59,7 @@ Cuando un jugador alcanza 15 rondas ganadas, se comunica el ganador y finaliza l
 
 Cada cliente publica sus elecciones en sus propios archivos. El servidor lee esas elecciones, analiza el combate y escribe mensajes con los resultados. Los clientes leen los mensajes del servidor y muestran las cartas y el atributo cuando ambos jugadores han elegido.
 
-Los clientes validan sus entradas y el servidor comprueba las respuestas contra la solicitud y el estado vigentes antes de aceptarlas. El protocolo detallado y sus mecanismos técnicos propuestos están en [Protocolo de partida compartida](Protocolo-partida.md). El CSV de personajes proporciona los datos iniciales y cumple una función distinta de los archivos que intercambian elecciones y resultados durante el juego.
+Los clientes validan sus entradas y el servidor comprueba las respuestas contra la solicitud y el estado vigentes antes de aceptarlas. El protocolo detallado y sus mecanismos técnicos propuestos están en [Protocolo de partida compartida](Protocolo-partida-archivos.md). El CSV de personajes proporciona los datos iniciales y cumple una función distinta de los archivos que intercambian elecciones y resultados durante el juego.
 
 ### Situaciones de error
 
@@ -84,4 +84,4 @@ Los clientes validan sus entradas y el servidor comprueba las respuestas contra 
 
 ## Persistencia de partida — decisión del 13 de noviembre de 2026
 
-Personajes en CSV mediante DataBases; acciones en historiales JSON propios y Estado completo en estado.json, guardado únicamente por el servidor. Los clientes muestran datos y envían respuestas sin reconstruir el dominio. El servidor restaura el último estado completo mientras sobreviva algún proceso de la sesión. Los locks y el ciclo de espera de cinco segundos se conservan. Contratos y propuesta de guardado en [Protocolo](Protocolo-partida.md).
+Personajes en CSV mediante DataBases; acciones en historiales JSON propios y Estado completo en estado.json, guardado únicamente por el servidor. Los clientes muestran datos y envían respuestas sin reconstruir el dominio. El servidor restaura el último estado completo mientras sobreviva algún proceso de la sesión. Los locks y el ciclo de espera de cinco segundos se conservan. Contratos y propuesta de guardado en [Protocolo](Protocolo-partida-archivos.md).

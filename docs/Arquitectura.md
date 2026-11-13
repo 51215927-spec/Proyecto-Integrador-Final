@@ -4,9 +4,13 @@ Modelo de análisis y diseño de TI, actualizado el 9 de noviembre de 2026 a par
 
 Las bibliotecas existen en el submódulo `Mis-Librerias/`, pero todavía no hay referencias a sus proyectos en la aplicación ni están incluidas en la solución principal. Las llamadas descritas a continuación son contratos del diseño, no integración ejecutable.
 
+## Alternativa REST — 13 de noviembre de 2026
+
+El usuario eligió REST para el diseño de comunicación web. El [borrador web](Protocolo-partidad-web.md) propone dos consolas, una API ASP.NET Core y persistencia local mediante EF Core/SQLite; estas tecnologías y sus contratos siguen en evaluación. Se conserva el [protocolo por archivos](Protocolo-partida-archivos.md) como alternativa independiente. Las secciones y el UML de comunicación existentes describen esa alternativa por archivos; no representan una implementación REST. La integración web en componentes, métodos y UML está pendiente. La consigna exige archivo compartido y su sustitución para la entrega requiere definición con el docente. No se autoriza Taller.
+
 ## Actualización de comunicación — 13 de noviembre de 2026
 
-El [protocolo](Protocolo-partida.md) y su [UML de comunicación](diagramas/Comunicacion.uxf) especifican el diseño vigente: Personaje en CSV mediante DataBases; Accion en historiales JSON y Estado como fotografía completa en estado.json. El servidor concentra la lógica y recupera desde Estado; los clientes solo muestran presentaciones y envían respuestas. Se sustituyen las propuestas anteriores de Accion CSV, diecisiete mensajes y reconstrucción por logs. El diseño detallado de tres mensajes y guardado con publicaciones pendientes está propuesto para revisión. La recuperación se permite mientras sobreviva algún proceso; si todos se cierran la partida finaliza. Sin implementación ni verificación en red.
+El [protocolo](Protocolo-partida-archivos.md) y su [UML de comunicación](diagramas/Comunicacion.uxf) especifican el diseño vigente: Personaje en CSV mediante DataBases; Accion en historiales JSON y Estado como fotografía completa en estado.json. El servidor concentra la lógica y recupera desde Estado; los clientes solo muestran presentaciones y envían respuestas. Se sustituyen las propuestas anteriores de Accion CSV, diecisiete mensajes y reconstrucción por logs. El diseño detallado de tres mensajes y guardado con publicaciones pendientes está propuesto para revisión. La recuperación se permite mientras sobreviva algún proceso; si todos se cierran la partida finaliza. Sin implementación ni verificación en red.
 
 ## Distribución y responsabilidades
 
@@ -365,7 +369,7 @@ DataBases ya proporciona bloqueo por archivo, archivo temporal y reemplazo, adem
 
 ### Entidades persistentes y columnas
 
-La decisión vigente conserva únicamente Personaje en DataBases. Accion y Estado se serializan como JSON. Las columnas siguientes corresponden a Personaje. Cada miembro persistente debe declararse mediante Columna en la configuración de su entidad; DataBases no descubre ni guarda automáticamente todos los miembros. El contrato JSON de Accion y Estado se encuentra en [Protocolo de partida](Protocolo-partida.md); la recuperación completa sigue pendiente.
+La decisión vigente conserva únicamente Personaje en DataBases. Accion y Estado se serializan como JSON. Las columnas siguientes corresponden a Personaje. Cada miembro persistente debe declararse mediante Columna en la configuración de su entidad; DataBases no descubre ni guarda automáticamente todos los miembros. El contrato JSON de Accion y Estado se encuentra en [Protocolo de partida](Protocolo-partida-archivos.md); la recuperación completa sigue pendiente.
 
 Personaje tiene actualmente los siguientes campos en el modelo, sin agregar otros por inferencia:
 
@@ -440,4 +444,4 @@ Se corrigió la pertenencia del jugador mano a Ronda, se explicitó la consulta 
 
 ## Accion y Estado — actividad 6
 
-Accion transporta mensajes JSON. Estado conserva todos los datos de partida, ronda, combate, mazo, jugadores y coordinación mediante DTO sin referencias cíclicas, E/S ni lógica. No implementan IEntidad ni usan Configurar de DataBases. Los campos, DTO anidados y contratos de captura, restauración, publicación y almacenamiento se especifican en [Protocolo](Protocolo-partida.md). Estado incluye el catálogo con IDs estables y las acciones procesadas/publicaciones pendientes; no incluye objetos técnicos. La recuperación se hace cargando estado.json, sin reconstruir la partida recorriendo los historiales.
+Accion transporta mensajes JSON. Estado conserva todos los datos de partida, ronda, combate, mazo, jugadores y coordinación mediante DTO sin referencias cíclicas, E/S ni lógica. No implementan IEntidad ni usan Configurar de DataBases. Los campos, DTO anidados y contratos de captura, restauración, publicación y almacenamiento se especifican en [Protocolo](Protocolo-partida-archivos.md). Estado incluye el catálogo con IDs estables y las acciones procesadas/publicaciones pendientes; no incluye objetos técnicos. La recuperación se hace cargando estado.json, sin reconstruir la partida recorriendo los historiales.

@@ -15,7 +15,7 @@ Se revisaron el documento de avance aportado por el usuario y el [UML existente]
 | 3. Modelo de clases | Completada por confirmación del usuario. UML y Arquitectura revisados, con firmas, relaciones, responsabilidades y justificación. | Sin pendientes propios. El modelado de comunicación y su integración se realizan en la actividad 6. |
 | 4. Métodos | Completada por confirmación del usuario. Las 58 especificaciones están redactadas en Arquitectura, con un párrafo por método y sin validaciones repetidas. | Sin pendientes propios. Los formatos y la integración corresponden a las actividades 5 y 6. |
 | 5. Archivos de personajes | Completada por confirmación del usuario. Formato de DataBases, columnas, descripción, ASCII y errores documentados en Arquitectura; UML y contratos de Personaje actualizados. | Sin condiciones pendientes para el cierre aceptado. Conversión al CSV postergada; ejemplos propios no elaborados. |
-| 6. Archivo de partida | Propuesta documental y UML de comunicación redactados; acciones JSON, Estado completo y recuperación mientras sobreviva un proceso. | Revisar propuesta, verificar Windows/SMB y revisión de compañero. |
+| 6. Archivo de partida | Propuesta documental y UML de comunicación redactados; acciones JSON, Estado completo y recuperación mientras sobreviva un proceso. | Revisar ambas alternativas, definir compatibilidad con la consigna y completar las verificaciones y revisión correspondientes. |
 | 7. Pruebas | No se encontró un plan de casos desarrollado en el material revisado. | Diseñar condiciones iniciales, datos y resultados esperados para casos normales, límites y errores. |
 
 ### Verificación de s
@@ -69,7 +69,7 @@ Las actividades 1, 2, 3 y 4 tienen sus entregables documentados; el usuario conf
 
 ## Actualización de decisiones — 12 de noviembre de 2026
 
-El [protocolo de actividad 6](Protocolo-partida.md) sustituye las referencias históricas de este plan a cierre inmediato sin recuperación, transporte de acciones mediante DataBases y protocolo sin especificar. Los mecanismos nuevos son propuestas para revisión, no funcionalidades implementadas.
+El [protocolo de actividad 6](Protocolo-partida-archivos.md) sustituye las referencias históricas de este plan a cierre inmediato sin recuperación, transporte de acciones mediante DataBases y protocolo sin especificar. Los mecanismos nuevos son propuestas para revisión, no funcionalidades implementadas.
 
 ## TI — Análisis de Sistemas
 
@@ -167,7 +167,7 @@ No se elaboraron ejemplos propios válidos e inválidos; el cierre confirmado no
 
 ### Actividad 6 — Archivo de partida compartida
 
-**En curso — diseño JSON actualizado el 13 de noviembre de 2026.** Ver [Protocolo](Protocolo-partida.md). Los registros anteriores de Accion CSV y diecisiete tipos son antecedentes sustituidos, no tareas pendientes vigentes.
+**En curso — diseño JSON actualizado el 13 de noviembre de 2026.** Ver [Protocolo](Protocolo-partida-archivos.md). Los registros anteriores de Accion CSV y diecisiete tipos son antecedentes sustituidos, no tareas pendientes vigentes.
 
 - [x] Registrar roles elegibles, locks, Windows, historiales propios y limpieza explícita con los tres presentes.
 - [x] Registrar espera de cinco segundos y recuperación mientras sobreviva un proceso.
@@ -179,6 +179,32 @@ No se elaboraron ejemplos propios válidos e inválidos; el cierre confirmado no
 - [ ] Revisar propuesta de tres mensajes y contratos concretos de captura/restauración.
 - [ ] Revisar visualmente el UML y verificar Windows/SMB con carpeta y permisos reales.
 - [ ] Completar revisión de compañero antes de integrar; cerrar actividad tras revisión y verificaciones.
+
+#### Protocolo por archivos
+
+Las tareas anteriores se conservan con sus estados y corresponden al diseño por archivos. Esta subsección agrega su seguimiento específico sin reemplazarlas.
+
+- [x] Conservar el documento como [Protocolo por archivos](Protocolo-partida-archivos.md) y actualizar sus enlaces.
+- [ ] Revisar adquisición de roles, limpieza coordinada, publicación y recuperación con el equipo.
+- [ ] Diseñar los escenarios de verificación Windows/SMB y registrar las condiciones de ejecución pendientes.
+
+#### Protocolo web — REST
+
+REST fue elegido por el usuario como alternativa web. El borrador no sustituye el requisito académico de archivo compartido ni da por aprobados todos sus contratos.
+
+- [x] Registrar la elección de REST frente a WebSockets y GraphQL.
+- [x] Iniciar [Protocolo web](Protocolo-partidad-web.md) con responsabilidades, recursos, secuencia de combate y propuestas de consistencia.
+- [ ] Resolver con el docente la compatibilidad de REST con el requisito de archivo compartido para la entrega.
+- [ ] Confirmar ASP.NET Core, EF Core y SQLite, versiones y organización de procesos.
+- [ ] Definir administración, incorporación, asignación de J1/J2, credenciales y reincorporación.
+- [ ] Especificar rutas, DTO, estados HTTP y transiciones de inicio, combate, ronda y fin de partida.
+- [ ] Definir sondeo, presencia, pausa, abandono y recuperación tras reinicios.
+- [ ] Diseñar idempotencia, revisiones y concurrencia para todas las operaciones que modifican datos.
+- [ ] Diseñar modelo persistente, transacciones e importación del catálogo sin duplicar las reglas del dominio.
+- [ ] Adaptar documentalmente componentes, contratos y UML para REST.
+- [ ] Diseñar casos de errores, desconexión, reintentos, simultaneidad y privacidad de elecciones; vincularlos con la actividad 7.
+- [ ] Planificar la verificación en dos computadoras; ejecución técnica pendiente de autorización y entorno.
+- [ ] Revisar el borrador con el usuario y completar revisión de compañero antes de integrar.
 
 ### Actividad 7 — Casos de prueba
 
