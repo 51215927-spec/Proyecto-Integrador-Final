@@ -30,6 +30,7 @@ La aplicación todavía muestra `Hello, World!`. Existen implementaciones parcia
 - [Protocolo de partida web](docs/Protocolo-partidad-web.md): borrador REST, operaciones HTTP, concurrencia y decisiones pendientes.
 - [UML de comunicación](docs/diagramas/Comunicacion.uxf): ampliación propuesta para la actividad 6.
 - [Arquitectura](docs/Arquitectura.md): decisiones de diseño y especificaciones por clase y método, con características, contratos y justificación.
+- [Tecnologías REST](docs/Tecnologias-rest.md): selección acordada para la alternativa web, alcance de persistencia y decisiones pendientes.
 - [Diagrama UML](docs/diagramas/UML.uxf): modelo de dominio actualizado para abrir con UMLet; integración del protocolo pendiente de la actividad 6.
 - [Guía de colaboración](CONTRIBUTING.md): organización del trabajo, ramas, commits, revisión de cambios y [metodología TDD](CONTRIBUTING.md#desarrollo-guiado-por-pruebas-tdd).
 

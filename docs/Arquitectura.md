@@ -14,6 +14,8 @@ El usuario eligió REST para el diseño de comunicación web. El [borrador web](
 
 El [protocolo](Protocolo-partida-archivos.md) y su [UML de comunicación](diagramas/Comunicacion.uxf) especifican el diseño vigente: Personaje en CSV mediante DataBases; Accion en historiales JSON y Estado como fotografía completa en estado.json. El servidor concentra la lógica y recupera desde Estado; los clientes solo muestran presentaciones y envían respuestas. Se sustituyen las propuestas anteriores de Accion CSV, diecisiete mensajes y reconstrucción por logs. El diseño detallado de tres mensajes y guardado con publicaciones pendientes está propuesto para revisión. La recuperación se permite mientras sobreviva algún proceso; si todos se cierran la partida finaliza. Sin implementación ni verificación en red.
 
+La selección tecnológica y sus responsabilidades se detallan en [Tecnologías REST](Tecnologias-rest.md); las dependencias no se instalaron en esta tarea.
+
 ## Distribución y responsabilidades
 
 El servidor coordina la partida y analiza los enfrentamientos. Los dos clientes solicitan elecciones y presentan los resultados. Cada proceso dispone de su propio `Datos.Modelo` en memoria: compartir archivos no comparte objetos ni actualiza automáticamente las tablas.

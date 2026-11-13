@@ -219,6 +219,29 @@ REST fue elegido por el usuario como alternativa web. El borrador no sustituye e
 - [ ] Planificar la verificación en dos computadoras; ejecución técnica pendiente de autorización y entorno.
 - [ ] Revisar el borrador con el usuario y completar revisión de compañero antes de integrar.
 
+#### Tareas vigentes de la alternativa REST
+
+La selección acordada se documenta en [Tecnologías REST](Tecnologias-rest.md). Este seguimiento actualiza el resumen de ramas anterior; el borrador de contratos permanece en `docs/protocolo-partida-web`. No se considera cerrada la actividad 6 ni se autoriza Taller.
+
+- [x] Seleccionar C#/.NET, ASP.NET Core con Minimal APIs, HttpClient, System.Text.Json, SQLite, EF Core y xUnit.
+- [x] Definir la base como persistencia permanente del catálogo de personajes y de los datos de partidas, no solamente como respaldo ante caídas.
+- [ ] Resolver con el docente si REST puede sustituir el archivo compartido para la entrega.
+- [x] Confirmar net8.0 y versiones estables de la línea 8.0 de ASP.NET Core y EF Core; referencia 8.0.34 verificada en Tecnologías REST.
+- [x] Definir procesos separados y orden de inicio: primero servidor preparado para conexiones, después los dos clientes.
+- [ ] Verificar SDK y runtimes disponibles en los equipos y confirmar distribución física, despliegue, dirección, puerto y HTTP/HTTPS.
+- [ ] Especificar comprobación de disponibilidad y respuesta del cliente si se abre sin servidor.
+- [ ] Definir administración de partidas, incorporación, asignación J1/J2, credenciales y reincorporación.
+- [ ] Especificar rutas, DTO, estados HTTP y transiciones de inicio, combate, ronda y fin de partida.
+- [ ] Definir consultas periódicas, presencia, pausa, abandono y recuperación tras reinicios.
+- [ ] Diseñar idempotencia, revisiones y concurrencia para las operaciones que modifican datos.
+- [ ] Diseñar esquema persistente, relaciones y transacciones de catálogo y partidas sin duplicar las reglas del dominio.
+- [ ] Definir ingreso y mantenimiento del catálogo: importación CSV y alcance de posibles altas/modificaciones; no hay editor autorizado por esta decisión.
+- [ ] Definir estabilidad de personajes en partidas iniciadas frente a cambios posteriores del catálogo.
+- [ ] Adaptar Arquitectura, contratos y UML a REST y conciliar la persistencia anterior mediante DataBases.
+- [ ] Diseñar casos de errores, desconexión, reintentos, simultaneidad, persistencia y privacidad; vincularlos con la actividad 7.
+- [ ] Planificar verificación en dos computadoras; ejecución pendiente del entorno y la etapa autorizada.
+- [ ] Conciliar este seguimiento con el borrador de la rama web y completar revisión con el usuario y un compañero antes de integrar.
+
 ### Actividad 7 — Casos de prueba
 
 - [ ] Definir condiciones iniciales, datos y resultado esperado para cada caso de prueba.
