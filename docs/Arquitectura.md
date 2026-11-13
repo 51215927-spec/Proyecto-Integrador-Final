@@ -6,6 +6,10 @@ Las bibliotecas DataBases y Utilidades existen en el submódulo `Mis-Librerias/`
 
 El [Plan](Plan.md#actividad-6--archivo-de-partida-compartida) registra los avances posteriores de las ramas de protocolos por archivos y web, aún no integrados. Las secciones de comunicación de este documento describen la base de main: su política de cierre y el uso de DataBases para intercambio deberán conciliarse con el diseño JSON y la recuperación documentados en esas ramas, antes de integrar. No se adopta REST como sustituto del requisito académico por registrar su borrador.
 
+## Actualización de comunicación — 13 de noviembre de 2026
+
+El [protocolo](Protocolo-partida.md) y su [UML de comunicación](diagramas/Comunicacion.uxf) especifican el diseño vigente: Personaje en CSV mediante DataBases; Accion en historiales JSON y Estado como fotografía completa en estado.json. El servidor concentra la lógica y recupera desde Estado; los clientes solo muestran presentaciones y envían respuestas. Se sustituyen las propuestas anteriores de Accion CSV, diecisiete mensajes y reconstrucción por logs. El diseño detallado de tres mensajes y guardado con publicaciones pendientes está propuesto para revisión. La recuperación se permite mientras sobreviva algún proceso; si todos se cierran la partida finaliza. Sin implementación ni verificación en red.
+
 ## Distribución y responsabilidades
 
 El servidor coordina la partida y analiza los enfrentamientos. Los dos clientes solicitan elecciones y presentan los resultados. Cada proceso dispone de su propio `Datos.Modelo` en memoria: compartir archivos no comparte objetos ni actualiza automáticamente las tablas.
@@ -45,15 +49,19 @@ Las firmas indican parámetros y retornos. Salvo donde se indica estático, los 
 
 ### Personaje
 
-Representa una carta válida con nombre, descripción, ASCII y seis atributos privados. No ofrece modificación pública de esos valores. Implementa `IEntidad<Personaje>` sin encargarse de leer archivos.
+Representa una carta válida con ID, nombre, descripción, ASCII y seis atributos privados. No ofrece modificación pública de esos valores. Implementa `IEntidad<Personaje>` sin encargarse de leer archivos.
 
-#### Constructor `Personaje(nombre: string, descripcion: string, ascii: string, fuerza: int, velocidad: int, resistencia: int, inteligencia: int, energia: int, habilidad: int)`
+#### Constructor `Personaje(id: int, nombre: string, descripcion: string, ascii: string, fuerza: int, velocidad: int, resistencia: int, inteligencia: int, energia: int, habilidad: int)`
 
-Es público y recibe el nombre, la descripción, el ASCII y los seis atributos. La descripción contiene el texto sobre la historia o las características del personaje y se conserva en el campo privado descripcion; es opcional, admite texto vacío y no tiene límite de longitud definido por el juego. La ausencia de descripción se representa mediante texto vacío (""), según la definición del usuario; se conserva el tipo string. No se utiliza null para representar esa ausencia. Comprueba que el nombre no sea nulo, vacío ni solo espacios y que el ASCII no sea nulo; si falta alguno, rechaza la construcción con ArgumentException. Guarda los datos y llama a Validar para comprobar las reglas numéricas. El ASCII se prepara con contenido, con un máximo de 25 líneas de 120 caracteres cada una y sin tabulaciones, conforme al formato de la actividad 5. Por indicación del usuario, no se agrega una validación de texto vacío; se conserva el rechazo de null ya especificado. Así, las demás clases pueden usar el personaje sin volver a validar sus datos.
+Es público y recibe el ID, el nombre, la descripción, el ASCII y los seis atributos. El ID es int, único y estable, proporcionado por el sistema externo; se conserva en el campo privado id sin setter. No se ha definido un rango numérico para este identificador. La descripción contiene el texto sobre la historia o las características del personaje y se conserva en el campo privado descripcion; es opcional, admite texto vacío y no tiene límite de longitud definido por el juego. La ausencia de descripción se representa mediante texto vacío (""), según la definición del usuario; se conserva el tipo string. No se utiliza null para representar esa ausencia. Comprueba que el nombre no sea nulo, vacío ni solo espacios y que el ASCII no sea nulo; si falta alguno, rechaza la construcción con ArgumentException. Guarda los datos y llama a Validar para comprobar las reglas numéricas. El ASCII se prepara con contenido, con un máximo de 25 líneas de 120 caracteres cada una y sin tabulaciones, conforme al formato de la actividad 5. Por indicación del usuario, no se agrega una validación de texto vacío; se conserva el rechazo de null ya especificado. Así, las demás clases pueden usar el personaje sin volver a validar sus datos.
 
 #### `Validar(): void`
 
 Es privado y comprueba que cada atributo esté entre 250 y 750, que los seis sumen 3000, que alguno sea mayor o igual a 650 y que alguno sea menor o igual a 350. Si no se cumple alguna condición, rechaza la construcción con ArgumentException e indica el motivo. No modifica los valores.
+
+#### `GetId(): int`
+
+Es público y devuelve el identificador almacenado, sin modificarlo. Se utiliza para relacionar el idPersonaje enviado en RespuestaDto con el catálogo; no depende del orden de sus filas.
 
 #### `GetNombre(): string`
 
@@ -73,7 +81,7 @@ Es público y recibe un TipoAtributo elegido entre las seis opciones del juego. 
 
 #### `Configurar(entidad: ConstructorEntidad<Personaje>): void`
 
-Es público y estático. Recibe el ConstructorEntidad que proporciona DataBases y configura el archivo Datos.RUTA_PERSONAJES y las columnas asociadas a los campos privados, incluida descripcion de tipo string. El constructor compatible recibe también descripcion para reconstruir el objeto sin utilizar setters. DataBases comprueba la configuración. El formato del catálogo está especificado en el apartado de la actividad 5 de este documento.
+Es público y estático. Recibe el ConstructorEntidad que proporciona DataBases y configura el archivo Datos.RUTA_PERSONAJES y las columnas asociadas a los campos privados, incluidos id de tipo int y descripcion de tipo string. El constructor compatible recibe también descripcion para reconstruir el objeto sin utilizar setters. DataBases comprueba la configuración. El formato del catálogo está especificado en el apartado de la actividad 5 de este documento.
 
 ### Mazo
 
@@ -359,12 +367,13 @@ DataBases ya proporciona bloqueo por archivo, archivo temporal y reemplazo, adem
 
 ### Entidades persistentes y columnas
 
-El usuario indicó que las clases persistentes serán Personaje y Accion y que las columnas corresponderán a sus atributos. Cada miembro persistente debe declararse mediante Columna en la configuración de su entidad; DataBases no descubre ni guarda automáticamente todos los miembros. El contrato de Accion y su integración con las elecciones de los clientes y las publicaciones del servidor quedan pendientes de definición en la actividad 6.
+La decisión vigente conserva únicamente Personaje en DataBases. Accion y Estado se serializan como JSON. Las columnas siguientes corresponden a Personaje. Cada miembro persistente debe declararse mediante Columna en la configuración de su entidad; DataBases no descubre ni guarda automáticamente todos los miembros. El contrato JSON de Accion y Estado se encuentra en [Protocolo de partida](Protocolo-partida.md); la recuperación completa sigue pendiente.
 
 Personaje tiene actualmente los siguientes campos en el modelo, sin agregar otros por inferencia:
 
 | Campo / columna | Tipo | Condición ya definida |
 |---|---|---|
+| id | int | Identificador único y estable proporcionado por el sistema externo; no cambia durante una partida. |
 | nombre | string | No nulo, vacío ni compuesto solo por espacios. |
 | descripcion | string | Opcional y sin límite de longitud. La ausencia se representa con texto vacío (""), no con null. |
 | ascii | string | No nulo; máximo 25 líneas y 120 caracteres por línea; sin tabulaciones. Se entrega con contenido, pero no se valida si está vacío. |
@@ -389,7 +398,7 @@ La palabra null sin comillas representa ausencia de valor; las comillas vacías 
 
 El catálogo se carga al iniciar mediante Cargar<Personaje>(exigirArchivo: true). Si falta, se produce FileNotFoundException. DataBases informa encabezados inválidos, cantidad incorrecta de celdas, conversiones imposibles y datos rechazados por el constructor mediante CsvFormatException. Los errores de entrada y salida o de permisos se propagan sin envolver. Conforme a la política vigente, el punto de ejecución informa el error y finaliza el juego completo, sin recuperación.
 
-DataBases no impone unicidad de personajes. Por confirmación del usuario, el catálogo estará preparado antes de la ejecución y él garantizará que no contenga duplicados. La carga no queda a cargo del usuario final del juego; no se incorpora un mecanismo de detección de duplicados ni un identificador adicional por este motivo.
+DataBases no impone unicidad de personajes. Por confirmación del usuario, el catálogo estará preparado antes de la ejecución y él garantizará que no contenga duplicados. La carga no queda a cargo del usuario final del juego; por decisión posterior del usuario se agrega id como columna única y estable. La biblioteca no valida esa unicidad: antes de comenzar la partida debe rechazarse un catálogo con IDs ambiguos.
 
 La conversión de la información de los personajes al catálogo CSV se definirá posteriormente. El usuario considera como posibilidades un script o solicitar la generación del CSV a partir de los datos, sin haber elegido todavía una alternativa. No se exige por ahora que cada alumno entregue un CSV individual ni se define un formato de conversión.
 
@@ -429,4 +438,8 @@ Las cajas se ajustaron a las medidas del texto exportado por UMLet, con margen m
 
 ## Resultado de la revisión final del dominio
 
-Se corrigió la pertenencia del jugador mano a Ronda, se explicitó la consulta de participantes de Combate para la presentación y se ajustó la multiplicidad de Modelo a su ciclo de inicialización. Se precisaron los contratos de incorporación de combates, resolución y recuperación completa de personajes. No se agregaron clases ni implementación. La incorporación posterior de la descripción a Personaje, su constructor, GetDescripcion y la columna descripcion se documenta en la actividad 5 por indicación del usuario. La descripción es opcional y no tiene límite de longitud; su ausencia se representa con texto vacío ("") y su presentación sigue pendiente. No se ha agregado un identificador al catálogo; las entidades de intercambio y el estado compartido corresponden a la actividad 6 y deberán reflejarse después en este modelo.
+Se corrigió la pertenencia del jugador mano a Ronda, se explicitó la consulta de participantes de Combate para la presentación y se ajustó la multiplicidad de Modelo a su ciclo de inicialización. Se precisaron los contratos de incorporación de combates, resolución y recuperación completa de personajes. No se agregaron clases ni implementación. La incorporación posterior de la descripción a Personaje, su constructor, GetDescripcion y la columna descripcion se documenta en la actividad 5 por indicación del usuario. La descripción es opcional y no tiene límite de longitud; su ausencia se representa con texto vacío ("") y su presentación sigue pendiente. Posteriormente el usuario aprobó agregar id: int al catálogo y GetId a Personaje; las entidades de intercambio y el estado compartido corresponden a la actividad 6 y deberán reflejarse después en este modelo.
+
+## Accion y Estado — actividad 6
+
+Accion transporta mensajes JSON. Estado conserva todos los datos de partida, ronda, combate, mazo, jugadores y coordinación mediante DTO sin referencias cíclicas, E/S ni lógica. No implementan IEntidad ni usan Configurar de DataBases. Los campos, DTO anidados y contratos de captura, restauración, publicación y almacenamiento se especifican en [Protocolo](Protocolo-partida.md). Estado incluye el catálogo con IDs estables y las acciones procesadas/publicaciones pendientes; no incluye objetos técnicos. La recuperación se hace cargando estado.json, sin reconstruir la partida recorriendo los historiales.

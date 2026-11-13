@@ -67,6 +67,10 @@ Esta decisión y las reglas confirmadas están redactadas en [Reglas del juego](
 
 Las actividades 1, 2, 3 y 4 tienen sus entregables documentados; el usuario confirmó el cierre de las actividades 3 y 4. El modelado e integración de comunicación se completarán en la actividad 6. Los demás entregables de TI no se consideran cerrados solo por contar con documentación parcial.
 
+## Actualización de decisiones — 12 de noviembre de 2026
+
+El [protocolo de actividad 6](Protocolo-partida.md) sustituye las referencias históricas de este plan a cierre inmediato sin recuperación, transporte de acciones mediante DataBases y protocolo sin especificar. Los mecanismos nuevos son propuestas para revisión, no funcionalidades implementadas.
+
 ## TI — Análisis de Sistemas
 
 ### Actividad 1 — Análisis y diseño de los personajes
@@ -163,7 +167,7 @@ No se elaboraron ejemplos propios válidos e inválidos; el cierre confirmado no
 
 ### Actividad 6 — Archivo de partida compartida
 
-**En curso, con avances fuera de main.** La lista que sigue describe la base integrada anterior; no debe interpretarse como ausencia de trabajo en las ramas de protocolos. Revisión del 13 de noviembre de 2026:
+**En curso, con avances fuera de main.** El resumen registra los avances de las ramas; la lista posterior detalla el estado del protocolo en esta rama. Revisión del 13 de noviembre de 2026:
 
 | Rama revisada | Evidencia disponible | Pendientes declarados |
 |---|---|---|
@@ -172,29 +176,22 @@ No se elaboraron ejemplos propios válidos e inválidos; el cierre confirmado no
 
 Los documentos se encuentran en los worktrees hermanos de cada rama; aún no existen en main. Ambas ramas contienen el main revisado (`dcfc9eb`) y coinciden con sus referencias remotas. No se integran alternativas ni se da por aprobada una propuesta técnica por estar redactada.
 
-El protocolo por archivos registra decisiones del usuario del 12 de noviembre que sustituyen el cierre inmediato: suspensión ante ausencia, espera de cinco segundos y recuperación mientras sobreviva un proceso. También separa Personaje CSV/DataBases de Accion y Estado JSON. Estas decisiones están documentadas en la rama; la política anterior que permanece debajo y en Arquitectura corresponde a la base integrada y deberá conciliarse al revisar e integrar el protocolo. El borrador REST no reemplaza automáticamente el requisito académico de archivo compartido.
+El protocolo por archivos registra decisiones del usuario del 12 de noviembre que sustituyen el cierre inmediato: suspensión ante ausencia, espera de cinco segundos y recuperación mientras sobreviva un proceso. También separa Personaje CSV/DataBases de Accion y Estado JSON. Estas decisiones están documentadas en la rama; la política anterior de main queda sustituida en esta rama por el protocolo documentado y deberá conciliarse al revisar e integrar. El borrador REST no reemplaza automáticamente el requisito académico de archivo compartido.
 
 **Criterio de cierre:** revisar los contratos y diagramas de la alternativa que corresponda a la entrega, verificar las condiciones reales de SSI y completar la revisión de compañero. La actividad 7 sigue pendiente; describir escenarios del protocolo no equivale a entregar el plan de pruebas.
 
-#### Lista de la base integrada, pendiente de conciliación
+**En curso — diseño JSON actualizado el 13 de noviembre de 2026.** Ver [Protocolo](Protocolo-partida.md). Los registros anteriores de Accion CSV y diecisiete tipos son antecedentes sustituidos, no tareas pendientes vigentes.
 
-Los registros de elecciones y publicaciones se definirán en esta actividad. El acceso a archivos se realiza mediante Datos y DataBases. La validez de los envíos corresponde al cliente y cualquier fallo de ejecución finaliza el juego completo, sin recuperación.
-
-- [x] Definir un escritor exclusivo por archivo: cada cliente escribe sus elecciones y el servidor sus publicaciones; los demás procesos leen.
-- [ ] Definir las entidades de intercambio y sus campos, cantidad de archivos, rutas, permisos y configuración en DataBases.
-- [ ] Especificar la identificación de partida, jugadores, estado, ronda, combate y jugador autorizado a elegir.
-- [ ] Definir cómo se relacionan los registros de intercambio con los s del catálogo.
-- [ ] Determinar cuándo cada proceso ejecuta Cargar<T> y Guardar<T> y qué tablas puede guardar.
-- [ ] Especificar la secuencia de elecciones y la publicación de resultados sin revelar elecciones anticipadamente en la interfaz.
-- [ ] Definir cómo se reconocen registros ya procesados, repetidos o correspondientes a otra partida, ronda o combate.
-- [ ] Especificar publicación de mensajes completos y coherencia entre archivos, considerando que Guardar reemplaza una tabla completa y no hay transacciones entre archivos.
-- [ ] Especificar la creación inicial de las tablas y cuáles requieren archivos existentes al cargarse.
-- [ ] Definir la detección de fallos y el cierre coordinado de clientes y servidor, sin recuperación.
-- [ ] Verificar con SSI el acceso, permisos, bloqueos y reemplazo de archivos en la red local.
-- [ ] Incorporar al UML y Arquitectura las entidades de elecciones de los clientes y publicaciones del servidor, con atributos, relaciones y configuración en Datos.
-- [ ] Definir los métodos que conectan los registros de intercambio con Partida y los clientes, conforme al protocolo acordado.
-- [ ] Revisar la coherencia de esas ampliaciones con las reglas y el modelo de dominio ya cerrado en la actividad 3.
-- [ ] Entregar la especificación de intercambio, diferenciándola del catálogo inicial de s.
+- [x] Registrar roles elegibles, locks, Windows, historiales propios y limpieza explícita con los tres presentes.
+- [x] Registrar espera de cinco segundos y recuperación mientras sobreviva un proceso.
+- [x] Definir Estado como fotografía completa del juego, catálogo y coordinación.
+- [x] Separar Personaje CSV/DataBases de Accion y Estado JSON.
+- [x] Documentar propuesta de guardado completo, publicaciones pendientes y efectos sin duplicación.
+- [x] Resolver documentalmente reparto completo y catálogo estable dentro de Estado.
+- [x] Actualizar contratos y UML de comunicación con Estado y DTO relacionados.
+- [ ] Revisar propuesta de tres mensajes y contratos concretos de captura/restauración.
+- [ ] Revisar visualmente el UML y verificar Windows/SMB con carpeta y permisos reales.
+- [ ] Completar revisión de compañero antes de integrar; cerrar actividad tras revisión y verificaciones.
 
 ### Actividad 7 — Casos de prueba
 
@@ -330,3 +327,7 @@ Cierre de la actividad 3 por confirmación del usuario: sin tareas propias pendi
 ## Ampliación documental de Personaje — actividad 5
 
 Por indicación del usuario se agregó descripcion: string al modelo de Personaje y a sus columnas, se amplió el constructor y se especificó GetDescripcion. La descripción es opcional y no tiene límite de longitud por confirmación del usuario; su ausencia se representa con texto vacío ("") y su presentación sigue pendiente de decisión. La conversión al CSV se resolverá posteriormente y el usuario garantiza un catálogo preparado sin duplicados. No se implementó código. Posteriormente el usuario confirmó el cierre de la actividad 5 con esta especificación. Los registros anteriores de 58 operaciones corresponden a la revisión previa a esta ampliación.
+
+## Decisiones reemplazadas de actividad 6
+
+Se aprobaron inicialmente Accion CSV con doce campos y diecisiete tipos, y luego se eligió JSON para Accion y Estado por simplicidad. La versión vigente es la sección de actividad 6 y el protocolo enlazado. El ID permanente de Personaje continúa vigente. No quedan pendientes de configurar Accion en DataBases ni de reconstruir la partida desde logs. Los mecanismos de sesión y publicación deben verificarse como diseño propuesto.
