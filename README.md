@@ -112,6 +112,41 @@ El diseño REST acordado utiliza ASP.NET Core, HttpClient, System.Text.Json, SQL
 
 Todavía no existe ese servidor ni están declarados esos paquetes en la solución. Por eso, la restauración actual no instala EF Core ni prepara una base de datos. Cuando se autorice Taller y se incorporen sus referencias, se actualizará esta guía con los pasos para crear la base y ejecutar el servidor. SQLite se utilizará dentro del servidor; no se prevé instalar un servicio de base de datos independiente. Las herramientas de migraciones de EF Core también quedan para esa etapa.
 
+#### Comandos de PowerShell para EF Core y SQLite (etapa futura)
+
+Estos son los comandos de instalación previstos. Se ejecutarán cuando Taller esté autorizado y exista el proyecto servidor; no deben aplicarse al proyecto de consola actual. Cuando llegue esa etapa, PowerShell pedirá la ruta real del archivo `.csproj` del servidor, para no depender de un nombre todavía sin definir:
+
+```powershell
+$proyectoServidor = Read-Host "Ruta del archivo .csproj del servidor"
+if (-not (Test-Path -LiteralPath $proyectoServidor -PathType Leaf)) {
+    throw "No existe el archivo de proyecto indicado."
+}
+dotnet add "$proyectoServidor" package Microsoft.EntityFrameworkCore --version 8.0.34
+dotnet add "$proyectoServidor" package Microsoft.EntityFrameworkCore.Sqlite --version 8.0.34
+dotnet add "$proyectoServidor" package Microsoft.EntityFrameworkCore.Design --version 8.0.34
+dotnet restore "$proyectoServidor"
+dotnet list "$proyectoServidor" package
+```
+
+El proveedor SQLite incluye las dependencias necesarias para usar la base desde .NET. No hace falta instalar un servidor SQLite por separado. Los clientes de consola no necesitan estos paquetes de persistencia.
+
+Para instalar la herramienta de migraciones de EF Core por primera vez:
+
+```powershell
+dotnet tool install --global dotnet-ef --version 8.0.34
+dotnet ef --version
+```
+
+Si `dotnet-ef` ya estaba instalada y necesitás seleccionar esta versión, usá esta alternativa al comando de instalación:
+
+```powershell
+dotnet tool update --global dotnet-ef --version 8.0.34
+```
+
+Si la versión global existente pertenece a otra línea y la herramienta rechaza el cambio, conservála y revisá una instalación local para este proyecto; no hace falta desinstalar herramientas usadas por otros proyectos. Crear tablas y migraciones requiere diseñar e implementar primero el modelo de datos; instalar los paquetes no crea la base del juego.
+
+Sintaxis contrastada con las referencias oficiales del [proveedor SQLite](https://learn.microsoft.com/en-us/ef/core/providers/sqlite/) y las [herramientas de EF Core](https://learn.microsoft.com/en-us/ef/core/cli/dotnet).
+
 En el diseño acordado, primero se abre el servidor y, cuando está disponible, se abren los clientes. La implementación y los comandos de inicio específicos siguen pendientes.
 
 ## Cómo usarlo
