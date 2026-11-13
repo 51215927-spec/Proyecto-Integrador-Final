@@ -15,7 +15,7 @@ Se revisaron el documento de avance aportado por el usuario y el [UML existente]
 | 3. Modelo de clases | Completada por confirmación del usuario. UML y Arquitectura revisados, con firmas, relaciones, responsabilidades y justificación. | Sin pendientes propios. El modelado de comunicación y su integración se realizan en la actividad 6. |
 | 4. Métodos | Completada por confirmación del usuario. Las 58 especificaciones están redactadas en Arquitectura, con un párrafo por método y sin validaciones repetidas. | Sin pendientes propios. Los formatos y la integración corresponden a las actividades 5 y 6. |
 | 5. Archivos de personajes | Completada por confirmación del usuario. Formato de DataBases, columnas, descripción, ASCII y errores documentados en Arquitectura; UML y contratos de Personaje actualizados. | Sin condiciones pendientes para el cierre aceptado. Conversión al CSV postergada; ejemplos propios no elaborados. |
-| 6. Archivo de partida | Dos clientes y servidor; intercambio mediante Datos y DataBases. | Definir registros, identificación, secuencia, permisos, publicación y cierre coordinado. Verificar funcionamiento en red local. |
+| 6. Archivo de partida | Propuesta documental y UML de comunicación redactados; acciones JSON, Estado completo y recuperación mientras sobreviva un proceso. | Revisar propuesta, verificar Windows/SMB y revisión de compañero. |
 | 7. Pruebas | No se encontró un plan de casos desarrollado en el material revisado. | Diseñar condiciones iniciales, datos y resultados esperados para casos normales, límites y errores. |
 
 ### Verificación de s
@@ -66,6 +66,10 @@ Esta decisión y las reglas confirmadas están redactadas en [Reglas del juego](
 5. Completar el plan de pruebas y revisar que todos los entregables de TI sean coherentes (actividad 7).
 
 Las actividades 1, 2, 3 y 4 tienen sus entregables documentados; el usuario confirmó el cierre de las actividades 3 y 4. El modelado e integración de comunicación se completarán en la actividad 6. Los demás entregables de TI no se consideran cerrados solo por contar con documentación parcial.
+
+## Actualización de decisiones — 12 de noviembre de 2026
+
+El [protocolo de actividad 6](Protocolo-partida.md) sustituye las referencias históricas de este plan a cierre inmediato sin recuperación, transporte de acciones mediante DataBases y protocolo sin especificar. Los mecanismos nuevos son propuestas para revisión, no funcionalidades implementadas.
 
 ## TI — Análisis de Sistemas
 
@@ -163,23 +167,18 @@ No se elaboraron ejemplos propios válidos e inválidos; el cierre confirmado no
 
 ### Actividad 6 — Archivo de partida compartida
 
-Los registros de elecciones y publicaciones se definirán en esta actividad. El acceso a archivos se realiza mediante Datos y DataBases. La validez de los envíos corresponde al cliente y cualquier fallo de ejecución finaliza el juego completo, sin recuperación.
+**En curso — diseño JSON actualizado el 13 de noviembre de 2026.** Ver [Protocolo](Protocolo-partida.md). Los registros anteriores de Accion CSV y diecisiete tipos son antecedentes sustituidos, no tareas pendientes vigentes.
 
-- [x] Definir un escritor exclusivo por archivo: cada cliente escribe sus elecciones y el servidor sus publicaciones; los demás procesos leen.
-- [ ] Definir las entidades de intercambio y sus campos, cantidad de archivos, rutas, permisos y configuración en DataBases.
-- [ ] Especificar la identificación de partida, jugadores, estado, ronda, combate y jugador autorizado a elegir.
-- [ ] Definir cómo se relacionan los registros de intercambio con los s del catálogo.
-- [ ] Determinar cuándo cada proceso ejecuta Cargar<T> y Guardar<T> y qué tablas puede guardar.
-- [ ] Especificar la secuencia de elecciones y la publicación de resultados sin revelar elecciones anticipadamente en la interfaz.
-- [ ] Definir cómo se reconocen registros ya procesados, repetidos o correspondientes a otra partida, ronda o combate.
-- [ ] Especificar publicación de mensajes completos y coherencia entre archivos, considerando que Guardar reemplaza una tabla completa y no hay transacciones entre archivos.
-- [ ] Especificar la creación inicial de las tablas y cuáles requieren archivos existentes al cargarse.
-- [ ] Definir la detección de fallos y el cierre coordinado de clientes y servidor, sin recuperación.
-- [ ] Verificar con SSI el acceso, permisos, bloqueos y reemplazo de archivos en la red local.
-- [ ] Incorporar al UML y Arquitectura las entidades de elecciones de los clientes y publicaciones del servidor, con atributos, relaciones y configuración en Datos.
-- [ ] Definir los métodos que conectan los registros de intercambio con Partida y los clientes, conforme al protocolo acordado.
-- [ ] Revisar la coherencia de esas ampliaciones con las reglas y el modelo de dominio ya cerrado en la actividad 3.
-- [ ] Entregar la especificación de intercambio, diferenciándola del catálogo inicial de s.
+- [x] Registrar roles elegibles, locks, Windows, historiales propios y limpieza explícita con los tres presentes.
+- [x] Registrar espera de cinco segundos y recuperación mientras sobreviva un proceso.
+- [x] Definir Estado como fotografía completa del juego, catálogo y coordinación.
+- [x] Separar Personaje CSV/DataBases de Accion y Estado JSON.
+- [x] Documentar propuesta de guardado completo, publicaciones pendientes y efectos sin duplicación.
+- [x] Resolver documentalmente reparto completo y catálogo estable dentro de Estado.
+- [x] Actualizar contratos y UML de comunicación con Estado y DTO relacionados.
+- [ ] Revisar propuesta de tres mensajes y contratos concretos de captura/restauración.
+- [ ] Revisar visualmente el UML y verificar Windows/SMB con carpeta y permisos reales.
+- [ ] Completar revisión de compañero antes de integrar; cerrar actividad tras revisión y verificaciones.
 
 ### Actividad 7 — Casos de prueba
 
@@ -304,3 +303,7 @@ Cierre de la actividad 3 por confirmación del usuario: sin tareas propias pendi
 ## Ampliación documental de Personaje — actividad 5
 
 Por indicación del usuario se agregó descripcion: string al modelo de Personaje y a sus columnas, se amplió el constructor y se especificó GetDescripcion. La descripción es opcional y no tiene límite de longitud por confirmación del usuario; su ausencia se representa con texto vacío ("") y su presentación sigue pendiente de decisión. La conversión al CSV se resolverá posteriormente y el usuario garantiza un catálogo preparado sin duplicados. No se implementó código. Posteriormente el usuario confirmó el cierre de la actividad 5 con esta especificación. Los registros anteriores de 58 operaciones corresponden a la revisión previa a esta ampliación.
+
+## Decisiones reemplazadas de actividad 6
+
+Se aprobaron inicialmente Accion CSV con doce campos y diecisiete tipos, y luego se eligió JSON para Accion y Estado por simplicidad. La versión vigente es la sección de actividad 6 y el protocolo enlazado. El ID permanente de Personaje continúa vigente. No quedan pendientes de configurar Accion en DataBases ni de reconstruir la partida desde logs. Los mecanismos de sesión y publicación deben verificarse como diseño propuesto.
