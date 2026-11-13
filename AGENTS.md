@@ -137,6 +137,7 @@ No trabajar directamente sobre `main`.
 ### Trabajo en paralelo con worktrees
 
 - Utilizar `git worktree` para trabajar en tareas simultáneas: cada tarea debe tener su propia rama y directorio de trabajo.
+- Guardar los worktrees en directorios hermanos del repositorio principal con el formato `../worktree-<nombre-de-la-rama>`, sustituyendo `/` por `-`. Por ejemplo, la rama `docs/protocolo-partida-web` utiliza `../worktree-docs-protocolo-partida-web`. No ubicarlos en `/tmp` ni dentro del directorio del repositorio principal.
 - Crear cada rama nueva desde `main` actualizado, respetando los tipos de rama y la separación de documentación, código y pruebas.
 - Antes de crear o reutilizar un worktree, consultar `git worktree list`, el estado de los directorios implicados y las referencias remotas.
 - No cambiar la rama de un directorio utilizado por otra tarea ni compartir un mismo worktree entre agentes o tareas que escriban simultáneamente.
