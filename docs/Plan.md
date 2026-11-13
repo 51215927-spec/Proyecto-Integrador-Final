@@ -161,7 +161,9 @@ Verificación documental: las 58 operaciones del UML tienen una subsección de e
 
 No se elaboraron ejemplos propios válidos e inválidos; el cierre confirmado no los presenta como realizados ni los conserva como condición para reabrir esta actividad. La presentación de la descripción en consola sigue sin definir y no condiciona este cierre. La conversión al CSV queda postergada por indicación del usuario.
 
-### Actividad 6 — Archivo de partida compartida
+<a id="actividad-6--archivo-de-partida-compartida"></a>
+
+# Actividad 6
 
 **En curso, con avances fuera de main.** La lista que sigue describe la base integrada anterior; no debe interpretarse como ausencia de trabajo en las ramas de protocolos. Revisión del 13 de noviembre de 2026:
 
@@ -176,7 +178,9 @@ El protocolo por archivos registra decisiones del usuario del 12 de noviembre qu
 
 **Criterio de cierre:** revisar los contratos y diagramas de la alternativa que corresponda a la entrega, verificar las condiciones reales de SSI y completar la revisión de compañero. La actividad 7 sigue pendiente; describir escenarios del protocolo no equivale a entregar el plan de pruebas.
 
-#### Lista de la base integrada, pendiente de conciliación
+## Archivos
+
+Lista de la base integrada, pendiente de conciliación con el protocolo por archivos.
 
 Los registros de elecciones y publicaciones se definirán en esta actividad. El acceso a archivos se realiza mediante Datos y DataBases. La validez de los envíos corresponde al cliente y cualquier fallo de ejecución finaliza el juego completo, sin recuperación.
 
@@ -196,40 +200,38 @@ Los registros de elecciones y publicaciones se definirán en esta actividad. El 
 - [ ] Revisar la coherencia de esas ampliaciones con las reglas y el modelo de dominio ya cerrado en la actividad 3.
 - [ ] Entregar la especificación de intercambio, diferenciándola del catálogo inicial de s.
 
-#### Seguimiento REST con numeración permanente
+## REST
 
-Los números 1 a 14 corresponden a los pasos acordados con el usuario y se conservan aunque cambie su estado. Este seguimiento actualiza las decisiones posteriores al resumen de ramas anterior, sin integrar sus documentos. Las decisiones del protocolo se redactan en `docs/protocolo-partida-web`; esta rama `docs/actualizar-plan` modifica únicamente el plan.
+Las tareas se presentan con casillas, sin numeración. Las decisiones del protocolo se redactan en `docs/protocolo-partida-web`; esta reorganización en `docs/actualizar-tareas` modifica únicamente el plan y conserva el seguimiento anterior.
 
-| Paso | Tarea | Estado |
-|---|---|---|
-| 1 | Acordar con el docente si REST sustituye el archivo compartido. | Pendiente. |
-| 2 | Definir versiones y distribución de ejecución. | Terminado por confirmación del usuario: net8.0; ASP.NET Core y EF Core estables de la línea 8.0 (referencia 8.0.34); ambas computadoras Windows; servidor y cliente J1 en la primera y cliente J2 en la segunda. Primero se abre el servidor y después los clientes. La comprobación de instalaciones queda pendiente en las verificaciones, sin reabrir este paso. |
-| 3 | Definir conexión y disponibilidad del servidor. | Decisiones redactadas: HTTP en red local, TCP 5000 y dirección configurable. Ante indisponibilidad se informa y se permite reintentar o salir, conservando una elección pendiente sin tratarla como una jugada nueva. Pruebas entre equipos pendientes. |
-| 4 | Definir administración, incorporación, J1/J2, credenciales y reincorporación. | Pendiente. |
-| 5 | Completar rutas, DTO, respuestas HTTP y transiciones del juego. | Pendiente. |
-| 6 | Definir consultas, presencia, pausa, abandono y recuperación. | Pendiente. |
-| 7 | Diseñar idempotencia, revisiones y concurrencia. | Pendiente. |
-| 8 | Diseñar tablas, relaciones y transacciones de personajes y partidas. | Pendiente. SQLite conserva permanentemente el catálogo, además del estado de partidas. |
-| 9 | Definir incorporación y mantenimiento de personajes. | Pendiente. |
-| 10 | Preservar datos de personajes en partidas iniciadas ante cambios del catálogo. | Pendiente. |
-| 11 | Adaptar Arquitectura y UML a REST y conciliar la persistencia anterior. | Pendiente. |
-| 12 | Diseñar casos de prueba y vincularlos con la actividad 7. | Pendiente. |
-| 13 | Planificar y registrar la verificación en dos computadoras. | Pendiente; las verificaciones concretas se mantienen debajo. |
-| 14 | Conciliar documentos y completar revisión antes de integrar. | Pendiente. |
+- [ ] **Acordar con el docente si REST sustituye el archivo compartido.** Pendiente.
+- [x] **Definir versiones y distribución de ejecución.** Terminado por confirmación del usuario: net8.0; ASP.NET Core y EF Core estables de la línea 8.0 (referencia 8.0.34); ambas computadoras Windows; servidor y cliente J1 en la primera y cliente J2 en la segunda. Primero se abre el servidor y después los clientes. La comprobación de instalaciones queda pendiente en las verificaciones, sin reabrir esta tarea.
+- [ ] **Definir conexión y disponibilidad del servidor.** Decisiones redactadas: HTTP en red local, TCP 5000 y dirección configurable. Ante indisponibilidad se informa y se permite reintentar o salir, conservando una elección pendiente sin tratarla como una jugada nueva. Pruebas entre equipos pendientes.
+- [ ] **Definir administración, incorporación, J1/J2, credenciales y reincorporación.** Pendiente.
+- [ ] **Completar rutas, DTO, respuestas HTTP y transiciones del juego.** Pendiente.
+- [ ] **Definir consultas, presencia, pausa, abandono y recuperación.** Pendiente.
+- [ ] **Diseñar idempotencia, revisiones y concurrencia.** Pendiente.
+- [ ] **Diseñar tablas, relaciones y transacciones de personajes y partidas.** Pendiente. SQLite conserva permanentemente el catálogo, además del estado de partidas.
+- [ ] **Definir incorporación y mantenimiento de personajes.** Pendiente.
+- [ ] **Preservar datos de personajes en partidas iniciadas ante cambios del catálogo.** Pendiente.
+- [ ] **Adaptar Arquitectura y UML a REST y conciliar la persistencia anterior.** Pendiente.
+- [ ] **Diseñar casos de prueba y vincularlos con la actividad 7.** Pendiente.
+- [ ] **Planificar y registrar la verificación en dos computadoras.** Pendiente; las verificaciones concretas se mantienen debajo.
+- [ ] **Conciliar documentos y completar revisión antes de integrar.** Pendiente.
 
 **Evidencia disponible:** el usuario informó comunicación correcta entre dos procesos mediante localhost. No aportó una ejecución reproducible del proyecto ni una prueba entre computadoras; no se presenta como implementación del juego o validación de la red escolar. No tiene los equipos disponibles para ejecutar las comprobaciones ahora.
 
-**Verificaciones pendientes de los pasos 2, 3 y 13** (no se renumeran los pasos):
+**Verificaciones pendientes de instalaciones y comunicación entre computadoras:**
 
 - [ ] Comprobar SDK y runtimes .NET/ASP.NET Core 8 en ambas computadoras y registrar resultados.
 - [ ] Comprobar dirección real del servidor y disponibilidad del puerto TCP 5000.
 - [ ] Verificar que el servidor acepte conexiones por su dirección de red y no solamente por localhost.
 - [ ] Probar los dos clientes distribuidos en las dos computadoras con HTTP y dirección configurable.
 - [ ] Comprobar si el firewall o la red escolar bloquean la comunicación; si hace falta una excepción, coordinarla con el responsable y limitarla al servicio y equipos participantes, sin desactivar el firewall ni abrir el router a Internet.
-- [ ] Verificar servidor no iniciado, pérdida de conexión, reintento y salida sin duplicar elecciones; vincular estos escenarios con el diseño del paso 7.
+- [ ] Verificar servidor no iniciado, pérdida de conexión, reintento y salida sin duplicar elecciones; vincular estos escenarios con el diseño de idempotencia y concurrencia.
 - [ ] Registrar condiciones de la red, configuración utilizada y resultados; no marcar exitosas pruebas todavía no ejecutadas.
 
-### Actividad 7 — Casos de prueba
+# Actividad 7 — Casos de prueba
 
 - [ ] Definir condiciones iniciales, datos y resultado esperado para cada caso de prueba.
 - [ ] Diseñar casos para un personaje válido y para un total distinto de 3000.
