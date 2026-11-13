@@ -106,6 +106,15 @@ Si existen divergencias, conflictos o cambios locales pendientes:
 
 Nunca asumir que una sincronización se realizó correctamente sin verificar el resultado.
 
+### Actualización de ramas después de modificar main
+
+- Cada vez que `main` se actualice, sincronizar todas las demás ramas de trabajo vigentes con el nuevo `main`, incluidas las publicadas en el remoto. No dar por terminada la actualización de `main` mientras falte esta sincronización o informar expresamente qué ramas quedaron pendientes y por qué.
+- Actualizar las referencias remotas y revisar cada rama y su worktree antes de integrar. Conservar cambios locales y remotos; si hay trabajo en curso de otro agente, coordinar la actualización sin modificar simultáneamente su directorio.
+- Incorporar `main` mediante merge, usando avance rápido cuando sea posible, sin reescribir el historial publicado. Subir las ramas remotas actualizadas y comprobar que contienen el nuevo `main` y que sus referencias locales y remotas coinciden.
+- Si una rama remota vigente no tiene copia local, preparar su rama y worktree según la convención antes de actualizarla. No publicar ramas que todavía sean exclusivamente locales salvo autorización.
+- Si aparecen conflictos, analizarlos y resolverlos conservando el trabajo de ambas ramas; consultar cuando la resolución requiera una decisión de alcance o diseño. No forzar pushes ni descartar cambios para completar la sincronización.
+- Las ramas de tareas cerradas por integración final se eliminan junto con sus worktrees según la regla de limpieza; no se mantienen solo para sincronizarlas. Esta actualización de ramas no integra en `main` las tareas que siguen en curso.
+
 ### 5.2. Ramas
 
 Cada tarea de GitHub debe desarrollarse en una rama nueva.
