@@ -203,8 +203,10 @@ La selección acordada se documenta en [Tecnologías REST](Tecnologias-rest.md).
 - [x] Seleccionar C#/.NET, ASP.NET Core con Minimal APIs, HttpClient, System.Text.Json, SQLite, EF Core y xUnit.
 - [x] Definir la base como persistencia permanente del catálogo de personajes y de los datos de partidas, no solamente como respaldo ante caídas.
 - [ ] Resolver con el docente si REST puede sustituir el archivo compartido para la entrega.
-- [ ] Confirmar versión de .NET y dependencias compatibles; decidir expresamente si se migra desde .NET 8.
-- [ ] Confirmar organización de procesos, despliegue, dirección, puerto y HTTP/HTTPS.
+- [x] Confirmar net8.0 y versiones estables de la línea 8.0 de ASP.NET Core y EF Core; referencia 8.0.34 verificada en Tecnologías REST.
+- [x] Definir procesos separados y orden de inicio: primero servidor preparado para conexiones, después los dos clientes.
+- [ ] Verificar SDK y runtimes disponibles en los equipos y confirmar distribución física, despliegue, dirección, puerto y HTTP/HTTPS.
+- [ ] Especificar comprobación de disponibilidad y respuesta del cliente si se abre sin servidor.
 - [ ] Definir administración de partidas, incorporación, asignación J1/J2, credenciales y reincorporación.
 - [ ] Especificar rutas, DTO, estados HTTP y transiciones de inicio, combate, ronda y fin de partida.
 - [ ] Definir consultas periódicas, presencia, pausa, abandono y recuperación tras reinicios.

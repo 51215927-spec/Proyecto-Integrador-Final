@@ -8,7 +8,7 @@ El [Plan](Plan.md#actividad-6--archivo-de-partida-compartida) registra los avanc
 
 ## Selección tecnológica REST
 
-El usuario confirmó la pila de la alternativa REST y la persistencia permanente del catálogo en SQLite, además de las partidas. [Tecnologías REST](Tecnologias-rest.md) registra responsabilidades, alcance y pendientes. La adaptación de componentes y UML sigue pendiente; las secciones posteriores describen la arquitectura anterior por archivos y no acreditan integración con EF Core. La versión del repositorio continúa en .NET 8 hasta una decisión expresa de migración.
+El usuario confirmó la pila de la alternativa REST y la persistencia permanente del catálogo en SQLite, además de las partidas. [Tecnologías REST](Tecnologias-rest.md) registra responsabilidades, alcance y pendientes. La adaptación de componentes y UML sigue pendiente; las secciones posteriores describen la arquitectura anterior por archivos y no acreditan integración con EF Core. El usuario confirmó net8.0, ASP.NET Core y EF Core estables de la línea 8.0 (referencia 8.0.34). Se abre primero el servidor y, cuando acepta conexiones, los dos clientes como procesos separados; solo el servidor accede a SQLite. Las versiones no se instalaron en esta tarea.
 
 ## Distribución y responsabilidades
 
