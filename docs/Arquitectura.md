@@ -1,8 +1,10 @@
 # Arquitectura
 
-Modelo de análisis y diseño de TI, actualizado el 9 de noviembre de 2026 a partir de las decisiones del usuario. Las clases del [UML](diagramas/UML.uxf) todavía no están implementadas; la aplicación conserva `Hello, World!`. Los requisitos están en [Reglas del juego](Reglas-del-juego.md) y el seguimiento en [Plan](Plan.md).
+Modelo de análisis y diseño de TI, actualizado el 9 de noviembre de 2026 a partir de las decisiones del usuario. El modelo del [UML](diagramas/UML.uxf) no está implementado por completo; la aplicación conserva `Hello, World!`. La revisión del 13 de noviembre encontró código parcial de Personaje y Mazo, sin pruebas de comportamiento; Personaje aún no incluye descripcion ni configura su persistencia. Los requisitos están en [Reglas del juego](Reglas-del-juego.md) y el seguimiento en [Plan](Plan.md).
 
-Las bibliotecas existen en el submódulo `Mis-Librerias/`, pero todavía no hay referencias a sus proyectos en la aplicación ni están incluidas en la solución principal. Las llamadas descritas a continuación son contratos del diseño, no integración ejecutable.
+Las bibliotecas DataBases y Utilidades existen en el submódulo `Mis-Librerias/`, están referenciadas por la aplicación e incluidas en la solución principal. No hay flujo ejecutable de carga o comunicación conectado a ellas. Las llamadas descritas a continuación siguen siendo contratos del diseño.
+
+El [Plan](Plan.md#actividad-6--archivo-de-partida-compartida) registra los avances posteriores de las ramas de protocolos por archivos y web, aún no integrados. Las secciones de comunicación de este documento describen la base de main: su política de cierre y el uso de DataBases para intercambio deberán conciliarse con el diseño JSON y la recuperación documentados en esas ramas, antes de integrar. No se adopta REST como sustituto del requisito académico por registrar su borrador.
 
 ## Alternativa REST — 13 de noviembre de 2026
 
